@@ -11,6 +11,7 @@ This folder holds every project Laika builds for Efren. Each project lives in it
 | How Long Until Dawn | nit_d'alba/ | Complete — macro fragility engine |
 | Can You Predict the Market? | augur/ | Complete — ML, honest verdict |
 | A Strategy That Actually Survives | inercia/ | Tested — momentum / crisis alpha |
+| How Much of the Literature Actually Survives? | cartograf/ | Complete — 5 published edges tested, honest book |
 
 ## How work is done here
 
