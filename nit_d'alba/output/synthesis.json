@@ -1,0 +1,33 @@
+{
+  "fragility_latest": 1.54,
+  "fragility_percentile_since_1970": 76.0,
+  "components_latest": {
+    "debt_gdp": 121.19,
+    "interest_burden": 6.31,
+    "real_yield": 2.86,
+    "oil": 96.24,
+    "vix": 15.27
+  },
+  "scenarios": {
+    "baseline": {
+      "debt_gdp": 121.2,
+      "y10": 5.21,
+      "interest_burden": 6.31
+    },
+    "war_oil_shock": {
+      "debt_gdp": 121.2,
+      "y10": 6.71,
+      "interest_burden": 8.13
+    },
+    "ai_correction": {
+      "debt_gdp": 131.2,
+      "y10": 5.21,
+      "interest_burden": 6.83
+    },
+    "combined_shock": {
+      "debt_gdp": 131.2,
+      "y10": 6.71,
+      "interest_burden": 8.8
+    }
+  }
+}

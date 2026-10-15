@@ -1,0 +1,14 @@
+{
+  "mag7_combined_marketcap_trillion": 24.63,
+  "mag7_pe": {
+    "NVDA": 28.0,
+    "MSFT": 30.1,
+    "AAPL": 39.3,
+    "GOOGL": 17.4,
+    "AMZN": 20.4,
+    "META": 27.8,
+    "TSLA": 340.0
+  },
+  "mag7_vs_sp_10y_pct": 601.1,
+  "sp_10y_return_pct": 251.1
+}

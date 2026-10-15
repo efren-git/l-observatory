@@ -1,0 +1,28 @@
+{
+  "strategy": {
+    "CAGR": 0.0533,
+    "Vol": 0.1052,
+    "Sharpe": 0.547,
+    "MaxDD": -0.2644
+  },
+  "spy": {
+    "CAGR": 0.1088,
+    "Vol": 0.186,
+    "Sharpe": 0.649,
+    "MaxDD": -0.5519
+  },
+  "sixty40": {
+    "CAGR": 0.0829,
+    "Vol": 0.1073,
+    "Sharpe": 0.796,
+    "MaxDD": -0.3139
+  },
+  "combo_60_40_plus_30": {
+    "CAGR": 0.0762,
+    "Vol": 0.0851,
+    "Sharpe": 0.905,
+    "MaxDD": -0.1942
+  },
+  "corr_strategy_spy": 0.123,
+  "annual_turnover": 18.9
+}

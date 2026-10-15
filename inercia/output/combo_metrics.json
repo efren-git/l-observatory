@@ -1,0 +1,54 @@
+{
+  "trend": {
+    "CAGR": 0.0546,
+    "Vol": 0.1051,
+    "Sharpe": 0.559,
+    "MaxDD": -0.264
+  },
+  "carry": {
+    "CAGR": 0.0128,
+    "Vol": 0.0919,
+    "Sharpe": 0.185,
+    "MaxDD": -0.3056
+  },
+  "reversal": {
+    "CAGR": -0.0419,
+    "Vol": 0.0767,
+    "Sharpe": -0.519,
+    "MaxDD": -0.6558
+  },
+  "corr": {
+    "trend": {
+      "trend": 1.0,
+      "carry": 0.033,
+      "reversal": -0.417
+    },
+    "carry": {
+      "trend": 0.033,
+      "carry": 1.0,
+      "reversal": 0.014
+    },
+    "reversal": {
+      "trend": -0.417,
+      "carry": 0.014,
+      "reversal": 1.0
+    }
+  },
+  "combo_equal_3": {
+    "CAGR": 0.0062,
+    "Vol": 0.0501,
+    "Sharpe": 0.149,
+    "MaxDD": -0.2324
+  },
+  "combo_tangency": {
+    "CAGR": 0.2374,
+    "Vol": 0.564,
+    "Sharpe": 0.665,
+    "MaxDD": -0.7842
+  },
+  "tangency_weights": {
+    "trend": 3.277,
+    "carry": 1.624,
+    "reversal": -3.901
+  }
+}

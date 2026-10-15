@@ -1,0 +1,14 @@
+# python envs
+.venv/
+**/.venv/
+__pycache__/
+*.pyc
+# macOS
+.DS_Store
+**/.DS_Store
+# raw data (large, re-fetchable with src/fetch_*.py)
+data/raw/
+**/data/raw/
+# misc
+*.log
+.ipynb_checkpoints/

@@ -1,0 +1,37 @@
+{
+  "trend": {
+    "CAGR": 0.0546,
+    "Vol": 0.1051,
+    "Sharpe": 0.559,
+    "MaxDD": -0.264
+  },
+  "carry": {
+    "CAGR": 0.0128,
+    "Vol": 0.0919,
+    "Sharpe": 0.185,
+    "MaxDD": -0.3056
+  },
+  "corr_trend_carry": 0.033,
+  "book_weights": {
+    "trend": 0.744,
+    "carry": 0.256
+  },
+  "book": {
+    "CAGR": 0.0441,
+    "Vol": 0.0795,
+    "Sharpe": 0.583,
+    "MaxDD": -0.2328
+  },
+  "sixty40": {
+    "CAGR": 0.0829,
+    "Vol": 0.1073,
+    "Sharpe": 0.796,
+    "MaxDD": -0.3139
+  },
+  "combo_60_40_plus_30_book": {
+    "CAGR": 0.0763,
+    "Vol": 0.0855,
+    "Sharpe": 0.903,
+    "MaxDD": -0.2311
+  }
+}
