@@ -5,7 +5,8 @@ works, and what the results mean.*
 
 Project #4 of l'Observatori. Status: **complete (2026-10-16)** — five published return
 patterns tested on free data, walk-forward, net of costs, plus an equity-factor cross-check, plus
-two follow-ups: **network momentum** (§8) and a **proper volatility-risk-premium** test (§9).
+three follow-ups: **network momentum** (§8), a **proper volatility-risk-premium** test (§9) and
+**cross-asset carry** (§10).
 
 ## How to read this book
 
@@ -288,6 +289,53 @@ so its calm-crisis record is partly an artefact of the sample. It is one regime.
 optimistic for a variance position. And the gate did *not* save February 2018 (−10.3%): when the
 spike comes while the curve still slopes up, the protection is not there.
 
+## Chapter 10 — Follow-up: cross-asset carry, done properly
+
+Carry (Koijen, Moskowitz, Pedersen & Vrugt 2018) is *the return to an asset if its price does not
+change* — the interest you earn, the dividend you collect, the yield above cash. It is one of the
+three pillars of managed futures, alongside momentum and value, so it deserves a proper test.
+
+Three asset classes, each ranked **cross-sectionally** (long the highest carry, short the lowest),
+monthly, vol-targeted, net of 5 bps:
+
+| Class | Carry measured as | Data |
+|---|---|---|
+| bonds | Treasury yield at the ETF's tenor **minus** 3-month cash | FRED curve (SHY→2y, IEF→7y, TLT→30y) |
+| equities | trailing-12m dividend yield **minus** 3-month cash | Yahoo dividend history (14 ETFs) |
+| FX | foreign 3-month rate **minus** US 3-month rate | FRED G10 interbank rates (EUR/JPY/GBP/AUD/CAD/CHF) |
+
+**Commodity carry is not tested.** It needs futures curves — the roll yield is the carry — and
+those are not free. Saying so is the honest option; a bad proxy would be worse than nothing.
+
+Results (2007-01 → 2026-10, the window where all three classes are live):
+
+| Book | CAGR | Vol | Sharpe | Max DD | Worst year |
+|---|---|---|---|---|---|
+| bond carry | 2.4% | 9.8% | **0.29** | −23.5% | −11.9% |
+| equity carry | −6.0% | 10.2% | **−0.56** | −78.0% | −23.6% |
+| FX carry | −0.4% | 10.1% | 0.01 | −42.4% | −25.1% |
+| **carry book (all three)** | −1.9% | 10.5% | **−0.13** | −49.3% | −22.1% |
+| SPY | 11.4% | 18.5% | 0.68 | −55.2% | −36.8% |
+| 60/40 | 8.4% | 11.2% | 0.77 | −31.4% | −16.7% |
+
+**Verdict — it does not survive here, and the reasons are informative.**
+
+- **Equity carry is a disguised value bet, and value died.** Long high-dividend, short low-dividend
+  meant long value/REITs and short growth — the single worst trade of 2007–2026. Sharpe −0.56.
+- **FX carry is flat (0.01)** because G10 rate dispersion collapsed after 2008: everyone was at
+  zero, so there was almost nothing to carry. Its −42% drawdown is the 2008 and 2015 carry crashes.
+- **Bond carry is the only positive piece (0.29)** — a curve-slope bet that earns a little, slowly.
+- The combined book is **uncorrelated with equities (−0.02)** but *negatively* performing, and
+  uncorrelated-and-losing is not diversifying — it is just a second way to lose. Adding 20–30% of
+  it to a 60/40 *lowers* the Sharpe (0.77 → 0.72 → 0.66).
+
+**The honest conclusion.** On free data, over this window, with these instruments, the classic
+carry factor does not deliver. Three caveats matter: this uses spot ETFs rather than futures (the
+proper instrument for carry); commodities — historically a third of managed-futures carry — are
+untested; and one 19-year window is one observation. But the failure of the equity leg is not a
+technicality: it is the same momentum/value decay that killed the factors in §5.5, showing up
+again under a different name.
+
 ## Appendix — Reproducibility
 
     cartograf/
@@ -298,9 +346,10 @@ spike comes while the curve still slopes up, the protection is not there.
     ├── src/engine.py            backtest plumbing (no-lookahead, costs, HRP)
     ├── src/run.py               the five sleeves + combination + report  -> metrics.json
     ├── src/network_momentum.py  §8 lead-lag network                     -> network_metrics.json
-    └── src/vrp.py               §9 the volatility risk premium          -> vrp_metrics.json
+    ├── src/vrp.py               §9 the volatility risk premium          -> vrp_metrics.json
+    └── src/carry.py             §10 cross-asset carry                   -> carry_metrics.json
     output/                      01_equity 02_drawdown 03_corr 04_annual 05_factors
-                                 06_network 07_vrp  (+ the three metrics files)
+                                 06_network 07_vrp 08_carry  (+ the metrics files)
 
 Run: `./.venv/bin/python3 src/fetch_data.py` then `./.venv/bin/python3 src/run.py`.
 

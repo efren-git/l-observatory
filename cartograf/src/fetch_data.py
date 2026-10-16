@@ -163,9 +163,73 @@ def fetch_cboe(force=False):
           "to", term.index[-1].date())
 
 
+# --- carry inputs -----------------------------------------------------------
+# Bond carry needs the Treasury curve; FX carry needs short rates for each currency.
+# All free from FRED's CSV endpoint (no key; use the DEFAULT User-Agent -- custom UAs get
+# throttled).  Commodity carry needs futures curves, which are not free -- not tested.
+FRED_SERIES = {
+    "dgs3mo": "DGS3MO", "dgs1": "DGS1", "dgs2": "DGS2", "dgs5": "DGS5",
+    "dgs7": "DGS7", "dgs10": "DGS10", "dgs20": "DGS20", "dgs30": "DGS30",
+    "fx_eur": "IR3TIB01EZM156N", "fx_jpy": "IR3TIB01JPM156N", "fx_gbp": "IR3TIB01GBM156N",
+    "fx_aud": "IR3TIB01AUM156N", "fx_cad": "IR3TIB01CAM156N", "fx_chf": "IR3TIB01CHM156N",
+    "fx_usd": "IR3TIB01USM156N",
+}
+
+
+def fetch_fred_carry(force=False):
+    out = os.path.join(RAW, "fred_carry.csv")
+    if os.path.exists(out) and not force:
+        print("fred_carry.csv present: skip")
+        return
+    cols = {}
+    for key, sid in FRED_SERIES.items():
+        req = urllib.request.Request("https://fred.stlouisfed.org/graph/fredgraph.csv?id=" + sid)
+        txt = urllib.request.urlopen(req, timeout=60).read().decode()
+        df = pd.read_csv(io.StringIO(txt))
+        df.columns = ["date", key]
+        df["date"] = pd.to_datetime(df["date"], errors="coerce")
+        df[key] = pd.to_numeric(df[key], errors="coerce")
+        cols[key] = df.dropna(subset=["date"]).set_index("date")[key]
+        time.sleep(0.5)
+    fr = pd.concat(cols, axis=1).sort_index()
+    fr.index.name = "Date"
+    fr = fr.ffill()          # daily curve: carry gaps on holidays
+    fr.to_csv(out)
+    print("wrote", out, fr.shape)
+
+
+EQUITY_FOR_DIV = ["SPY", "QQQ", "IWM", "EFA", "EEM", "IWD", "IWF", "USMV", "SPLV",
+                  "QUAL", "MTUM", "SPHB", "VNQ", "RWX"]
+
+
+def fetch_dividends(force=False):
+    out = os.path.join(RAW, "dividends.csv")
+    if os.path.exists(out) and not force:
+        print("dividends.csv present: skip")
+        return
+    import yfinance as yf
+    ser = {}
+    for t in EQUITY_FOR_DIV:
+        try:
+            d = yf.Ticker(t).dividends
+            if d is not None and len(d):
+                ser[t] = d
+        except Exception as ex:
+            print("div fail", t, ex)
+        time.sleep(0.3)
+    div = pd.DataFrame(ser)
+    div.index = pd.to_datetime(div.index).tz_localize(None)   # yfinance gives tz-aware stamps
+    div.index.name = "Date"
+    div = div[div.index >= pd.Timestamp("2000-01-01")]
+    div.to_csv(out)
+    print("wrote", out, div.shape)
+
+
 if __name__ == "__main__":
     force = "--force" in sys.argv
     fetch_prices(force)
     fetch_factors(force)
     fetch_cboe(force)
+    fetch_fred_carry(force)
+    fetch_dividends(force)
     print("done")
