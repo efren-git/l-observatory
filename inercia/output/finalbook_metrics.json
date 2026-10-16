@@ -1,0 +1,66 @@
+{
+  "trend": {
+    "CAGR": 0.0572,
+    "Vol": 0.1075,
+    "Sharpe": 0.572,
+    "Sortino": 0.74,
+    "MaxDD": -0.264
+  },
+  "carry": {
+    "CAGR": 0.0079,
+    "Vol": 0.094,
+    "Sharpe": 0.131,
+    "Sortino": 0.162,
+    "MaxDD": -0.3056
+  },
+  "xs_momentum": {
+    "CAGR": -0.0212,
+    "Vol": 0.1006,
+    "Sharpe": -0.163,
+    "Sortino": -0.213,
+    "MaxDD": -0.5228
+  },
+  "corr": {
+    "trend": {
+      "trend": 1.0,
+      "carry": 0.033,
+      "xsmom": 0.265
+    },
+    "carry": {
+      "trend": 0.033,
+      "carry": 1.0,
+      "xsmom": -0.031
+    },
+    "xsmom": {
+      "trend": 0.265,
+      "carry": -0.031,
+      "xsmom": 1.0
+    }
+  },
+  "book_weights": {
+    "trend": 0.853,
+    "carry": 0.147,
+    "xsmom": 0.0
+  },
+  "book": {
+    "CAGR": 0.0511,
+    "Vol": 0.0931,
+    "Sharpe": 0.582,
+    "Sortino": 0.745,
+    "MaxDD": -0.2483
+  },
+  "sixty40": {
+    "CAGR": 0.0829,
+    "Vol": 0.1073,
+    "Sharpe": 0.796,
+    "Sortino": 1.006,
+    "MaxDD": -0.3139
+  },
+  "combo_60_40_plus_30_book": {
+    "CAGR": 0.0772,
+    "Vol": 0.0881,
+    "Sharpe": 0.888,
+    "Sortino": 1.155,
+    "MaxDD": -0.2137
+  }
+}

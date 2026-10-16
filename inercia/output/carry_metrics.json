@@ -1,0 +1,24 @@
+{
+  "carry": {
+    "CAGR": 0.0155,
+    "Vol": 0.0913,
+    "Sharpe": 0.215,
+    "MaxDD": -0.3088,
+    "Total": 0.46
+  },
+  "trend": {
+    "CAGR": 0.0533,
+    "Vol": 0.1052,
+    "Sharpe": 0.547,
+    "MaxDD": -0.2644,
+    "Total": 2.26
+  },
+  "combo_50_50": {
+    "CAGR": 0.0352,
+    "Vol": 0.0719,
+    "Sharpe": 0.517,
+    "MaxDD": -0.225,
+    "Total": 1.19
+  },
+  "corr_trend_carry": 0.033
+}

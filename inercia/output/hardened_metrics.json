@@ -1,0 +1,50 @@
+{
+  "trend": {
+    "CAGR": 0.0381,
+    "Vol": 0.0849,
+    "Sharpe": 0.482,
+    "Sortino": 0.562,
+    "MaxDD": -0.181,
+    "WorstYr": -0.0663
+  },
+  "carry": {
+    "CAGR": 0.0083,
+    "Vol": 0.0402,
+    "Sharpe": 0.225,
+    "Sortino": 0.258,
+    "MaxDD": -0.1815,
+    "WorstYr": -0.146
+  },
+  "book": {
+    "CAGR": 0.0601,
+    "Vol": 0.0953,
+    "Sharpe": 0.66,
+    "Sortino": 0.824,
+    "MaxDD": -0.1988,
+    "WorstYr": -0.0688
+  },
+  "book_dd_control": {
+    "CAGR": 0.0407,
+    "Vol": 0.0701,
+    "Sharpe": 0.605,
+    "Sortino": 0.704,
+    "MaxDD": -0.1575,
+    "WorstYr": -0.0369
+  },
+  "book_regime": {
+    "CAGR": 0.0525,
+    "Vol": 0.0926,
+    "Sharpe": 0.6,
+    "Sortino": 0.737,
+    "MaxDD": -0.2545,
+    "WorstYr": -0.0678
+  },
+  "book_hardened": {
+    "CAGR": 0.0359,
+    "Vol": 0.0675,
+    "Sharpe": 0.556,
+    "Sortino": 0.627,
+    "MaxDD": -0.1668,
+    "WorstYr": -0.0332
+  }
+}

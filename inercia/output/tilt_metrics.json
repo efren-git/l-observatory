@@ -1,0 +1,34 @@
+{
+  "base_book": {
+    "CAGR": 0.0644,
+    "Vol": 0.1012,
+    "Sharpe": 0.668,
+    "Sortino": 0.836,
+    "MaxDD": -0.2191,
+    "WorstYr": -0.0968
+  },
+  "tilt_k0.3": {
+    "CAGR": 0.06,
+    "Vol": 0.098,
+    "Sharpe": 0.643,
+    "Sortino": 0.79,
+    "MaxDD": -0.1801,
+    "WorstYr": -0.0609
+  },
+  "tilt_k0.6": {
+    "CAGR": 0.0578,
+    "Vol": 0.1008,
+    "Sharpe": 0.608,
+    "Sortino": 0.736,
+    "MaxDD": -0.1791,
+    "WorstYr": -0.0622
+  },
+  "tilt_k1.0": {
+    "CAGR": 0.0511,
+    "Vol": 0.1023,
+    "Sharpe": 0.539,
+    "Sortino": 0.645,
+    "MaxDD": -0.1784,
+    "WorstYr": -0.0691
+  }
+}

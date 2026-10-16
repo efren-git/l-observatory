@@ -1,0 +1,58 @@
+[
+  {
+    "date": "1973-10-06",
+    "event": "Yom Kippur War / oil embargo",
+    "oil_at": 4.3,
+    "oil_+6m": 10.1,
+    "pct_6m": 134.6
+  },
+  {
+    "date": "1979-01-16",
+    "event": "Iranian Revolution",
+    "oil_at": 14.8,
+    "oil_+6m": 19.1,
+    "pct_6m": 28.6
+  },
+  {
+    "date": "1980-09-22",
+    "event": "Iran-Iraq War",
+    "oil_at": 38.0,
+    "oil_+6m": 38.0,
+    "pct_6m": 0.0
+  },
+  {
+    "date": "1990-08-02",
+    "event": "Gulf War",
+    "oil_at": 18.6,
+    "oil_+6m": 25.0,
+    "pct_6m": 33.9
+  },
+  {
+    "date": "2003-03-20",
+    "event": "Iraq War",
+    "oil_at": 35.9,
+    "oil_+6m": 31.6,
+    "pct_6m": -11.9
+  },
+  {
+    "date": "2011-02-15",
+    "event": "Arab Spring / Libya",
+    "oil_at": 89.4,
+    "oil_+6m": 97.2,
+    "pct_6m": 8.7
+  },
+  {
+    "date": "2022-02-24",
+    "event": "Russia invades Ukraine",
+    "oil_at": 83.2,
+    "oil_+6m": 101.6,
+    "pct_6m": 22.1
+  },
+  {
+    "date": "2023-10-07",
+    "event": "Israel-Hamas War",
+    "oil_at": 89.4,
+    "oil_+6m": 81.3,
+    "pct_6m": -9.1
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "gradient_boosting": {
+    "accuracy": 0.5489,
+    "auc": 0.5147
+  },
+  "logistic": {
+    "accuracy": 0.5447,
+    "auc": 0.4986
+  },
+  "baseline_majority_accuracy": 0.5511,
+  "n_out_of_sample": 2640,
+  "up_day_frequency": 0.5511,
+  "strategy_sharpe": 0.949,
+  "buy_hold_sharpe": 0.885,
+  "strategy_total_return": 3.318,
+  "buy_hold_total_return": 3.377,
+  "vol_signal_corr": 0.4951
+}

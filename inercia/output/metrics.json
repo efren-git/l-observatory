@@ -1,0 +1,62 @@
+{
+  "strategy_net": {
+    "CAGR": 0.0573,
+    "Vol": 0.1043,
+    "Sharpe": 0.587,
+    "MaxDD": -0.2876,
+    "Total": 2.551
+  },
+  "strategy_gross": {
+    "CAGR": 0.0681,
+    "Vol": 0.1044,
+    "Sharpe": 0.683,
+    "MaxDD": -0.2662,
+    "Total": 3.473
+  },
+  "spy_buy_hold": {
+    "CAGR": 0.1088,
+    "Vol": 0.186,
+    "Sharpe": 0.649,
+    "MaxDD": -0.5519,
+    "Total": 9.476
+  },
+  "sixty_forty": {
+    "CAGR": 0.0829,
+    "Vol": 0.1073,
+    "Sharpe": 0.796,
+    "MaxDD": -0.3139,
+    "Total": 5.12
+  },
+  "annual_turnover": 20.31,
+  "corr_to_spy": 0.184,
+  "subperiods": {
+    "2004_2007": {
+      "CAGR": 0.101,
+      "Vol": 0.0963,
+      "Sharpe": 1.048,
+      "MaxDD": -0.1146,
+      "Total": 0.468
+    },
+    "2008_2009": {
+      "CAGR": 0.0983,
+      "Vol": 0.1088,
+      "Sharpe": 0.916,
+      "MaxDD": -0.0885,
+      "Total": 0.207
+    },
+    "2010_2019": {
+      "CAGR": 0.0634,
+      "Vol": 0.104,
+      "Sharpe": 0.644,
+      "MaxDD": -0.1373,
+      "Total": 0.848
+    },
+    "2020_2026": {
+      "CAGR": 0.012,
+      "Vol": 0.1078,
+      "Sharpe": 0.165,
+      "MaxDD": -0.2876,
+      "Total": 0.084
+    }
+  }
+}

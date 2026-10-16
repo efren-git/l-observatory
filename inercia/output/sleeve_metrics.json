@@ -1,0 +1,41 @@
+{
+  "xs_momentum": {
+    "CAGR": 0.0188,
+    "Vol": 0.1043,
+    "Sharpe": 0.23,
+    "Sortino": 0.315,
+    "MaxDD": -0.3022
+  },
+  "low_vol": {
+    "CAGR": -0.0808,
+    "Vol": 0.104,
+    "Sharpe": -0.759,
+    "Sortino": -1.201,
+    "MaxDD": -0.8558
+  },
+  "equity_sleeve": {
+    "CAGR": -0.0364,
+    "Vol": 0.102,
+    "Sharpe": -0.312,
+    "Sortino": -0.443,
+    "MaxDD": -0.5898
+  },
+  "trend": {
+    "CAGR": 0.0663,
+    "Vol": 0.1077,
+    "Sharpe": 0.65,
+    "Sortino": 0.843,
+    "MaxDD": -0.2397
+  },
+  "corr_sleeve_trend": 0.078,
+  "corr_mom_trend": 0.4,
+  "turnover_mom": 0.0,
+  "turnover_sleeve": 0.0,
+  "combo_trend_sleeve": {
+    "CAGR": 0.0143,
+    "Vol": 0.0734,
+    "Sharpe": 0.23,
+    "Sortino": 0.316,
+    "MaxDD": -0.2048
+  }
+}

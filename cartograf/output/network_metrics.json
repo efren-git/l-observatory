@@ -1,0 +1,79 @@
+{
+  "window": [
+    "2008-01-31",
+    "2026-10-15"
+  ],
+  "params": {
+    "window_weeks": 156,
+    "top_k": 5,
+    "blend": 0.5
+  },
+  "avg_lead_corr_kept": 0.1146,
+  "trend_only": {
+    "CAGR": 0.0522,
+    "Vol": 0.1071,
+    "Sharpe": 0.529,
+    "Sortino": 0.624,
+    "MaxDD": -0.2626,
+    "Total": 2.3525,
+    "WorstYear": -0.1558,
+    "BestYear": 0.2398
+  },
+  "network_only": {
+    "CAGR": 0.0225,
+    "Vol": 0.1084,
+    "Sharpe": 0.26,
+    "Sortino": 0.288,
+    "MaxDD": -0.3725,
+    "Total": 0.6985,
+    "WorstYear": -0.2083,
+    "BestYear": 0.2512
+  },
+  "trend_plus_network": {
+    "CAGR": 0.0602,
+    "Vol": 0.1051,
+    "Sharpe": 0.609,
+    "Sortino": 0.726,
+    "MaxDD": -0.2742,
+    "Total": 3.0057,
+    "WorstYear": -0.1552,
+    "BestYear": 0.2541
+  },
+  "SPY": {
+    "CAGR": 0.1141,
+    "Vol": 0.185,
+    "Sharpe": 0.677,
+    "Sortino": 0.834,
+    "MaxDD": -0.5519,
+    "Total": 12.0265,
+    "WorstYear": -0.368,
+    "BestYear": 0.3231
+  },
+  "corr_own_vs_net": 0.418,
+  "corr_comb_vs_spy": 0.068,
+  "turnover": {
+    "own": 17.74,
+    "net": 18.4,
+    "comb": 16.7
+  },
+  "60/40+30 trend_only": {
+    "CAGR": 0.0786,
+    "Vol": 0.0832,
+    "Sharpe": 0.951,
+    "Sortino": 1.249,
+    "MaxDD": -0.1777,
+    "Total": 5.0307,
+    "WorstYear": -0.0738,
+    "BestYear": 0.1715
+  },
+  "60/40+30 trend+network": {
+    "CAGR": 0.0809,
+    "Vol": 0.0836,
+    "Sharpe": 0.972,
+    "Sortino": 1.268,
+    "MaxDD": -0.1666,
+    "Total": 5.3466,
+    "WorstYear": -0.0584,
+    "BestYear": 0.1904
+  }
+}

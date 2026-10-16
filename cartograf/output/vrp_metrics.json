@@ -1,0 +1,117 @@
+{
+  "vix3m_from": "2009-09-18",
+  "window": [
+    "2003-02-28",
+    "2026-09-30"
+  ],
+  "n_months": 200,
+  "premium": {
+    "mean_implied_vol": 19.01,
+    "mean_realized_vol": 15.6,
+    "mean_pnl_vol_points": 1.827,
+    "pct_months_implied_gt_realized": 0.815
+  },
+  "contango_fraction": 0.645,
+  "A_always_on": {
+    "CAGR": -0.0263,
+    "Vol": 0.2252,
+    "Sharpe": 0.05,
+    "MaxDD": -0.6402,
+    "WorstMonth": -0.635,
+    "WorstYear": -0.5825,
+    "Total": -0.3584
+  },
+  "B_contango_gated": {
+    "CAGR": 0.0657,
+    "Vol": 0.091,
+    "Sharpe": 0.752,
+    "MaxDD": -0.2702,
+    "WorstMonth": -0.2702,
+    "WorstYear": -0.1603,
+    "Total": 1.8893
+  },
+  "common_window": [
+    "2009-11-30",
+    "2026-09-30"
+  ],
+  "A_common_window": {
+    "CAGR": -0.0152,
+    "Vol": 0.2338,
+    "Sharpe": 0.12,
+    "MaxDD": -0.6402,
+    "WorstMonth": -0.635,
+    "WorstYear": -0.5825,
+    "Total": -0.1666
+  },
+  "B_common_window": {
+    "CAGR": 0.0931,
+    "Vol": 0.1067,
+    "Sharpe": 0.898,
+    "MaxDD": -0.2702,
+    "WorstMonth": -0.2702,
+    "WorstYear": -0.1603,
+    "Total": 1.8893
+  },
+  "C_svxy_proxy_common_window": {
+    "CAGR": 0.005,
+    "Vol": 0.0915,
+    "Sharpe": 0.102,
+    "MaxDD": -0.1907,
+    "WorstMonth": -0.1469,
+    "WorstYear": -0.1719,
+    "Total": 0.054
+  },
+  "SPY_common": {
+    "CAGR": 0.1348,
+    "Vol": 0.1464,
+    "Sharpe": 0.941,
+    "MaxDD": -0.2444,
+    "WorstMonth": -0.1249,
+    "WorstYear": -0.1284,
+    "Total": 3.5137
+  },
+  "60_40_common": {
+    "CAGR": 0.0851,
+    "Vol": 0.0903,
+    "Sharpe": 0.953,
+    "MaxDD": -0.2074,
+    "WorstMonth": -0.0744,
+    "WorstYear": -0.125,
+    "Total": 1.6469
+  },
+  "60/40+30 A_always_on": {
+    "CAGR": 0.0645,
+    "Vol": 0.1064,
+    "Sharpe": 0.645,
+    "MaxDD": -0.2128,
+    "WorstMonth": -0.1912,
+    "WorstYear": -0.112,
+    "Total": 1.1053
+  },
+  "60/40+30 B_contango_gated": {
+    "CAGR": 0.0892,
+    "Vol": 0.0794,
+    "Sharpe": 1.12,
+    "MaxDD": -0.1437,
+    "WorstMonth": -0.1064,
+    "WorstYear": -0.0875,
+    "Total": 1.7687
+  },
+  "crisis_months": {
+    "2008-10-31": {
+      "A": -0.2108,
+      "B": 0.0,
+      "SPY": NaN
+    },
+    "2018-02-28": {
+      "A": -0.1026,
+      "B": -0.1026,
+      "SPY": -0.0364
+    },
+    "2020-03-31": {
+      "A": -0.3084,
+      "B": 0.0,
+      "SPY": -0.1249
+    }
+  }
+}
