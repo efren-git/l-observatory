@@ -58,6 +58,17 @@ FF_FILES = {
     "ffmom": "F-F_Momentum_Factor_CSV.zip",
 }
 FF_BASE = "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/"
+
+# CBOE publishes the VIX term structure (its own index family) for free.  The VIX *futures*
+# settlement files are behind AccessDenied, so the VRP sleeve is built from implied vol
+# (these indices) versus realized vol -- the honest academic route.
+CBOE = {
+    "vix9d": "VIX9D_History.csv",
+    "vix": "VIX_History.csv",
+    "vix3m": "VIX3M_History.csv",
+    "vix6m": "VIX6M_History.csv",
+}
+CBOE_BASE = "https://cdn.cboe.com/api/global/us_indices/daily_prices/"
 _UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
 
 
@@ -129,8 +140,32 @@ def fetch_factors(force=False):
         time.sleep(1)
 
 
+def fetch_cboe(force=False):
+    out = os.path.join(RAW, "cboe_vix_term.csv")
+    if os.path.exists(out) and not force:
+        print("cboe_vix_term.csv present: skip")
+        return
+    frames = {}
+    for key, fname in CBOE.items():
+        req = urllib.request.Request(CBOE_BASE + fname, headers=_UA)
+        txt = urllib.request.urlopen(req, timeout=60).read().decode("utf-8", "ignore")
+        df = pd.read_csv(io.StringIO(txt))
+        df.columns = [c.strip().upper() for c in df.columns]
+        dcol = df.columns[0]
+        df[dcol] = pd.to_datetime(df[dcol], errors="coerce")
+        df = df.dropna(subset=[dcol]).set_index(dcol)
+        frames[key] = df["CLOSE"].astype(float)
+        time.sleep(1)
+    term = pd.concat(frames, axis=1).sort_index()
+    term.index.name = "Date"
+    term.to_csv(out)
+    print("wrote", out, term.shape, "from", term.dropna().index[0].date(),
+          "to", term.index[-1].date())
+
+
 if __name__ == "__main__":
     force = "--force" in sys.argv
     fetch_prices(force)
     fetch_factors(force)
+    fetch_cboe(force)
     print("done")

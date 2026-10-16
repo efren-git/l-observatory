@@ -3,8 +3,9 @@
 *A readable walkthrough of everything in this project: what it asks, why, how the data
 works, and what the results mean.*
 
-Project #4 of l'Observatori. Status: **complete (2026-10-15)** — five published return
-patterns tested on free data, walk-forward, net of costs, plus an equity-factor cross-check.
+Project #4 of l'Observatori. Status: **complete (2026-10-16)** — five published return
+patterns tested on free data, walk-forward, net of costs, plus an equity-factor cross-check, plus
+two follow-ups: **network momentum** (§8) and a **proper volatility-risk-premium** test (§9).
 
 ## How to read this book
 
@@ -207,25 +208,99 @@ This is the "factor zoo" in one table: the factors published *before* the data-m
 
 ## Chapter 7 — What I would try next (and why it is uncertain)
 
-- **Network momentum** (arXiv 2501.07135): lead-lag "spillover" between markets is the most
-  credible *new* signal in the recent q-fin literature. It needs cross-market lead-lag data and
-  careful multiple-testing control — a real project, not a small addition.
-- **Volatility risk premium done properly**: our SVXY proxy changed leverage in Feb 2018 and
-  is not a clean short-vol instrument. A proper test needs VIX futures or an options panel.
+- ~~**Network momentum** (arXiv 2501.07135)~~ — **done, see §8.**
+- ~~**Volatility risk premium done properly**~~ — **done, see §9.**
 - **Cross-asset carry** (the other half of managed futures, done in `inercia`) — combining
   `cartograf`'s core with `inercia`'s trend+carry book is the obvious next experiment, since
   both point to the same lesson: the value is in the correlation, not the standalone return.
 
+## Chapter 8 — Follow-up: network momentum (arXiv 2501.07135)
+
+The paper's idea: markets do not trend in isolation — there is *momentum spillover*, a lead-lag
+relationship where one market's trend shows up in another's a little later. So: estimate a
+**directed lead-lag network** and let each market also follow the trend of the markets that tend
+to *lead* it.
+
+Implementation (reduced but faithful): from a trailing **3 years of weekly returns**, compute the
+lead-lag correlation matrix `corr(r_j[t], r_i[t+1])`; each market then follows its **5 strongest
+positive leaders**, weighted by that correlation. Its signal is `0.5 × own trend + 0.5 × leaders'
+trend`. Same universe, same vol target, same costs, same window as §5.
+
+| Variant | CAGR | Vol | Sharpe | Max DD |
+|---|---|---|---|---|
+| trend alone | 5.2% | 10.7% | 0.53 | −26.3% |
+| network momentum alone | 2.3% | 10.8% | 0.26 | −37.3% |
+| **trend + network (50/50)** | 6.0% | 10.5% | **0.61** | −27.4% |
+| SPY (same window) | 11.4% | 18.5% | 0.68 | −55.2% |
+
+Cleaner version: **60/40 + 30% sleeve** → Sharpe 0.95 (trend alone) vs **0.97 (trend + network)**.
+
+**Verdict — a small, honest positive, and no more.** The network signal is weak on its own
+(0.26) and highly correlated with plain trend (0.42), so blending two correlated signals buys
++0.08 Sharpe standalone and +0.02 at the portfolio level. The average lead-lag correlation kept
+is 0.115 — real, but small. Nothing was tuned, so this is *suggestive, not proven*: with one
+lookback, one `k`, and one blend, a +0.08 improvement in Sharpe is well inside the noise.
+
+## Chapter 9 — Follow-up: the volatility risk premium, done properly
+
+§5 used SVXY, a crude proxy. Done properly: the premium is **implied variance minus subsequently
+realized variance**, from CBOE's own indices (VIX = 30-day implied, VIX3M = 3-month implied) and
+SPY realized vol. The tradable sleeve is the standard variance-swap P&L per unit of vega,
+`(K² − RV²) / (2K)`, in vol points.
+
+**The premium is real** (2003–2026, 200 months):
+
+| | |
+|---|---|
+| mean implied vol | 19.0 |
+| mean realized vol | 15.6 |
+| mean P&L | **+1.83 vol points / month** |
+| months with implied > realized | **81.5%** |
+
+So insurers of volatility are paid — most of the time. The problem is the other times.
+
+| Sleeve | CAGR | Vol | Sharpe | Max DD | Worst month |
+|---|---|---|---|---|---|
+| **A. always-on** short variance | −2.6% | 22.5% | **0.05** | −64.0% | −63.5% |
+| **B. contango-gated** | 9.3% | 10.7% | **0.90** | −27.0% | −27.0% |
+| C. SVXY proxy (old) | 0.5% | 9.2% | 0.10 | −19.1% | −14.7% |
+| SPY (same window) | 13.5% | 14.6% | 0.94 | −24.4% | −12.5% |
+| 60/40 (same window) | 8.5% | 9.0% | 0.95 | −20.7% | −7.4% |
+
+*A is measured from 2003; B, C and the benchmarks from the **common window 2009-11 → 2026-09**
+(VIX3M only starts in 2009).*
+
+Three honest lessons:
+
+1. **Harvesting the premium blindly does not work.** Always-on short variance has a Sharpe of
+   0.05: October 2008 and March 2020 hand back years of premium in one month (−63.5% worst month).
+2. **Gating turns it into a real sleeve.** Trading only when the curve slopes up (VIX < VIX3M,
+   64.5% of months) gives Sharpe **0.90** — flat in March 2020 and, by construction, out of the
+   worst of the tail.
+3. **The "proper" measurement mattered enormously.** The crude SVXY proxy scored 0.10; the actual
+   variance-swap implementation scores 0.90. A bad proxy can hide a real premium.
+
+And the portfolio effect: **60/40 + 30% gated VRP → Sharpe 1.12, max drawdown −14.4%** — the
+best single addition found anywhere in this project.
+
+**Caveats, stated plainly.** There is no 2008 test for B (the 3-month index only starts in 2009),
+so its calm-crisis record is partly an artefact of the sample. It is one regime. 5 bps/month is
+optimistic for a variance position. And the gate did *not* save February 2018 (−10.3%): when the
+spike comes while the curve still slopes up, the protection is not there.
+
 ## Appendix — Reproducibility
 
     cartograf/
-    ├── README.md          this book
-    ├── data/raw/          prices.csv (yfinance), ff_*.csv (Ken French)   [git-ignored]
-    ├── src/fetch_data.py  downloads everything (free, no keys)
-    ├── src/engine.py      backtest plumbing (no-lookahead, costs, HRP)
-    └── src/run.py         the five sleeves + combination + report
-    output/                01_equity.png 02_drawdown.png 03_corr.png 04_annual.png
-                           05_factors.png, metrics.json
+    ├── README.md                this book
+    ├── data/raw/                prices.csv (yfinance), ff_*.csv (Ken French),
+    │                            cboe_vix_term.csv (CBOE)                  [git-ignored]
+    ├── src/fetch_data.py        downloads everything (free, no keys)
+    ├── src/engine.py            backtest plumbing (no-lookahead, costs, HRP)
+    ├── src/run.py               the five sleeves + combination + report  -> metrics.json
+    ├── src/network_momentum.py  §8 lead-lag network                     -> network_metrics.json
+    └── src/vrp.py               §9 the volatility risk premium          -> vrp_metrics.json
+    output/                      01_equity 02_drawdown 03_corr 04_annual 05_factors
+                                 06_network 07_vrp  (+ the three metrics files)
 
 Run: `./.venv/bin/python3 src/fetch_data.py` then `./.venv/bin/python3 src/run.py`.
 
