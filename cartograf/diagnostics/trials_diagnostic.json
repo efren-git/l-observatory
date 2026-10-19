@@ -1,0 +1,34 @@
+{
+  "trial_registry": {
+    "sleeves": 5,
+    "combination_books": 4,
+    "core_selection_legacy_proper": 2,
+    "network_parameters": 3,
+    "vrp_variants": 3,
+    "carry_legs": 3,
+    "carry_book": 1,
+    "hrp_window": 1,
+    "vol_target": 1
+  },
+  "n_trials_all": 23,
+  "n_trials_final_published": 2,
+  "deflated_sharpe_all_trials": {
+    "sharpe_daily": 0.2104,
+    "sr0_expected_max": 0.18884,
+    "dsr": 0.5886,
+    "n_trials": 23,
+    "n_obs": 143,
+    "skew": -1.014,
+    "kurtosis": 10.282
+  },
+  "deflated_sharpe_final_variants": {
+    "sharpe_daily": 0.2104,
+    "sr0_expected_max": 0.05004,
+    "dsr": 0.9521,
+    "n_trials": 2,
+    "n_obs": 143,
+    "skew": -1.014,
+    "kurtosis": 10.282
+  },
+  "frequency": "monthly"
+}

@@ -1,0 +1,74 @@
+{
+  "legacy_svxy_core_common_sample": {
+    "stats": {
+      "CAGR": 0.0465,
+      "Vol": 0.1086,
+      "Sharpe": 0.475,
+      "Sortino": 0.553,
+      "MaxDD": -0.1908,
+      "WorstMonth": -0.1474,
+      "WorstYear": -0.1663,
+      "Total": 0.7188
+    },
+    "corr_to_spy": 0.419,
+    "60_40_plus_30": {
+      "CAGR": 0.0763,
+      "Vol": 0.0828,
+      "Sharpe": 0.932,
+      "Sortino": 1.352,
+      "MaxDD": -0.152,
+      "WorstMonth": -0.0639,
+      "WorstYear": -0.0633,
+      "Total": 1.401,
+      "CAGR_excess": 0.0601,
+      "Sharpe_excess": 0.745
+    },
+    "frequency": "monthly",
+    "note": "same sample as core_proper_vrp; isolates the VRP proxy change"
+  },
+  "proper_gated_vrp_core": {
+    "stats": {
+      "CAGR": 0.0784,
+      "Vol": 0.1127,
+      "Sharpe": 0.729,
+      "Sortino": 0.759,
+      "MaxDD": -0.1692,
+      "WorstMonth": -0.1692,
+      "WorstYear": -0.0998,
+      "Total": 1.4586
+    },
+    "corr_to_spy": 0.34,
+    "60_40_plus_30": {
+      "CAGR": 0.0863,
+      "Vol": 0.0814,
+      "Sharpe": 1.061,
+      "Sortino": 1.466,
+      "MaxDD": -0.1283,
+      "WorstMonth": -0.0759,
+      "WorstYear": -0.056,
+      "Total": 1.6806,
+      "CAGR_excess": 0.07,
+      "Sharpe_excess": 0.871
+    },
+    "frequency": "monthly"
+  },
+  "vrp_B_common": {
+    "CAGR": 0.0931,
+    "Vol": 0.1067,
+    "Sharpe": 0.898,
+    "MaxDD": -0.2702,
+    "WorstMonth": -0.2702,
+    "WorstYear": -0.1603,
+    "Total": 1.8893
+  },
+  "vrp_C_svxy_common": {
+    "CAGR": 0.0752,
+    "Vol": 0.2482,
+    "Sharpe": 0.41,
+    "MaxDD": -0.2753,
+    "WorstMonth": -0.2539,
+    "WorstYear": -0.1719,
+    "Total": 1.1421
+  },
+  "note": "The two core rows use the same 2009-11+ sample. The difference is the VRP implementation, not the sample."
+}

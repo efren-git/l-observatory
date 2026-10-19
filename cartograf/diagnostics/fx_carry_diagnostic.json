@@ -1,0 +1,22 @@
+{
+  "fxe_range": [
+    "2005-12-12",
+    "2026-10-15"
+  ],
+  "source": "yfinance EURUSD=X (saved to data/raw/eurusd_diag.csv)",
+  "monthly_mean_pct": {
+    "FXE": 0.0271,
+    "spot": 0.0009,
+    "spot_plus_eur": 0.1022,
+    "spot_plus_eur_minus_us": -0.0618
+  },
+  "monthly_vol_pct": {
+    "FXE": 9.055,
+    "spot": 8.993,
+    "spot_plus_eur": 9.03,
+    "spot_plus_eur_minus_us": 8.965
+  },
+  "mean_fxe_minus_spot_bp": 2.62,
+  "mean_fxe_minus_spot_plus_eur_bp": -7.52,
+  "interpretation": "FXE tracks spot closely; it does not accrue the full foreign rate. The old FX carry leg subtracted the US rate but never added the foreign rate, so the carry book was missing its main source of return."
+}

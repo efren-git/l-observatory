@@ -1,0 +1,32 @@
+{
+  "input": {
+    "name": "SPY daily returns",
+    "n": 5982,
+    "start": "2003-01-03",
+    "end": "2026-10-15"
+  },
+  "old_first_nonzero_scale": "2003-04-04",
+  "old_zero_days": 63,
+  "new_first_scale_value": 1.0,
+  "old_stats": {
+    "CAGR": 0.0825,
+    "Vol": 0.1066,
+    "Sharpe": 0.797,
+    "Sortino": 1.016,
+    "MaxDD": -0.2357,
+    "Total": 5.5589,
+    "WorstYear": -0.1517,
+    "BestYear": 0.3232
+  },
+  "new_stats": {
+    "CAGR": 0.0809,
+    "Vol": 0.1091,
+    "Sharpe": 0.768,
+    "Sortino": 0.986,
+    "MaxDD": -0.2357,
+    "Total": 5.3417,
+    "WorstYear": -0.1517,
+    "BestYear": 0.3232
+  },
+  "interpretation": "Old code was flat for the first 63 trading days; new code is invested at unit size until the first vol estimate exists."
+}

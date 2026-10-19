@@ -3,7 +3,7 @@
 *A readable walkthrough of everything in this project: what it asks, why, how the data
 works, and what the results mean.*
 
-Project #4 of l'Observatori. Status: **complete (2026-10-16)** — five published return
+Project #4 of l'Observatori. Status: **refactored and re-audited 2026-10-19** — five published return
 patterns tested on free data, walk-forward, net of costs, plus an equity-factor cross-check, plus
 three follow-ups: **network momentum** (§8), a **proper volatility-risk-premium** test (§9) and
 **cross-asset carry** (§10).
@@ -111,11 +111,11 @@ cherry-picked). Monthly rebalance, daily P&L, all sleeves scaled to a **10% vola
 
 | Sleeve | CAGR | Vol | Sharpe | Max DD | corr to SPY | Turnover /yr |
 |---|---|---|---|---|---|---|
-| trend | 6.8% | 12.1% | **0.61** | −22.0% | 0.04 | 20.9× |
-| xsmom | 0.6% | 10.8% | 0.11 | −40.2% | 0.16 | 10.7× |
-| value | −2.7% | 9.0% | **−0.26** | −55.8% | −0.14 | 5.2× |
-| bab | 1.3% | 10.7% | 0.17 | −36.4% | 0.10 | 4.0× |
-| vrp | 2.4% | 11.2% | 0.27 | −43.0% | 0.36 | 1.3× |
+| trend | 6.8% | 12.1% | **0.61** | −22.0% | 0.04 | 17.4× |
+| xsmom | 0.6% | 10.8% | 0.11 | −40.2% | 0.16 | 8.9× |
+| value | −2.1% | 9.5% | **−0.18** | −55.8% | −0.07 | 5.1× |
+| bab | 1.3% | 10.7% | 0.17 | −36.4% | 0.10 | 3.3× |
+| vrp | 2.4% | 11.2% | 0.27 | −43.0% | 0.36 | 1.1× |
 
 Three of the five are **weak or negative**. Cross-sectional momentum barely clears zero;
 cross-asset value actually *loses* money; betting-against-beta is a shadow of its published
@@ -123,7 +123,7 @@ self. Only trend is clearly real — and even it is not a return-maximiser (SPY 
 year against trend's 6.8%).
 
 But look at the last two columns. Trend is essentially **uncorrelated with stocks (0.04)**,
-and value is **negatively** correlated with almost everything (−0.36 to xsmom, −0.23 to trend
+and value is **negatively** correlated with almost everything (−0.38 to xsmom, −0.26 to trend
 and vrp). A sleeve can be a bad standalone strategy and a good portfolio ingredient. That is
 the whole game.
 
@@ -131,16 +131,16 @@ the whole game.
 
 | Book | CAGR | Vol | Sharpe | Max DD | corr to SPY |
 |---|---|---|---|---|---|
-| equal-weight (all 5) | 6.4% | 11.0% | 0.62 | −30.1% | 0.23 |
-| inverse-vol | 4.9% | 10.4% | 0.52 | −29.1% | 0.28 |
-| **HRP** | 3.6% | 11.2% | **0.37** | −48.0% | 0.21 |
-| **core: trend+bab+vrp** | 7.5% | 11.0% | **0.72** | −20.3% | 0.26 |
+| equal-weight (all 5) | 6.9% | 11.0% | 0.66 | −30.1% | 0.25 |
+| inverse-vol | 5.2% | 10.2% | 0.55 | −29.1% | 0.29 |
+| **HRP** | 3.6% | 10.6% | **0.39** | −44.2% | 0.21 |
+| **core: trend+bab+vrp** | 7.6% | 11.0% | **0.72** | −20.3% | 0.25 |
 
 Two honest lessons:
 
-- **HRP lost to naive equal weight** (0.37 vs 0.62). HRP is a *risk* allocator and blind to
+- **HRP lost to naive equal weight** (0.39 vs 0.66). HRP is a *risk* allocator and blind to
   expected return; in 2020 it had loaded ~29% on the losing value sleeve and paid for it
-  (−24% that year). With only five sleeves and a 36-month window, the elegant method is worse
+  badly that year. With only five sleeves and a 36-month window, the elegant method is worse
   than the dumb one. (This is Harvey–Liu–Zhu in miniature: sophistication is not edge.)
 - **Dropping the two failures helped.** The "core" book of the three survivors — trend, bab,
   vrp — is the best of all: Sharpe **0.72**, max drawdown −20%.
@@ -151,7 +151,7 @@ Two honest lessons:
 |---|---|---|---|---|---|
 | SPY | 11.3% | 19.7% | 0.64 | 0.78 | −51.9% |
 | 60/40 | 8.4% | 11.4% | 0.77 | 0.97 | −30.8% |
-| 60/40 + 30% equal book | 8.0% | 9.3% | 0.88 | 1.11 | −18.8% |
+| 60/40 + 30% equal book | 8.2% | 9.4% | 0.89 | 1.12 | −19.0% |
 | **60/40 + 30% core book** | 8.4% | 9.4% | **0.90** | **1.14** | −19.2% |
 
 Adding a 30% sleeve of the core book turns a 0.77-Sharpe, −31%-drawdown 60/40 into a
@@ -166,7 +166,7 @@ Annual returns of the equal-weight book vs SPY:
 
 | Year | SPY | book |
 |---|---|---|
-| 2008 | −36.8% | **+13.2%** |
+| 2008 | −36.8% | **+10.0%** |
 | 2018 | −4.6% | −17.5% |
 | 2020 | +18.3% | −13.9% |
 | 2022 | −18.2% | **+15.5%** |
@@ -196,10 +196,10 @@ This is the "factor zoo" in one table: the factors published *before* the data-m
 ## Chapter 6 — Verdict
 
 - **Did we beat the S&P 500?** No. Nothing here does. SPY returned 11.3%/yr at Sharpe 0.64;
-  the best book made 7.5%/yr at Sharpe 0.72.
+  the best book made 7.6%/yr at Sharpe 0.72.
 - **Did anything survive?** Yes, three things: **trend** (Sharpe 0.61, uncorrelated),
   a weak **volatility risk premium** (0.27), and a weak **defensive/BAB** tilt (0.17).
-- **What died?** Cross-sectional momentum (0.11), cross-asset value (−0.26), and — on the
+- **What died?** Cross-sectional momentum (0.11), cross-asset value (−0.18), and — on the
   long history — the classic size, value and momentum equity factors.
 - **What is the book actually worth?** A 30% allocation lifts a 60/40 from Sharpe 0.77 to
   **0.90** and nearly halves the drawdown. That is the honest product: **diversification and
@@ -229,18 +229,18 @@ trend`. Same universe, same vol target, same costs, same window as §5.
 
 | Variant | CAGR | Vol | Sharpe | Max DD |
 |---|---|---|---|---|
-| trend alone | 5.2% | 10.7% | 0.53 | −26.3% |
-| network momentum alone | 2.3% | 10.8% | 0.26 | −37.3% |
-| **trend + network (50/50)** | 6.0% | 10.5% | **0.61** | −27.4% |
-| SPY (same window) | 11.4% | 18.5% | 0.68 | −55.2% |
+| trend alone | 6.7% | 12.1% | 0.60 | −26.3% |
+| network momentum alone | 2.9% | 12.2% | 0.29 | −37.3% |
+| **trend + network (50/50)** | 7.7% | 11.8% | **0.69** | −27.4% |
+| SPY (same window) | 11.8% | 19.7% | 0.67 | −51.5% |
 
-Cleaner version: **60/40 + 30% sleeve** → Sharpe 0.95 (trend alone) vs **0.97 (trend + network)**.
+Cleaner version: **60/40 + 30% sleeve** → Sharpe 0.94 (trend alone) vs **0.97 (trend + network)**.
 
 **Verdict — a small, honest positive, and no more.** The network signal is weak on its own
-(0.26) and highly correlated with plain trend (0.42), so blending two correlated signals buys
-+0.08 Sharpe standalone and +0.02 at the portfolio level. The average lead-lag correlation kept
+(0.29) and highly correlated with plain trend (0.42), so blending two correlated signals buys
++0.09 Sharpe standalone and +0.03 at the portfolio level. The average lead-lag correlation kept
 is 0.115 — real, but small. Nothing was tuned, so this is *suggestive, not proven*: with one
-lookback, one `k`, and one blend, a +0.08 improvement in Sharpe is well inside the noise.
+lookback, one `k`, and one blend, a +0.09 improvement in Sharpe is well inside the noise.
 
 ## Chapter 9 — Follow-up: the volatility risk premium, done properly
 
@@ -262,13 +262,13 @@ So insurers of volatility are paid — most of the time. The problem is the othe
 
 | Sleeve | CAGR | Vol | Sharpe | Max DD | Worst month |
 |---|---|---|---|---|---|
-| **A. always-on** short variance | −2.6% | 22.5% | **0.05** | −64.0% | −63.5% |
+| **A. always-on** short variance | −3.0% | 24.0% | **0.05** | −64.0% | −63.5% |
 | **B. contango-gated** | 9.3% | 10.7% | **0.90** | −27.0% | −27.0% |
 | C. SVXY proxy (old) | 0.5% | 9.2% | 0.10 | −19.1% | −14.7% |
 | SPY (same window) | 13.5% | 14.6% | 0.94 | −24.4% | −12.5% |
 | 60/40 (same window) | 8.5% | 9.0% | 0.95 | −20.7% | −7.4% |
 
-*A is measured from 2003; B, C and the benchmarks from the **common window 2009-11 → 2026-09**
+*A starts after its 24-month vol warm-up (2005); B, C and the benchmarks from the **common window 2009-11 → 2026-09**
 (VIX3M only starts in 2009).*
 
 Three honest lessons:
@@ -313,21 +313,23 @@ Results (2007-01 → 2026-10, the window where all three classes are live):
 |---|---|---|---|---|---|
 | bond carry | 2.4% | 9.8% | **0.29** | −23.5% | −11.9% |
 | equity carry | −6.0% | 10.2% | **−0.56** | −78.0% | −23.6% |
-| FX carry | −0.4% | 10.1% | 0.01 | −42.4% | −25.1% |
-| **carry book (all three)** | −1.9% | 10.5% | **−0.13** | −49.3% | −22.1% |
-| SPY | 11.4% | 18.5% | 0.68 | −55.2% | −36.8% |
+| FX carry | 2.7% | 10.1% | 0.31 | −31.8% | −21.5% |
+| **carry book (all three)** | 0.3% | 10.5% | **0.08** | −37.3% | −20.9% |
+| SPY | 11.0% | 19.5% | 0.63 | −55.2% | −36.8% |
 | 60/40 | 8.4% | 11.2% | 0.77 | −31.4% | −16.7% |
 
 **Verdict — it does not survive here, and the reasons are informative.**
 
 - **Equity carry is a disguised value bet, and value died.** Long high-dividend, short low-dividend
   meant long value/REITs and short growth — the single worst trade of 2007–2026. Sharpe −0.56.
-- **FX carry is flat (0.01)** because G10 rate dispersion collapsed after 2008: everyone was at
-  zero, so there was almost nothing to carry. Its −42% drawdown is the 2008 and 2015 carry crashes.
-- **Bond carry is the only positive piece (0.29)** — a curve-slope bet that earns a little, slowly.
-- The combined book is **uncorrelated with equities (−0.02)** but *negatively* performing, and
-  uncorrelated-and-losing is not diversifying — it is just a second way to lose. Adding 20–30% of
-  it to a 60/40 *lowers* the Sharpe (0.77 → 0.72 → 0.66).
+- **FX carry only looks alive after the fix (0.31).** The old code subtracted the US rate but never
+  added the foreign one, so it was measuring spot, not carry; FXE tracks spot to 2.6 bp/month.
+  Crediting the foreign deposit rate turns 0.01 into 0.31 — but with a −32% drawdown (2008 and
+  2015) and no useful correlation to the rest. It is a measurement repair, not a new edge.
+- The combined book is **uncorrelated with equities (−0.02)** and now slightly positive (0.08),
+  but that is not enough: adding 20–30% of it to a 60/40 still *lowers* the Sharpe
+  (0.77 → 0.76 → 0.74). Uncorrelated and barely positive is not diversifying; it is just a
+  second, weaker way to be long risk.
 
 **The honest conclusion.** On free data, over this window, with these instruments, the classic
 carry factor does not deliver. Three caveats matter: this uses spot ETFs rather than futures (the

@@ -1,5 +1,5 @@
 {
-  "vix3m_from": "2009-09-18",
+  "vix3m_from": "2009-11-30",
   "window": [
     "2003-02-28",
     "2026-09-30"
@@ -13,22 +13,34 @@
   },
   "contango_fraction": 0.645,
   "A_always_on": {
-    "CAGR": -0.0263,
-    "Vol": 0.2252,
-    "Sharpe": 0.05,
+    "CAGR": -0.0298,
+    "Vol": 0.2402,
+    "Sharpe": 0.054,
+    "Sortino": 0.028,
     "MaxDD": -0.6402,
     "WorstMonth": -0.635,
     "WorstYear": -0.5825,
     "Total": -0.3584
   },
   "B_contango_gated": {
-    "CAGR": 0.0657,
-    "Vol": 0.091,
-    "Sharpe": 0.752,
+    "CAGR": 0.0931,
+    "Vol": 0.1067,
+    "Sharpe": 0.898,
+    "Sortino": 0.469,
     "MaxDD": -0.2702,
     "WorstMonth": -0.2702,
     "WorstYear": -0.1603,
     "Total": 1.8893
+  },
+  "C_svxy_proxy": {
+    "CAGR": 0.005,
+    "Vol": 0.0915,
+    "Sharpe": 0.102,
+    "Sortino": 0.099,
+    "MaxDD": -0.1907,
+    "WorstMonth": -0.1469,
+    "WorstYear": -0.1719,
+    "Total": 0.054
   },
   "common_window": [
     "2009-11-30",
@@ -38,6 +50,7 @@
     "CAGR": -0.0152,
     "Vol": 0.2338,
     "Sharpe": 0.12,
+    "Sortino": 0.058,
     "MaxDD": -0.6402,
     "WorstMonth": -0.635,
     "WorstYear": -0.5825,
@@ -47,6 +60,7 @@
     "CAGR": 0.0931,
     "Vol": 0.1067,
     "Sharpe": 0.898,
+    "Sortino": 0.469,
     "MaxDD": -0.2702,
     "WorstMonth": -0.2702,
     "WorstYear": -0.1603,
@@ -56,6 +70,7 @@
     "CAGR": 0.005,
     "Vol": 0.0915,
     "Sharpe": 0.102,
+    "Sortino": 0.099,
     "MaxDD": -0.1907,
     "WorstMonth": -0.1469,
     "WorstYear": -0.1719,
@@ -65,42 +80,62 @@
     "CAGR": 0.1348,
     "Vol": 0.1464,
     "Sharpe": 0.941,
+    "Sortino": 1.414,
     "MaxDD": -0.2444,
     "WorstMonth": -0.1249,
     "WorstYear": -0.1284,
-    "Total": 3.5137
+    "Total": 3.5137,
+    "CAGR_excess": 0.1179,
+    "Sharpe_excess": 0.837
   },
   "60_40_common": {
     "CAGR": 0.0851,
     "Vol": 0.0903,
     "Sharpe": 0.953,
+    "Sortino": 1.472,
     "MaxDD": -0.2074,
     "WorstMonth": -0.0744,
     "WorstYear": -0.125,
-    "Total": 1.6469
+    "Total": 1.6469,
+    "CAGR_excess": 0.0688,
+    "Sharpe_excess": 0.783
+  },
+  "excess_convention": {
+    "net_long_benchmarks": [
+      "SPY",
+      "60/40"
+    ],
+    "self_financing_sleeves": "raw; T-bills are not subtracted from a funded long/short book",
+    "reported": "raw and excess columns where a risk-free rate applies"
   },
   "60/40+30 A_always_on": {
     "CAGR": 0.0645,
     "Vol": 0.1064,
     "Sharpe": 0.645,
+    "Sortino": 0.527,
     "MaxDD": -0.2128,
     "WorstMonth": -0.1912,
     "WorstYear": -0.112,
-    "Total": 1.1053
+    "Total": 1.1053,
+    "CAGR_excess": 0.0484,
+    "Sharpe_excess": 0.5
   },
   "60/40+30 B_contango_gated": {
     "CAGR": 0.0892,
     "Vol": 0.0794,
     "Sharpe": 1.12,
+    "Sortino": 1.247,
     "MaxDD": -0.1437,
     "WorstMonth": -0.1064,
     "WorstYear": -0.0875,
-    "Total": 1.7687
+    "Total": 1.7687,
+    "CAGR_excess": 0.0729,
+    "Sharpe_excess": 0.93
   },
   "crisis_months": {
     "2008-10-31": {
       "A": -0.2108,
-      "B": 0.0,
+      "B": NaN,
       "SPY": NaN
     },
     "2018-02-28": {

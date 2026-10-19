@@ -6,7 +6,7 @@
   "turnover_x_yr": {
     "bond": 3.52,
     "equity": 3.08,
-    "fx": 3.54
+    "fx": 3.56
   },
   "sleeves": {
     "bond_carry": {
@@ -30,32 +30,32 @@
       "BestYear": 0.1698
     },
     "fx_carry": {
-      "CAGR": -0.004,
-      "Vol": 0.101,
-      "Sharpe": 0.011,
-      "Sortino": 0.013,
-      "MaxDD": -0.4241,
-      "Total": -0.0901,
-      "WorstYear": -0.2513,
-      "BestYear": 0.1488
+      "CAGR": 0.0267,
+      "Vol": 0.1011,
+      "Sharpe": 0.312,
+      "Sortino": 0.356,
+      "MaxDD": -0.318,
+      "Total": 0.8712,
+      "WorstYear": -0.215,
+      "BestYear": 0.1674
     },
     "carry_book": {
-      "CAGR": -0.0185,
-      "Vol": 0.105,
-      "Sharpe": -0.125,
-      "Sortino": -0.178,
-      "MaxDD": -0.4931,
-      "Total": -0.3079,
-      "WorstYear": -0.2207,
-      "BestYear": 0.1586
+      "CAGR": 0.003,
+      "Vol": 0.1052,
+      "Sharpe": 0.081,
+      "Sortino": 0.117,
+      "MaxDD": -0.3725,
+      "Total": 0.0615,
+      "WorstYear": -0.2085,
+      "BestYear": 0.2002
     }
   },
   "corr": {
-    "carry_vs_spy": -0.023,
-    "carry_vs_6040": 0.051,
-    "bond_vs_fx": -0.248,
+    "carry_vs_spy": -0.021,
+    "carry_vs_6040": 0.053,
+    "bond_vs_fx": -0.247,
     "bond_vs_eq": 0.178,
-    "eq_vs_fx": -0.129
+    "eq_vs_fx": -0.127
   },
   "benchmarks": {
     "SPY": {
@@ -66,7 +66,10 @@
       "MaxDD": -0.5519,
       "Total": 6.8031,
       "WorstYear": -0.368,
-      "BestYear": 0.3231
+      "BestYear": 0.3231,
+      "CAGR_excess": 0.0918,
+      "Vol_excess": 0.1953,
+      "Sharpe_excess": 0.548
     },
     "60/40": {
       "CAGR": 0.0839,
@@ -76,51 +79,69 @@
       "MaxDD": -0.3139,
       "Total": 3.9119,
       "WorstYear": -0.1673,
-      "BestYear": 0.2177
+      "BestYear": 0.2177,
+      "CAGR_excess": 0.0666,
+      "Vol_excess": 0.1122,
+      "Sharpe_excess": 0.63
     }
   },
+  "fx_convention": "FX ETF return + publication-lagged foreign rate - US rate; the old code subtracted the US rate but never added the foreign rate",
+  "excess_convention": {
+    "net_long_benchmarks": [
+      "SPY",
+      "60/40"
+    ],
+    "self_financing_sleeves": "raw; T-bills are not subtracted from a funded long/short book",
+    "reported": "raw and excess columns where a risk-free rate applies"
+  },
   "60/40+20 carry": {
-    "CAGR": 0.0645,
-    "Vol": 0.0932,
-    "Sharpe": 0.717,
-    "Sortino": 0.903,
-    "MaxDD": -0.2863,
-    "Total": 2.439,
-    "WorstYear": -0.1526,
-    "BestYear": 0.1906
+    "CAGR": 0.0691,
+    "Vol": 0.0933,
+    "Sharpe": 0.763,
+    "Sortino": 0.959,
+    "MaxDD": -0.2814,
+    "Total": 2.7461,
+    "WorstYear": -0.148,
+    "BestYear": 0.1944,
+    "CAGR_excess": 0.052,
+    "Vol_excess": 0.0933,
+    "Sharpe_excess": 0.59
   },
   "60/40+30 carry": {
-    "CAGR": 0.0546,
-    "Vol": 0.0861,
-    "Sharpe": 0.66,
-    "Sortino": 0.837,
-    "MaxDD": -0.2731,
-    "Total": 1.8586,
-    "WorstYear": -0.1458,
-    "BestYear": 0.1769
+    "CAGR": 0.0615,
+    "Vol": 0.0862,
+    "Sharpe": 0.735,
+    "Sortino": 0.93,
+    "MaxDD": -0.2656,
+    "Total": 2.2498,
+    "WorstYear": -0.1388,
+    "BestYear": 0.1826,
+    "CAGR_excess": 0.0445,
+    "Vol_excess": 0.0862,
+    "Sharpe_excess": 0.548
   },
   "annual": {
     "carry": {
-      "2007": -0.0851,
-      "2008": -0.1078,
-      "2009": 0.0658,
-      "2010": 0.144,
-      "2011": 0.0424,
-      "2012": 0.1586,
-      "2013": -0.2207,
-      "2014": 0.1522,
-      "2015": -0.0594,
-      "2016": -0.0137,
-      "2017": -0.0162,
-      "2018": -0.1449,
-      "2019": 0.0804,
-      "2020": -0.1226,
-      "2021": 0.0092,
-      "2022": -0.061,
-      "2023": -0.0059,
-      "2024": -0.0817,
-      "2025": 0.0113,
-      "2026": -0.0093
+      "2007": -0.0787,
+      "2008": -0.0833,
+      "2009": 0.0706,
+      "2010": 0.1764,
+      "2011": 0.0687,
+      "2012": 0.2002,
+      "2013": -0.2085,
+      "2014": 0.1723,
+      "2015": -0.0439,
+      "2016": 0.0005,
+      "2017": 0.0,
+      "2018": -0.1288,
+      "2019": 0.0979,
+      "2020": -0.0957,
+      "2021": 0.0202,
+      "2022": -0.0636,
+      "2023": 0.0265,
+      "2024": -0.0419,
+      "2025": 0.0561,
+      "2026": 0.0212
     },
     "SPY": {
       "2007": 0.0515,

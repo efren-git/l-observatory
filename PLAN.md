@@ -1,6 +1,7 @@
 # PLAN — l'Observatori hardening (2026-10-19)
 
-_Status: approved by Efren. Phase 1 (inercia refactor) in progress._
+_Status: approved by Efren. Phase 1 (inercia) complete 2026-10-19. Phase 2
+(cartograf) nearly complete - one item left: per-month live-name masking._
 
 ## Decisions taken
 
@@ -43,16 +44,20 @@ Acceptance: `./.venv/bin/python3 src/run.py` regenerates every chart and JSON
 in `output/`; `python -m unittest discover -s tests` passes; the README agrees
 with the JSONs.
 
-## Phase 2 — cartograf (next)
+## Phase 2 — cartograf (in progress)
 
-Apply the same conventions to the cartograf sleeves and books:
-
-- shared excess-return handling (net-long vs self-financing);
-- inception-date ETF universe; stock sleeve labelled and excluded;
-- fix the FX-carry double count (FX ETF total return plus explicit rate
-  differential);
-- trial registry and DSR for the core book and overlay parameters;
-- synthetic smoke test.
+- [x] shared excess-return handling (net-long vs self-financing);
+- [x] stock sleeve labelled upward-biased and excluded from the book;
+- [ ] per-month live-name masking (inception dates) inside the cross-sections —
+      disclosure and exclusion are done, the signal-level mask is not;
+- [x] fix the FX-carry double count (FX ETF total return plus explicit rate
+      differential);
+- [x] lag FRED monthly averages two months (publication-safe);
+- [x] trial registry and DSR for the core book and overlay parameters;
+- [x] synthetic smoke test;
+- [x] re-run chapters 1-10; README now agrees with the JSONs, including the
+      SVXY warm-up regression found during reconciliation
+      (see cartograf/AUDIT-2026-10-19.md).
 
 ## Phase 3 — combined book
 
