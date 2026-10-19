@@ -1,50 +1,73 @@
 {
   "trend": {
-    "CAGR": 0.0381,
-    "Vol": 0.0849,
-    "Sharpe": 0.482,
-    "Sortino": 0.562,
-    "MaxDD": -0.181,
-    "WorstYr": -0.0663
+    "CAGR": 0.0546,
+    "Vol": 0.1051,
+    "Sharpe": 0.559,
+    "Sortino": 0.708,
+    "MaxDD": -0.264,
+    "Total": 2.34,
+    "WorstYr": -0.1216,
+    "BestYr": 0.2658
   },
   "carry": {
-    "CAGR": 0.0083,
-    "Vol": 0.0402,
-    "Sharpe": 0.225,
-    "Sortino": 0.258,
-    "MaxDD": -0.1815,
-    "WorstYr": -0.146
+    "CAGR": 0.0135,
+    "Vol": 0.0917,
+    "Sharpe": 0.192,
+    "Sortino": 0.232,
+    "MaxDD": -0.2991,
+    "Total": 0.36,
+    "WorstYr": -0.2203,
+    "BestYr": 0.1892
+  },
+  "book_unlevered": {
+    "CAGR": 0.0457,
+    "Vol": 0.0821,
+    "Sharpe": 0.585,
+    "Sortino": 0.73,
+    "MaxDD": -0.2388,
+    "Total": 1.76,
+    "WorstYr": -0.0838,
+    "BestYr": 0.2246
   },
   "book": {
-    "CAGR": 0.0601,
-    "Vol": 0.0953,
-    "Sharpe": 0.66,
-    "Sortino": 0.824,
-    "MaxDD": -0.1988,
-    "WorstYr": -0.0688
+    "CAGR": 0.0618,
+    "Vol": 0.1085,
+    "Sharpe": 0.607,
+    "Sortino": 0.752,
+    "MaxDD": -0.3629,
+    "Total": 2.9,
+    "WorstYr": -0.1298,
+    "BestYr": 0.3468
   },
   "book_dd_control": {
-    "CAGR": 0.0407,
-    "Vol": 0.0701,
-    "Sharpe": 0.605,
-    "Sortino": 0.704,
-    "MaxDD": -0.1575,
-    "WorstYr": -0.0369
+    "CAGR": 0.0479,
+    "Vol": 0.0749,
+    "Sharpe": 0.662,
+    "Sortino": 0.763,
+    "MaxDD": -0.1861,
+    "Total": 1.89,
+    "WorstYr": -0.0407,
+    "BestYr": 0.3147
   },
   "book_regime": {
-    "CAGR": 0.0525,
-    "Vol": 0.0926,
-    "Sharpe": 0.6,
-    "Sortino": 0.737,
-    "MaxDD": -0.2545,
-    "WorstYr": -0.0678
+    "CAGR": 0.0602,
+    "Vol": 0.1058,
+    "Sharpe": 0.606,
+    "Sortino": 0.756,
+    "MaxDD": -0.3298,
+    "Total": 2.77,
+    "WorstYr": -0.12,
+    "BestYr": 0.3113
   },
   "book_hardened": {
-    "CAGR": 0.0359,
-    "Vol": 0.0675,
-    "Sharpe": 0.556,
-    "Sortino": 0.627,
-    "MaxDD": -0.1668,
-    "WorstYr": -0.0332
-  }
+    "CAGR": 0.0449,
+    "Vol": 0.074,
+    "Sharpe": 0.63,
+    "Sortino": 0.728,
+    "MaxDD": -0.1825,
+    "Total": 1.71,
+    "WorstYr": -0.0382,
+    "BestYr": 0.2782
+  },
+  "note": "overlays are preference trades, not free Sharpe"
 }

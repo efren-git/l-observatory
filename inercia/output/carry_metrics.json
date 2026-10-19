@@ -1,24 +1,46 @@
 {
   "carry": {
-    "CAGR": 0.0155,
-    "Vol": 0.0913,
-    "Sharpe": 0.215,
-    "MaxDD": -0.3088,
-    "Total": 0.46
+    "CAGR": 0.0135,
+    "Vol": 0.0917,
+    "Sharpe": 0.192,
+    "Sortino": 0.232,
+    "MaxDD": -0.2991,
+    "Total": 0.36,
+    "WorstYr": -0.2203,
+    "BestYr": 0.1892
   },
   "trend": {
-    "CAGR": 0.0533,
-    "Vol": 0.1052,
-    "Sharpe": 0.547,
-    "MaxDD": -0.2644,
-    "Total": 2.26
+    "CAGR": 0.0546,
+    "Vol": 0.1051,
+    "Sharpe": 0.559,
+    "Sortino": 0.708,
+    "MaxDD": -0.264,
+    "Total": 2.34,
+    "WorstYr": -0.1216,
+    "BestYr": 0.2658
   },
   "combo_50_50": {
-    "CAGR": 0.0352,
-    "Vol": 0.0719,
-    "Sharpe": 0.517,
-    "MaxDD": -0.225,
-    "Total": 1.19
+    "CAGR": 0.045,
+    "Vol": 0.0776,
+    "Sharpe": 0.607,
+    "Sortino": 0.76,
+    "MaxDD": -0.3204,
+    "Total": 1.72,
+    "WorstYr": -0.089,
+    "BestYr": 0.2915
   },
-  "corr_trend_carry": 0.033
+  "corr_trend_carry": 0.033,
+  "carry_meta": {
+    "lag_months": 2,
+    "carry_mean": -0.073
+  },
+  "carry_turnover": 6.5,
+  "excess_convention": {
+    "net_long_benchmarks": [
+      "SPY",
+      "60/40"
+    ],
+    "self_financing_sleeves": "reported raw; subtracting T-bills would be double-counting",
+    "reported": "raw and excess columns where a risk-free rate applies"
+  }
 }

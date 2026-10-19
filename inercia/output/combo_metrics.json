@@ -3,52 +3,73 @@
     "CAGR": 0.0546,
     "Vol": 0.1051,
     "Sharpe": 0.559,
-    "MaxDD": -0.264
+    "Sortino": 0.708,
+    "MaxDD": -0.264,
+    "Total": 2.34,
+    "WorstYr": -0.1216,
+    "BestYr": 0.2658
   },
   "carry": {
-    "CAGR": 0.0128,
-    "Vol": 0.0919,
-    "Sharpe": 0.185,
-    "MaxDD": -0.3056
+    "CAGR": 0.0135,
+    "Vol": 0.0917,
+    "Sharpe": 0.192,
+    "Sortino": 0.232,
+    "MaxDD": -0.2991,
+    "Total": 0.36,
+    "WorstYr": -0.2203,
+    "BestYr": 0.1892
   },
   "reversal": {
-    "CAGR": -0.0419,
-    "Vol": 0.0767,
-    "Sharpe": -0.519,
-    "MaxDD": -0.6558
+    "CAGR": -0.0298,
+    "Vol": 0.1016,
+    "Sharpe": -0.247,
+    "Sortino": -0.372,
+    "MaxDD": -0.536,
+    "Total": -0.5,
+    "WorstYr": -0.1554,
+    "BestYr": 0.1369
   },
   "corr": {
     "trend": {
       "trend": 1.0,
       "carry": 0.033,
-      "reversal": -0.417
+      "reversal": -0.435
     },
     "carry": {
       "trend": 0.033,
       "carry": 1.0,
-      "reversal": 0.014
+      "reversal": 0.027
     },
     "reversal": {
-      "trend": -0.417,
-      "carry": 0.014,
+      "trend": -0.435,
+      "carry": 0.027,
       "reversal": 1.0
     }
   },
   "combo_equal_3": {
-    "CAGR": 0.0062,
-    "Vol": 0.0501,
-    "Sharpe": 0.149,
-    "MaxDD": -0.2324
+    "CAGR": 0.0237,
+    "Vol": 0.0535,
+    "Sharpe": 0.464,
+    "Sortino": 0.613,
+    "MaxDD": -0.2101,
+    "Total": 0.7,
+    "WorstYr": -0.0788,
+    "BestYr": 0.2297
   },
   "combo_tangency": {
-    "CAGR": 0.2374,
-    "Vol": 0.564,
-    "Sharpe": 0.665,
-    "MaxDD": -0.7842
+    "CAGR": 0.0467,
+    "Vol": 0.084,
+    "Sharpe": 0.585,
+    "Sortino": 0.731,
+    "MaxDD": -0.2427,
+    "Total": 1.82,
+    "WorstYr": -0.0841,
+    "BestYr": 0.2306
   },
   "tangency_weights": {
-    "trend": 3.277,
-    "carry": 1.624,
-    "reversal": -3.901
-  }
+    "trend": 0.747,
+    "carry": 0.273,
+    "reversal": -0.02
+  },
+  "tangency_in_sample": true
 }

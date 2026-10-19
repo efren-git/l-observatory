@@ -1,66 +1,172 @@
 {
   "trend": {
-    "CAGR": 0.0572,
-    "Vol": 0.1075,
-    "Sharpe": 0.572,
-    "Sortino": 0.74,
-    "MaxDD": -0.264
+    "CAGR": 0.0546,
+    "Vol": 0.1051,
+    "Sharpe": 0.559,
+    "Sortino": 0.708,
+    "MaxDD": -0.264,
+    "Total": 2.34,
+    "WorstYr": -0.1216,
+    "BestYr": 0.2658
   },
   "carry": {
-    "CAGR": 0.0079,
-    "Vol": 0.094,
-    "Sharpe": 0.131,
-    "Sortino": 0.162,
-    "MaxDD": -0.3056
+    "CAGR": 0.0135,
+    "Vol": 0.0917,
+    "Sharpe": 0.192,
+    "Sortino": 0.232,
+    "MaxDD": -0.2991,
+    "Total": 0.36,
+    "WorstYr": -0.2203,
+    "BestYr": 0.1892
   },
   "xs_momentum": {
-    "CAGR": -0.0212,
-    "Vol": 0.1006,
-    "Sharpe": -0.163,
-    "Sortino": -0.213,
-    "MaxDD": -0.5228
+    "CAGR": 0.0072,
+    "Vol": 0.1044,
+    "Sharpe": 0.121,
+    "Sortino": 0.165,
+    "MaxDD": -0.3059,
+    "Total": 0.17,
+    "WorstYr": -0.1839,
+    "BestYr": 0.2377
   },
   "corr": {
     "trend": {
       "trend": 1.0,
       "carry": 0.033,
-      "xsmom": 0.265
+      "xsmom": 0.399
     },
     "carry": {
       "trend": 0.033,
       "carry": 1.0,
-      "xsmom": -0.031
+      "xsmom": -0.01
     },
     "xsmom": {
-      "trend": 0.265,
-      "carry": -0.031,
+      "trend": 0.399,
+      "carry": -0.01,
       "xsmom": 1.0
     }
   },
   "book_weights": {
-    "trend": 0.853,
-    "carry": 0.147,
-    "xsmom": 0.0
+    "trend": 0.74,
+    "carry": 0.26
   },
+  "book_weights_note": "fixed 74/26 selected in-sample; headline book is unlevered",
   "book": {
-    "CAGR": 0.0511,
-    "Vol": 0.0931,
-    "Sharpe": 0.582,
-    "Sortino": 0.745,
-    "MaxDD": -0.2483
+    "CAGR": 0.0457,
+    "Vol": 0.0821,
+    "Sharpe": 0.585,
+    "Sortino": 0.73,
+    "MaxDD": -0.2388,
+    "Total": 1.76,
+    "WorstYr": -0.0838,
+    "BestYr": 0.2246
+  },
+  "book_target_vol": {
+    "CAGR": 0.0618,
+    "Vol": 0.1085,
+    "Sharpe": 0.607,
+    "Sortino": 0.752,
+    "MaxDD": -0.3629,
+    "Total": 2.9,
+    "WorstYr": -0.1298,
+    "BestYr": 0.3468
+  },
+  "book_walkforward": {
+    "CAGR": 0.037,
+    "Vol": 0.0818,
+    "Sharpe": 0.485,
+    "Sortino": 0.597,
+    "MaxDD": -0.258,
+    "Total": 1.28,
+    "WorstYr": -0.1022,
+    "BestYr": 0.1865
+  },
+  "book_walkforward_target_vol": {
+    "CAGR": 0.0586,
+    "Vol": 0.1092,
+    "Sharpe": 0.577,
+    "Sortino": 0.708,
+    "MaxDD": -0.3773,
+    "Total": 2.65,
+    "WorstYr": -0.1481,
+    "BestYr": 0.3757
+  },
+  "leverage_mean": 1.383,
+  "leverage_max": 3.0,
+  "book_weights_walkforward_latest": {
+    "trend": 0.826,
+    "carry": 0.174
   },
   "sixty40": {
     "CAGR": 0.0829,
     "Vol": 0.1073,
     "Sharpe": 0.796,
     "Sortino": 1.006,
-    "MaxDD": -0.3139
+    "MaxDD": -0.3139,
+    "Total": 5.12,
+    "WorstYr": -0.1673,
+    "BestYr": 0.2177,
+    "CAGR_excess": 0.0611,
+    "Sharpe_excess": 0.606,
+    "Vol_excess": 0.1073
   },
   "combo_60_40_plus_30_book": {
-    "CAGR": 0.0772,
-    "Vol": 0.0881,
-    "Sharpe": 0.888,
-    "Sortino": 1.155,
-    "MaxDD": -0.2137
+    "CAGR": 0.0732,
+    "Vol": 0.0829,
+    "Sharpe": 0.894,
+    "Sortino": 1.16,
+    "MaxDD": -0.2315,
+    "Total": 3.97,
+    "WorstYr": -0.1271,
+    "BestYr": 0.1567,
+    "CAGR_excess": 0.0516,
+    "Sharpe_excess": 0.649,
+    "Vol_excess": 0.0829
+  },
+  "xsmom_excluded": true,
+  "xsmom_survivorship": {
+    "universe": "current S&P 500 constituents",
+    "biased": true,
+    "direction": "upward",
+    "reason": "no free point-in-time membership; delisted losers are absent",
+    "treatment": "reported separately and excluded from the combined book"
+  },
+  "xsmom_turnover": 11.4,
+  "deflated_sharpe_all_trials": {
+    "sharpe_daily": 0.03687,
+    "sr0_expected_max": 0.02699,
+    "dsr": 0.7694,
+    "n_trials": 26,
+    "n_obs": 5721,
+    "skew": -0.685,
+    "kurtosis": 7.84
+  },
+  "deflated_sharpe_final_variants": {
+    "sharpe_daily": 0.03687,
+    "sr0_expected_max": 0.00697,
+    "dsr": 0.9872,
+    "n_trials": 2,
+    "n_obs": 5721,
+    "skew": -0.685,
+    "kurtosis": 7.84
+  },
+  "trial_registry": {
+    "trend_variants": 8,
+    "risk_allocation_variants": 4,
+    "tilt_variants": 3,
+    "combo_variants": 2,
+    "carry_combo": 1,
+    "sleeve_variants": 2,
+    "book_weightings": 2,
+    "hardening_overlays": 3,
+    "final_book": 1
+  },
+  "excess_convention": {
+    "net_long_benchmarks": [
+      "SPY",
+      "60/40"
+    ],
+    "self_financing_sleeves": "reported raw; subtracting T-bills would be double-counting",
+    "reported": "raw and excess columns where a risk-free rate applies"
   }
 }

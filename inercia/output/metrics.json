@@ -1,62 +1,101 @@
 {
   "strategy_net": {
-    "CAGR": 0.0573,
-    "Vol": 0.1043,
-    "Sharpe": 0.587,
-    "MaxDD": -0.2876,
-    "Total": 2.551
+    "CAGR": 0.0533,
+    "Vol": 0.1052,
+    "Sharpe": 0.547,
+    "Sortino": 0.692,
+    "MaxDD": -0.2644,
+    "Total": 2.26,
+    "WorstYr": -0.1216,
+    "BestYr": 0.2658
   },
   "strategy_gross": {
-    "CAGR": 0.0681,
-    "Vol": 0.1044,
-    "Sharpe": 0.683,
-    "MaxDD": -0.2662,
-    "Total": 3.473
+    "CAGR": 0.0633,
+    "Vol": 0.1053,
+    "Sharpe": 0.636,
+    "Sortino": 0.806,
+    "MaxDD": -0.2397,
+    "Total": 3.04,
+    "WorstYr": -0.1087,
+    "BestYr": 0.2739
   },
   "spy_buy_hold": {
     "CAGR": 0.1088,
     "Vol": 0.186,
     "Sharpe": 0.649,
+    "Sortino": 0.794,
     "MaxDD": -0.5519,
-    "Total": 9.476
+    "Total": 9.48,
+    "WorstYr": -0.368,
+    "BestYr": 0.3231,
+    "CAGR_excess": 0.0864,
+    "Sharpe_excess": 0.539,
+    "Vol_excess": 0.186
   },
   "sixty_forty": {
     "CAGR": 0.0829,
     "Vol": 0.1073,
     "Sharpe": 0.796,
+    "Sortino": 1.006,
     "MaxDD": -0.3139,
-    "Total": 5.12
+    "Total": 5.12,
+    "WorstYr": -0.1673,
+    "BestYr": 0.2177,
+    "CAGR_excess": 0.0611,
+    "Sharpe_excess": 0.606,
+    "Vol_excess": 0.1073
   },
-  "annual_turnover": 20.31,
-  "corr_to_spy": 0.184,
+  "annual_turnover": 18.9,
+  "annual_cost_drag": 0.0094,
+  "corr_to_spy": 0.123,
   "subperiods": {
     "2004_2007": {
-      "CAGR": 0.101,
-      "Vol": 0.0963,
-      "Sharpe": 1.048,
-      "MaxDD": -0.1146,
-      "Total": 0.468
+      "CAGR": 0.1388,
+      "Vol": 0.098,
+      "Sharpe": 1.376,
+      "Sortino": 1.555,
+      "MaxDD": -0.1066,
+      "Total": 0.68,
+      "WorstYr": 0.0,
+      "BestYr": 0.2658
     },
     "2008_2009": {
-      "CAGR": 0.0983,
-      "Vol": 0.1088,
-      "Sharpe": 0.916,
-      "MaxDD": -0.0885,
-      "Total": 0.207
+      "CAGR": 0.0795,
+      "Vol": 0.1105,
+      "Sharpe": 0.747,
+      "Sortino": 1.021,
+      "MaxDD": -0.0805,
+      "Total": 0.17,
+      "WorstYr": 0.0771,
+      "BestYr": 0.0822
     },
     "2010_2019": {
-      "CAGR": 0.0634,
-      "Vol": 0.104,
-      "Sharpe": 0.644,
-      "MaxDD": -0.1373,
-      "Total": 0.848
+      "CAGR": 0.0418,
+      "Vol": 0.1047,
+      "Sharpe": 0.443,
+      "Sortino": 0.573,
+      "MaxDD": -0.255,
+      "Total": 0.5,
+      "WorstYr": -0.0997,
+      "BestYr": 0.1966
     },
     "2020_2026": {
-      "CAGR": 0.012,
-      "Vol": 0.1078,
-      "Sharpe": 0.165,
-      "MaxDD": -0.2876,
-      "Total": 0.084
+      "CAGR": 0.015,
+      "Vol": 0.1082,
+      "Sharpe": 0.192,
+      "Sortino": 0.243,
+      "MaxDD": -0.2455,
+      "Total": 0.11,
+      "WorstYr": -0.1216,
+      "BestYr": 0.115
     }
+  },
+  "excess_convention": {
+    "net_long_benchmarks": [
+      "SPY",
+      "60/40"
+    ],
+    "self_financing_sleeves": "reported raw; subtracting T-bills would be double-counting",
+    "reported": "raw and excess columns where a risk-free rate applies"
   }
 }

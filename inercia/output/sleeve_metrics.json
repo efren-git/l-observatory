@@ -1,41 +1,64 @@
 {
   "xs_momentum": {
-    "CAGR": 0.0188,
-    "Vol": 0.1043,
-    "Sharpe": 0.23,
-    "Sortino": 0.315,
-    "MaxDD": -0.3022
+    "CAGR": 0.0072,
+    "Vol": 0.1044,
+    "Sharpe": 0.121,
+    "Sortino": 0.165,
+    "MaxDD": -0.3059,
+    "Total": 0.17,
+    "WorstYr": -0.1839,
+    "BestYr": 0.2377
   },
   "low_vol": {
-    "CAGR": -0.0808,
+    "CAGR": -0.0853,
     "Vol": 0.104,
-    "Sharpe": -0.759,
-    "Sortino": -1.201,
-    "MaxDD": -0.8558
+    "Sharpe": -0.805,
+    "Sortino": -1.273,
+    "MaxDD": -0.8698,
+    "Total": -0.86,
+    "WorstYr": -0.2321,
+    "BestYr": 0.093
   },
   "equity_sleeve": {
-    "CAGR": -0.0364,
-    "Vol": 0.102,
-    "Sharpe": -0.312,
-    "Sortino": -0.443,
-    "MaxDD": -0.5898
+    "CAGR": -0.0421,
+    "Vol": 0.0715,
+    "Sharpe": -0.566,
+    "Sortino": -0.729,
+    "MaxDD": -0.6148,
+    "Total": -0.61,
+    "WorstYr": -0.1659,
+    "BestYr": 0.0955
   },
   "trend": {
-    "CAGR": 0.0663,
-    "Vol": 0.1077,
-    "Sharpe": 0.65,
-    "Sortino": 0.843,
-    "MaxDD": -0.2397
+    "CAGR": 0.0558,
+    "Vol": 0.1075,
+    "Sharpe": 0.559,
+    "Sortino": 0.724,
+    "MaxDD": -0.2644,
+    "Total": 2.26,
+    "WorstYr": -0.1216,
+    "BestYr": 0.2658
   },
-  "corr_sleeve_trend": 0.078,
-  "corr_mom_trend": 0.4,
-  "turnover_mom": 0.0,
-  "turnover_sleeve": 0.0,
+  "corr_sleeve_trend": 0.134,
+  "corr_mom_trend": 0.399,
+  "turnover_mom": 11.4,
+  "turnover_lowvol": 4.9,
+  "cost_bps": 10.0,
+  "survivorship": {
+    "universe": "current S&P 500 constituents",
+    "biased": true,
+    "direction": "upward",
+    "reason": "no free point-in-time membership; delisted losers are absent",
+    "treatment": "reported separately and excluded from the combined book"
+  },
   "combo_trend_sleeve": {
-    "CAGR": 0.0143,
-    "Vol": 0.0734,
-    "Sharpe": 0.23,
-    "Sortino": 0.316,
-    "MaxDD": -0.2048
+    "CAGR": -0.0016,
+    "Vol": 0.0797,
+    "Sharpe": 0.02,
+    "Sortino": 0.027,
+    "MaxDD": -0.3035,
+    "Total": -0.03,
+    "WorstYr": -0.1659,
+    "BestYr": 0.1179
   }
 }
