@@ -8,8 +8,8 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from cartograf.backtest import scale_weights_to_target, weights_to_returns
-from cartograf.sleeves import monthly_to_daily
+from cartograf.backtest import hrp_weights, scale_weights_to_target, weights_to_returns
+from cartograf.sleeves import live_mask, monthly_to_daily
 from cartograf.stats import deflated_sharpe, perf, vol_target
 
 
@@ -50,6 +50,22 @@ class SmokeTest(unittest.TestCase):
         # The first common rebalance must be unchanged when only far-future data changes.
         d = targets.index[0]
         np.testing.assert_allclose(w1.loc[d].values, w2.loc[d].values)
+
+    def test_hrp_handles_zero_variance_sleeve(self):
+        R = self.R.copy()
+        R["FLAT"] = 0.0
+        w = hrp_weights(R)
+        self.assertTrue(np.isfinite(w).all())
+        self.assertAlmostEqual(float(w.sum()), 1.0, places=8)
+
+    def test_live_mask_excludes_pre_inception(self):
+        idx = pd.bdate_range("2020-01-02", periods=400)
+        px = pd.DataFrame({"A": 100.0, "B": np.nan}, index=idx)
+        px.loc[idx[200:], "B"] = 100.0
+        dates = pd.DatetimeIndex([idx[50], idx[150], idx[250], idx[399]])
+        m = live_mask(px, dates, ["A", "B"])
+        self.assertTrue(bool(m["A"].all()))
+        self.assertEqual(m["B"].tolist(), [False, False, True, True])
 
     def test_monthly_to_daily_preserves_sum(self):
         idx = pd.bdate_range("2021-01-04", "2021-03-31")

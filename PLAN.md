@@ -1,7 +1,7 @@
 # PLAN — l'Observatori hardening (2026-10-19)
 
 _Status: approved by Efren. Phase 1 (inercia) complete 2026-10-19. Phase 2
-(cartograf) nearly complete - one item left: per-month live-name masking._
+(cartograf) complete 2026-10-19. Phase 3 (combined book) is next._
 
 ## Decisions taken
 
@@ -48,8 +48,9 @@ with the JSONs.
 
 - [x] shared excess-return handling (net-long vs self-financing);
 - [x] stock sleeve labelled upward-biased and excluded from the book;
-- [ ] per-month live-name masking (inception dates) inside the cross-sections —
-      disclosure and exclusion are done, the signal-level mask is not;
+- [x] per-month live-name masking (inception dates) inside the cross-sections —
+      implemented 2026-10-19; BAB's 2008–2010 score was 95–97% phantom names, now
+      masked before scoring, normalisation and carry ranking;
 - [x] fix the FX-carry double count (FX ETF total return plus explicit rate
       differential);
 - [x] lag FRED monthly averages two months (publication-safe);
@@ -59,10 +60,51 @@ with the JSONs.
       SVXY warm-up regression found during reconciliation
       (see cartograf/AUDIT-2026-10-19.md).
 
-## Phase 3 — combined book
+Phase 2 result: the mask repriced BAB 0.17 -> 0.10, the equal-weight book
+0.66 -> 0.58, and the core book 0.72 -> 0.61. The 60/40 overlay still works
+(0.77 -> 0.88), but the standalone core no longer clears SPY on Sharpe. Details in
+`cartograf/AUDIT-2026-10-19.md` §5.
 
-Only after Phases 1–2: test one book combining cartograf's core + gated VRP
-with inercia's trend + carry. Treat every parameter choice as a trial.
+## Phase 3 — combined book (pre-specified 2026-10-19)
+
+Goal: one book that combines the surviving sleeves without double-counting.
+
+**Overlap audit first.**
+
+- **Trend appears in both projects.** Use one implementation (inercia's, longer
+  history); do not add a second trend sleeve.
+- **Carry appears in both.** Cartograf's cross-asset carry failed (0.08, and it
+  lowers a 60/40). Use inercia's carry only; test cartograf's as a separate
+  variant, never both at once.
+- BAB and gated VRP are cartograf-only.
+
+**Frequency and windows.**
+
+- Monthly returns: the proper VRP is monthly, and daily smoothing creates
+  artificial autocorrelation.
+- Window A: 2008-01 → 2026-10 without proper VRP (legacy SVXY, labelled).
+- Window B: 2009-11 → 2026-10 with gated VRP (VIX3M starts 2009-09-18).
+- Report both; never mix them in one statistic.
+
+**Pre-specified variants (three, no grid).**
+
+1. Equal-weight the non-overlapping survivors: inercia trend + inercia carry +
+   cartograf BAB + cartograf gated VRP.
+2. Inverse-vol of the same four (trailing 63 days, shifted one day).
+3. 60/40 + 20% and 30% of variant 1 (one fixed family, not a search).
+
+**Rules.**
+
+- 5 bps per unit turnover (10 bps for vol ETFs); costs are charged in weights.
+- A sleeve that is not live is flat, not backfilled.
+- Benchmarks: SPY and 60/40; excess columns only for net-long series.
+- Register every variant; report DSR with all trials and final variants.
+- Success is an out-of-sample improvement in the 60/40's Sharpe and max
+  drawdown, not standalone CAGR. If the combined book does not beat SPY
+  standalone, say so.
+
+**Acceptance.** One script regenerates the combined book and its metrics; a
+synthetic smoke test; README chapter 11 with the honest result.
 
 ## Non-goals
 

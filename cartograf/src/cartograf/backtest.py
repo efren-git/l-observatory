@@ -69,8 +69,15 @@ def scale_weights_to_target(w_targets: pd.DataFrame, R: pd.DataFrame,
 
 # --- Hierarchical Risk Parity (Lopez de Prado, 2016) -------------------------
 def _get_ivp(cov):
-    ivp = 1.0 / np.diag(cov)
-    return ivp / ivp.sum()
+    # A sleeve that is flat because its instruments do not exist yet has zero
+    # variance. 1/0 would poison the HRP recursion, so give that sleeve zero
+    # inverse-variance weight and normalise over the live ones.
+    d = np.diag(np.asarray(cov, dtype=float))
+    ivp = np.zeros_like(d)
+    positive = d > 0
+    ivp[positive] = 1.0 / d[positive]
+    total = float(ivp.sum())
+    return ivp / total if total > 0 else np.zeros_like(ivp)
 
 
 def _cluster_var(cov, items):

@@ -35,6 +35,19 @@ def group_map(cols):
     return {k: v for k, v in g.items() if len(v) >= 2}
 
 
+def live_mask(px: pd.DataFrame, dates, cols) -> pd.DataFrame:
+    """Boolean [dates x cols]: the fund has a valid price on or before each date.
+
+    The first valid observation is the listing date. A name is never scored or
+    weighted before it existed. Signal lookbacks (252 days for momentum, 1260
+    for value) remain NaN until computable; this mask only removes the phantom
+    cross-section that a zero-filled return panel would otherwise create.
+    """
+    cols = list(cols)
+    seen = px.reindex(columns=cols).notna().cumsum()
+    return seen.reindex(pd.DatetimeIndex(dates), method="ffill").fillna(0.0).gt(0)
+
+
 def group_z(df, groups):
     out = pd.DataFrame(index=df.index, columns=df.columns, dtype=float)
     for _, cols in groups.items():
@@ -45,18 +58,28 @@ def group_z(df, groups):
 
 
 def xs_targets(score, me, groups):
-    """Cross-sectional z-score weights, gross 1 inside each group, then equal groups."""
+    """Cross-sectional z-score weights, gross 1 inside each group, then equal groups.
+
+    Only names that are live at the rebalance enter the cross-section. This
+    matters most where a score is built from a fillna(0) return panel: a fund
+    that has not listed must not be ranked, normalised against, or traded.
+    """
+    live = live_mask(prices(), score.index, score.columns)
+    score = score.where(live.reindex(index=score.index, columns=score.columns).fillna(False),
+                        np.nan)
     z = group_z(score, groups)
     w = z.copy()
     for _, cols in groups.items():
         denom = w[cols].abs().sum(axis=1).replace(0, np.nan)
         w[cols] = w[cols].div(denom, axis=0)
     w = w / max(len(groups), 1)
-    return w.reindex(me).fillna(0.0)
+    w = w.reindex(me).fillna(0.0)
+    return w.where(live.reindex(index=me, columns=w.columns).fillna(False), 0.0)
 
 
 def _build(rows, me, cols, R, cost=COST):
     w = pd.DataFrame(rows, index=me).reindex(columns=cols).fillna(0.0)
+    w = w.where(live_mask(prices(), me, cols), 0.0)
     w = scale_weights_to_target(w, R, TARGET)
     net, to, _ = weights_to_returns(R, w, cost)
     return net, turnover_annual(to, len(R)), w
@@ -92,6 +115,9 @@ def bab(R, tradable, me, groups):
                          for t in eq})
     score = -(beta.sub(1.0))
     score = score.div((R[eq].rolling(63).std() * np.sqrt(252)).clip(lower=0.05))
+    # R is zero-filled before an ETF lists, so beta=0 and vol=0 produce a huge
+    # phantom score. Mask the name until it has a real 252-day history too.
+    score = score.where(live_mask(prices(), score.index, eq), np.nan)
     rows = score.div(score.abs().sum(axis=1).replace(0, np.nan), axis=0)
     net, to, _ = _build(rows.reindex(me).fillna(0.0), me, tradable, R, COST)
     return net, to
@@ -215,15 +241,20 @@ def carry_inputs():
     fxd = {c: monthly_rate_lagged(FX_MAP[c], R.index) for c in fx_cols}
     usd = monthly_rate_lagged("fx_usd", R.index)
 
+    # Rates exist before the ETF that carries them; the instrument does not.
+    live_b = live_mask(px, me, bond_cols)
+    live_e = live_mask(px, me, eq_cols)
+    live_f = live_mask(px, me, fx_cols)
+
     wb, we, wf = [], [], []
     for d in me:
         c = cash.loc[d]
         yb = {t: frd[BOND_TENOR[t]].loc[d] - c for t in bond_cols}
-        wb.append(_z_weights(yb, bond_cols))
+        wb.append(_z_weights(yb, bond_cols, live_b.loc[d]))
         ye = (dyield.loc[d] - c).to_dict()
-        we.append(_z_weights(ye, eq_cols))
+        we.append(_z_weights(ye, eq_cols, live_e.loc[d]))
         yf = {t: fxd[t].loc[d] - usd.loc[d] for t in fx_cols}
-        wf.append(_z_weights(yf, fx_cols))
+        wf.append(_z_weights(yf, fx_cols, live_f.loc[d]))
 
     # Excess return of each FX leg: spot ETF return + foreign rate - US rate.
     Rfx = R[fx_cols].copy()
@@ -235,8 +266,11 @@ def carry_inputs():
                 Rfx=Rfx, fxd=fxd, usd=usd)
 
 
-def _z_weights(score, cols):
-    s = pd.Series(score).reindex(cols).dropna()
+def _z_weights(score, cols, live_row=None):
+    s = pd.Series(score).reindex(cols)
+    if live_row is not None:
+        s = s.where(pd.Series(live_row).reindex(cols).fillna(False).astype(bool))
+    s = s.dropna()
     if len(s) < 2:
         return pd.Series(0.0, index=cols)
     z = s - s.mean()
@@ -280,30 +314,32 @@ def network_sleeves():
     vol = R.rolling(63).std() * np.sqrt(252)
     volm = vol.reindex(me)
 
+    live = live_mask(px, me, cols)
     own_rows, net_rows, comb_rows = [], [], []
     edge_stats = []
     for d in me:
-        t = trend_sig.loc[d].reindex(cols)
-        hist = wk.loc[:d].tail(157)
-        if len(hist) >= 60:
+        live_cols = [c for c in cols if bool(live.loc[d, c])]
+        t = trend_sig.loc[d].reindex(live_cols)
+        hist = wk.loc[:d, live_cols].tail(157)
+        if len(hist) >= 60 and len(live_cols) >= 2:
             Z = ((hist - hist.mean()) / hist.std()).fillna(0.0)
             A = Z.values
             M = (A[:-1].T @ A[1:]) / (len(A) - 1)
             M = np.nan_to_num(M)
             np.fill_diagonal(M, 0.0)
         else:
-            M = np.zeros((len(cols), len(cols)))
-        lead = pd.DataFrame(M, index=cols, columns=cols)
+            M = np.zeros((len(live_cols), len(live_cols)))
+        lead = pd.DataFrame(M, index=live_cols, columns=live_cols)
         nt = pd.Series(0.0, index=cols)
         kept = []
-        for ci in cols:
+        for ci in live_cols:
             col = lead[ci]
             col = col[col > 0].nlargest(5)
             if len(col):
                 w = col / col.sum()
                 nt[ci] = float((w * t.reindex(col.index).fillna(0.0)).sum())
                 kept.append(float(col.mean()))
-        own = t.fillna(0.0)
+        own = trend_sig.loc[d].reindex(cols).where(live.loc[d], 0.0).fillna(0.0)
         own_rows.append(own)
         net_rows.append(nt)
         comb_rows.append(0.5 * own + 0.5 * nt)
@@ -312,6 +348,7 @@ def network_sleeves():
 
     def build(rows):
         w = pd.DataFrame(rows, index=me).reindex(columns=cols).fillna(0.0)
+        w = w.where(live, 0.0)
         w = w * (TARGET / volm.reindex(columns=cols).clip(lower=0.05)).fillna(0.0)
         w = scale_weights_to_target(w, R, TARGET)
         net, to, _ = weights_to_returns(R, w, COST)
