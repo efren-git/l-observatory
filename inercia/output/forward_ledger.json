@@ -1,0 +1,15 @@
+{
+  "inception": "2026-10-31",
+  "created": "2026-10-20",
+  "rule": "first full month after inception; rows are append-only",
+  "base": "60/40 + 30% Phase 3 equal-weight overlay, monthly, 5 bps",
+  "note": "paper only; no orders. Returns are model returns, not fills.",
+  "last_month": null,
+  "summary": {
+    "months": 0
+  },
+  "appended_this_run": 0,
+  "rows": 0,
+  "sha256": "bcfb501ff66f664cb13e3bc1ce457eb1db0f9f1e815fdfe0dcd747d0a34e47cc",
+  "updated": "2026-10-20"
+}

@@ -173,6 +173,28 @@ holdout 2019-01→latest; select by selection Sharpe; DSR with 115 trials.
 Implementation: `inercia/src/inercia/phase6.py`, `src/run_phase6.py`,
 `inercia/PHASE6.md`, `output/phase6_metrics.json`.
 
+## Phase 7 — tail hedges (added and completed 2026-10-20)
+
+Pre-registered before the run: four fixed hedges on the 60/40 + 30% Phase 3
+overlay (short 5%/10% SPY, long 5% VIX spot, short 5% SVXY), selection
+2005–2018 (effectively 2009-11+), holdout 2019+, 5/10/25 bps, DSR at 119 trials.
+
+- short SPY 5%: holdout Sharpe 1.095 vs 1.079, MaxDD −13.25% vs −14.46%;
+  marginal Sharpe **−0.915** (t −3.77), hit rate 33.8%, bootstrap −1.37…−0.49.
+- short SPY 10%: holdout 1.113, MaxDD −12.04%; same marginal stream, scaled.
+- short SVXY 5%: holdout 1.116, MaxDD −13.47%; marginal Sharpe −0.571 (t −2.21),
+  convexity −1.39 pp.
+- long VIX spot 5%: looks best (holdout 1.746) but is not investable; it earns
+  the arithmetic mean of a mean-reverting index's percentage changes and ignores
+  futures roll.
+- Vol-matched drawdown: every investable hedge is worse than proportional. This
+  is de-risking, not convexity.
+- Verdict: no hedge is adopted; the base stays. The pre-registered rule was too
+  weak because it scored the hedged portfolio, not the hedge.
+
+Implementation: `inercia/src/inercia/phase7.py`, `src/run_phase7.py`,
+`inercia/PHASE7.md`, `output/phase7_metrics.json`, `output/14_phase7.png`.
+
 ## Non-goals
 
 - No live trading.

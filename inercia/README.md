@@ -391,6 +391,21 @@ robust improvement; the base 74/26, 10%-vol, monthly, 1/3/6/12 configuration
 remains the published choice. `lb_6_12` is a candidate for a forward test, not
 an adopted change.
 
+## Chapter 15 — Phase 7: tail hedges
+
+`PHASE7.md` tests four fixed hedges on the Phase 3 overlay: short 5% SPY,
+short 10% SPY, long 5% VIX spot (a diagnostic, not investable) and short 5%
+SVXY. No hedge is adopted. The two short-SPY sizes technically pass the
+pre-registered rule (holdout Sharpe +0.016/+0.034, max drawdown +1.2/+2.4
+points) but their own return stream has a Sharpe of **−0.92** (t = −3.8) and a
+bootstrap interval entirely below zero: they are de-risking with a fee, not tail
+protection. Their drawdowns are also worse than proportional to the volatility
+removed. The short-SVXY hedge has a marginal Sharpe of −0.57. The long-VIX-spot
+line looks far better only because it earns the arithmetic mean of percentage
+changes of a mean-reverting, non-investable index; a real futures position pays
+the roll. The base book is unchanged. The methodological lesson: test the
+hedge's difference series, not just the hedged portfolio's Sharpe.
+
 ## Appendix — References & reproducibility
 
 Selected references: Jegadeesh & Titman 1993; Carhart 1997; Moskowitz, Ooi &

@@ -69,11 +69,15 @@ def _monthly_benchmarks():
     return spy, bench, rf
 
 
-def load_sleeves(window: str):
-    """Return (monthly returns, live mask, label) for Window A or B."""
+def load_sleeves(window: str, cost_bps: float = COST_BPS):
+    """Return (monthly returns, live mask, label) for Window A or B.
+
+    cost_bps only scales the inercia trend/carry sleeves; the cartograf BAB and
+    VRP sleeves keep their own published cost assumptions.
+    """
     px = prices()
-    trend_d, _ = trend_returns(px, cost_bps=COST_BPS)
-    carry_d, _, _ = carry_returns(cost_bps=COST_BPS)
+    trend_d, _ = trend_returns(px, cost_bps=cost_bps)
+    carry_d, _, _ = carry_returns(cost_bps=cost_bps)
     trend_m = _to_monthly(trend_d)
     carry_m = _to_monthly(carry_d)
 
