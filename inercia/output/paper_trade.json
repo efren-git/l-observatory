@@ -1,0 +1,38 @@
+{
+  "as_of": "2026-10-14",
+  "mode": "paper only; no orders",
+  "phase3_overlay": {
+    "allocation": {
+      "60/40": 0.7,
+      "phase3_book": 0.3
+    },
+    "book_weights": {
+      "trend": 0.25,
+      "carry": 0.25,
+      "bab": 0.25,
+      "vrp_gated": 0.25
+    },
+    "note": "sleeve-level target; rebalance monthly; BAB is a drag"
+  },
+  "pair_signals": {
+    "V/MA": {
+      "as_of": "2026-10-14",
+      "pair": "V/MA",
+      "beta": 0.9284,
+      "spread": 0.03803,
+      "z": -0.797,
+      "position": 1,
+      "action": "long spread (long A / short beta*B)"
+    },
+    "KO/PEP": {
+      "as_of": "2026-10-14",
+      "pair": "KO/PEP",
+      "beta": -0.4361,
+      "spread": 0.12862,
+      "z": -1.425,
+      "position": 1,
+      "action": "long spread (long A / short beta*B)"
+    }
+  },
+  "note": "KO/PEP is the example pair and is not recommended; V/MA is the only pair in the fixed screen with a cointegrated residual."
+}

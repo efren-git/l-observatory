@@ -1,0 +1,4 @@
+date,strategy,target,detail
+2026-10-14,phase3_overlay,70% 60/40 + 30% book,equal weight trend/carry/BAB/gated VRP
+2026-10-14,V/MA,long spread (long A / short beta*B),beta=0.9284 z=-0.797 pos=1
+2026-10-14,KO/PEP,long spread (long A / short beta*B),beta=-0.4361 z=-1.425 pos=1

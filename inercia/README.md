@@ -368,6 +368,18 @@ level, and is positive in all 15 block sample-splits (min 0.49–0.54). The
 post-hoc 24-month holdout is 1.46–1.51, but it is not blind. The 30% size is not
 special: 40% looks better in-sample, which is a warning against re-optimising it.
 
+## Chapter 13 — Phase 5: pairs, hedging, paper trading
+
+`PHASE5.md` tests whether a pairs sleeve can improve or hedge the Phase 3 book.
+KO/PEP — the example — is **not cointegrated** on this data (ADF −0.77,
+half-life ~1,029 days) and the default strategy loses money (Sharpe −0.095).
+V/MA is the only pair in a fixed eight-pair screen that passes the cointegration
+screen (ADF −5.25, half-life 63 days), but its default Sharpe is only 0.073. A
+20% V/MA hedge cuts the Phase 3 overlay's drawdown from −14.5% to −11.1% and
+lifts Sharpe from 1.183 to 1.199, at the cost of 1.7 points of CAGR. That is a
+preference trade, not alpha. The paper-trading ledger is
+`output/paper_trade_log.csv`; it is a snapshot, not an order router.
+
 ## Appendix — References & reproducibility
 
 Selected references: Jegadeesh & Titman 1993; Carhart 1997; Moskowitz, Ooi &

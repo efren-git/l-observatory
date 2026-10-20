@@ -138,6 +138,23 @@ changed.
 Implementation: `inercia/src/inercia/phase4.py`, `src/run_phase4.py`,
 `inercia/PHASE4.md`, `output/phase4_metrics.json`.
 
+## Phase 5 — pairs, hedging, paper trading (added 2026-10-20)
+
+Test whether a simple pairs/stat-arb sleeve can improve or hedge the Phase 3
+book, and start a forward paper-trading ledger.
+
+- KO/PEP fails: ADF −0.77, half-life 1,029 days, default Sharpe −0.095.
+- Fixed eight-pair screen: V/MA is the only cointegrated pair (ADF −5.25,
+  half-life 63 days), default Sharpe 0.073.
+- 12-variant grid per pair: best V/MA 0.19, best KO/PEP 0.21, both in-sample;
+  worst −0.24 / −0.21. 103 total trials.
+- 20% V/MA hedge: Phase 3 overlay Sharpe 1.183 → 1.199, MaxDD −14.5% → −11.1%,
+  CAGR 8.33% → 6.66%. A preference trade, not alpha.
+- Paper ledger: `output/paper_trade.json`, `paper_trade_log.csv`; no orders.
+
+Implementation: `inercia/src/inercia/pairs.py`, `src/inercia/phase5.py`,
+`src/run_phase5.py`, `src/paper_trade.py`, `inercia/PHASE5.md`.
+
 ## Non-goals
 
 - No live trading.

@@ -1,0 +1,763 @@
+{
+  "trials": {
+    "prior": 67,
+    "pair_screen": 8,
+    "grid": 24,
+    "hedge": 4,
+    "all": 103
+  },
+  "pair_screen": {
+    "KO/PEP": {
+      "stats": {
+        "CAGR": -0.0077,
+        "Vol": 0.0618,
+        "Sharpe": -0.095,
+        "Sortino": -0.135,
+        "MaxDD": -0.3374,
+        "Total": -0.15,
+        "WorstYr": -0.1164,
+        "BestYr": 0.1137
+      },
+      "bootstrap": {
+        "sharpe": -0.095,
+        "ci_low": -0.463,
+        "ci_high": 0.205,
+        "p_sharpe_gt_0": 0.226,
+        "n_boot": 2000,
+        "block": 21,
+        "n_obs": 5167
+      },
+      "cointegration": {
+        "beta": 0.9584,
+        "adf_t": -0.773,
+        "crit_5pct_approx": -2.86,
+        "cointegrated_5pct": false,
+        "note": "full-sample Engle-Granger; the trading beta is rolling"
+      },
+      "half_life_days": 1029.3,
+      "diagnostics": {
+        "pair": "KO/PEP",
+        "start": "2006-03-31",
+        "end": "2026-10-14",
+        "n_days": 5167,
+        "annual_turnover": 10.2,
+        "avg_abs_position": 0.426,
+        "avg_beta": 0.755,
+        "corr_spy": -0.057,
+        "cost_bps_per_leg": 5.0,
+        "borrow_bps": 50.0
+      }
+    },
+    "XOM/CVX": {
+      "stats": {
+        "CAGR": 0.0049,
+        "Vol": 0.069,
+        "Sharpe": 0.106,
+        "Sortino": 0.149,
+        "MaxDD": -0.2357,
+        "Total": 0.11,
+        "WorstYr": -0.1204,
+        "BestYr": 0.1196
+      },
+      "bootstrap": {
+        "sharpe": 0.106,
+        "ci_low": -0.252,
+        "ci_high": 0.456,
+        "p_sharpe_gt_0": 0.717,
+        "n_boot": 2000,
+        "block": 21,
+        "n_obs": 5167
+      },
+      "cointegration": {
+        "beta": 0.7107,
+        "adf_t": -1.412,
+        "crit_5pct_approx": -2.86,
+        "cointegrated_5pct": false,
+        "note": "full-sample Engle-Granger; the trading beta is rolling"
+      },
+      "half_life_days": 685.2,
+      "diagnostics": {
+        "pair": "XOM/CVX",
+        "start": "2006-03-31",
+        "end": "2026-10-14",
+        "n_days": 5167,
+        "annual_turnover": 9.9,
+        "avg_abs_position": 0.438,
+        "avg_beta": 0.758,
+        "corr_spy": -0.021,
+        "cost_bps_per_leg": 5.0,
+        "borrow_bps": 50.0
+      }
+    },
+    "V/MA": {
+      "stats": {
+        "CAGR": 0.0023,
+        "Vol": 0.0481,
+        "Sharpe": 0.073,
+        "Sortino": 0.101,
+        "MaxDD": -0.1881,
+        "Total": 0.04,
+        "WorstYr": -0.0546,
+        "BestYr": 0.0819
+      },
+      "bootstrap": {
+        "sharpe": 0.073,
+        "ci_low": -0.323,
+        "ci_high": 0.446,
+        "p_sharpe_gt_0": 0.654,
+        "n_boot": 2000,
+        "block": 21,
+        "n_obs": 4360
+      },
+      "cointegration": {
+        "beta": 0.9152,
+        "adf_t": -5.251,
+        "crit_5pct_approx": -2.86,
+        "cointegrated_5pct": true,
+        "note": "full-sample Engle-Granger; the trading beta is rolling"
+      },
+      "half_life_days": 63.3,
+      "diagnostics": {
+        "pair": "V/MA",
+        "start": "2009-06-16",
+        "end": "2026-10-14",
+        "n_days": 4360,
+        "annual_turnover": 10.1,
+        "avg_abs_position": 0.398,
+        "avg_beta": 0.863,
+        "corr_spy": 0.006,
+        "cost_bps_per_leg": 5.0,
+        "borrow_bps": 50.0
+      }
+    },
+    "GS/MS": {
+      "stats": {
+        "CAGR": -0.0057,
+        "Vol": 0.0792,
+        "Sharpe": -0.033,
+        "Sortino": -0.047,
+        "MaxDD": -0.2837,
+        "Total": -0.11,
+        "WorstYr": -0.0738,
+        "BestYr": 0.1391
+      },
+      "bootstrap": {
+        "sharpe": -0.033,
+        "ci_low": -0.392,
+        "ci_high": 0.324,
+        "p_sharpe_gt_0": 0.433,
+        "n_boot": 2000,
+        "block": 21,
+        "n_obs": 5167
+      },
+      "cointegration": {
+        "beta": 0.8374,
+        "adf_t": -3.291,
+        "crit_5pct_approx": -2.86,
+        "cointegrated_5pct": true,
+        "note": "full-sample Engle-Granger; the trading beta is rolling"
+      },
+      "half_life_days": 245.0,
+      "diagnostics": {
+        "pair": "GS/MS",
+        "start": "2006-03-31",
+        "end": "2026-10-14",
+        "n_days": 5167,
+        "annual_turnover": 9.4,
+        "avg_abs_position": 0.421,
+        "avg_beta": 0.862,
+        "corr_spy": 0.112,
+        "cost_bps_per_leg": 5.0,
+        "borrow_bps": 50.0
+      }
+    },
+    "UPS/FDX": {
+      "stats": {
+        "CAGR": -0.0079,
+        "Vol": 0.1005,
+        "Sharpe": -0.029,
+        "Sortino": -0.042,
+        "MaxDD": -0.4613,
+        "Total": -0.15,
+        "WorstYr": -0.1301,
+        "BestYr": 0.1462
+      },
+      "bootstrap": {
+        "sharpe": -0.029,
+        "ci_low": -0.396,
+        "ci_high": 0.378,
+        "p_sharpe_gt_0": 0.435,
+        "n_boot": 2000,
+        "block": 21,
+        "n_obs": 5167
+      },
+      "cointegration": {
+        "beta": 0.8696,
+        "adf_t": -1.573,
+        "crit_5pct_approx": -2.86,
+        "cointegrated_5pct": false,
+        "note": "full-sample Engle-Granger; the trading beta is rolling"
+      },
+      "half_life_days": 540.2,
+      "diagnostics": {
+        "pair": "UPS/FDX",
+        "start": "2006-03-31",
+        "end": "2026-10-14",
+        "n_days": 5167,
+        "annual_turnover": 9.4,
+        "avg_abs_position": 0.435,
+        "avg_beta": 0.442,
+        "corr_spy": 0.16,
+        "cost_bps_per_leg": 5.0,
+        "borrow_bps": 50.0
+      }
+    },
+    "HD/LOW": {
+      "stats": {
+        "CAGR": -0.0022,
+        "Vol": 0.0562,
+        "Sharpe": -0.011,
+        "Sortino": -0.016,
+        "MaxDD": -0.2305,
+        "Total": -0.04,
+        "WorstYr": -0.1271,
+        "BestYr": 0.1112
+      },
+      "bootstrap": {
+        "sharpe": -0.011,
+        "ci_low": -0.416,
+        "ci_high": 0.397,
+        "p_sharpe_gt_0": 0.487,
+        "n_boot": 2000,
+        "block": 21,
+        "n_obs": 5167
+      },
+      "cointegration": {
+        "beta": 1.1111,
+        "adf_t": -2.686,
+        "crit_5pct_approx": -2.86,
+        "cointegrated_5pct": false,
+        "note": "full-sample Engle-Granger; the trading beta is rolling"
+      },
+      "half_life_days": 262.4,
+      "diagnostics": {
+        "pair": "HD/LOW",
+        "start": "2006-03-31",
+        "end": "2026-10-14",
+        "n_days": 5167,
+        "annual_turnover": 10.0,
+        "avg_abs_position": 0.435,
+        "avg_beta": 0.82,
+        "corr_spy": -0.013,
+        "cost_bps_per_leg": 5.0,
+        "borrow_bps": 50.0
+      }
+    },
+    "PG/CL": {
+      "stats": {
+        "CAGR": -0.0386,
+        "Vol": 0.0617,
+        "Sharpe": -0.608,
+        "Sortino": -0.792,
+        "MaxDD": -0.6247,
+        "Total": -0.55,
+        "WorstYr": -0.1927,
+        "BestYr": 0.0794
+      },
+      "bootstrap": {
+        "sharpe": -0.608,
+        "ci_low": -1.012,
+        "ci_high": -0.157,
+        "p_sharpe_gt_0": 0.004,
+        "n_boot": 2000,
+        "block": 21,
+        "n_obs": 5167
+      },
+      "cointegration": {
+        "beta": 0.9888,
+        "adf_t": -1.997,
+        "crit_5pct_approx": -2.86,
+        "cointegrated_5pct": false,
+        "note": "full-sample Engle-Granger; the trading beta is rolling"
+      },
+      "half_life_days": 537.9,
+      "diagnostics": {
+        "pair": "PG/CL",
+        "start": "2006-03-31",
+        "end": "2026-10-14",
+        "n_days": 5167,
+        "annual_turnover": 8.7,
+        "avg_abs_position": 0.465,
+        "avg_beta": 0.664,
+        "corr_spy": 0.129,
+        "cost_bps_per_leg": 5.0,
+        "borrow_bps": 50.0
+      }
+    },
+    "JNJ/PFE": {
+      "stats": {
+        "CAGR": -0.0127,
+        "Vol": 0.0968,
+        "Sharpe": -0.083,
+        "Sortino": -0.123,
+        "MaxDD": -0.3653,
+        "Total": -0.23,
+        "WorstYr": -0.1266,
+        "BestYr": 0.0898
+      },
+      "bootstrap": {
+        "sharpe": -0.083,
+        "ci_low": -0.403,
+        "ci_high": 0.244,
+        "p_sharpe_gt_0": 0.304,
+        "n_boot": 2000,
+        "block": 21,
+        "n_obs": 5167
+      },
+      "cointegration": {
+        "beta": 1.1156,
+        "adf_t": -1.639,
+        "crit_5pct_approx": -2.86,
+        "cointegrated_5pct": false,
+        "note": "full-sample Engle-Granger; the trading beta is rolling"
+      },
+      "half_life_days": 500.7,
+      "diagnostics": {
+        "pair": "JNJ/PFE",
+        "start": "2006-03-31",
+        "end": "2026-10-14",
+        "n_days": 5167,
+        "annual_turnover": 9.0,
+        "avg_abs_position": 0.438,
+        "avg_beta": 0.431,
+        "corr_spy": 0.282,
+        "cost_bps_per_leg": 5.0,
+        "borrow_bps": 50.0
+      }
+    }
+  },
+  "parameter_grid": {
+    "V/MA": {
+      "best": {
+        "entry": 1.5,
+        "z_window": 120,
+        "exit": 1.0,
+        "sharpe": 0.19,
+        "cagr": 0.0063,
+        "maxdd": -0.1024,
+        "turnover": 13.0
+      },
+      "worst": {
+        "entry": 2.5,
+        "z_window": 120,
+        "exit": 0.5,
+        "sharpe": -0.244,
+        "cagr": -0.0069,
+        "maxdd": -0.1601,
+        "turnover": 3.3
+      },
+      "all": [
+        {
+          "entry": 1.5,
+          "z_window": 120,
+          "exit": 1.0,
+          "sharpe": 0.19,
+          "cagr": 0.0063,
+          "maxdd": -0.1024,
+          "turnover": 13.0
+        },
+        {
+          "entry": 1.5,
+          "z_window": 120,
+          "exit": 0.5,
+          "sharpe": 0.175,
+          "cagr": 0.0059,
+          "maxdd": -0.1077,
+          "turnover": 9.4
+        },
+        {
+          "entry": 1.5,
+          "z_window": 60,
+          "exit": 1.0,
+          "sharpe": 0.168,
+          "cagr": 0.006,
+          "maxdd": -0.1312,
+          "turnover": 20.8
+        },
+        {
+          "entry": 2.0,
+          "z_window": 60,
+          "exit": 1.0,
+          "sharpe": 0.141,
+          "cagr": 0.0043,
+          "maxdd": -0.1763,
+          "turnover": 11.8
+        },
+        {
+          "entry": 1.5,
+          "z_window": 60,
+          "exit": 0.5,
+          "sharpe": 0.115,
+          "cagr": 0.004,
+          "maxdd": -0.1908,
+          "turnover": 14.5
+        },
+        {
+          "entry": 2.0,
+          "z_window": 120,
+          "exit": 1.0,
+          "sharpe": 0.094,
+          "cagr": 0.0024,
+          "maxdd": -0.0817,
+          "turnover": 6.4
+        },
+        {
+          "entry": 2.0,
+          "z_window": 60,
+          "exit": 0.5,
+          "sharpe": 0.079,
+          "cagr": 0.0023,
+          "maxdd": -0.1832,
+          "turnover": 10.1
+        },
+        {
+          "entry": 2.5,
+          "z_window": 60,
+          "exit": 0.5,
+          "sharpe": 0.035,
+          "cagr": 0.0006,
+          "maxdd": -0.1206,
+          "turnover": 6.6
+        },
+        {
+          "entry": 2.0,
+          "z_window": 120,
+          "exit": 0.5,
+          "sharpe": -0.023,
+          "cagr": -0.0014,
+          "maxdd": -0.1438,
+          "turnover": 5.6
+        },
+        {
+          "entry": 2.5,
+          "z_window": 60,
+          "exit": 1.0,
+          "sharpe": -0.067,
+          "cagr": -0.0021,
+          "maxdd": -0.139,
+          "turnover": 6.7
+        },
+        {
+          "entry": 2.5,
+          "z_window": 120,
+          "exit": 1.0,
+          "sharpe": -0.239,
+          "cagr": -0.0059,
+          "maxdd": -0.1114,
+          "turnover": 3.3
+        },
+        {
+          "entry": 2.5,
+          "z_window": 120,
+          "exit": 0.5,
+          "sharpe": -0.244,
+          "cagr": -0.0069,
+          "maxdd": -0.1601,
+          "turnover": 3.3
+        }
+      ]
+    },
+    "KO/PEP": {
+      "best": {
+        "entry": 2.5,
+        "z_window": 60,
+        "exit": 1.0,
+        "sharpe": 0.212,
+        "cagr": 0.007,
+        "maxdd": -0.1026,
+        "turnover": 6.6
+      },
+      "worst": {
+        "entry": 2.5,
+        "z_window": 120,
+        "exit": 1.0,
+        "sharpe": -0.213,
+        "cagr": -0.0084,
+        "maxdd": -0.2077,
+        "turnover": 3.8
+      },
+      "all": [
+        {
+          "entry": 2.5,
+          "z_window": 60,
+          "exit": 1.0,
+          "sharpe": 0.212,
+          "cagr": 0.007,
+          "maxdd": -0.1026,
+          "turnover": 6.6
+        },
+        {
+          "entry": 2.0,
+          "z_window": 60,
+          "exit": 1.0,
+          "sharpe": 0.157,
+          "cagr": 0.0057,
+          "maxdd": -0.1914,
+          "turnover": 11.7
+        },
+        {
+          "entry": 1.5,
+          "z_window": 60,
+          "exit": 1.0,
+          "sharpe": -0.064,
+          "cagr": -0.0044,
+          "maxdd": -0.3326,
+          "turnover": 18.3
+        },
+        {
+          "entry": 1.5,
+          "z_window": 120,
+          "exit": 1.0,
+          "sharpe": -0.094,
+          "cagr": -0.0064,
+          "maxdd": -0.3511,
+          "turnover": 12.0
+        },
+        {
+          "entry": 2.5,
+          "z_window": 60,
+          "exit": 0.5,
+          "sharpe": -0.094,
+          "cagr": -0.0048,
+          "maxdd": -0.2904,
+          "turnover": 6.1
+        },
+        {
+          "entry": 2.0,
+          "z_window": 120,
+          "exit": 1.0,
+          "sharpe": -0.122,
+          "cagr": -0.006,
+          "maxdd": -0.2256,
+          "turnover": 6.8
+        },
+        {
+          "entry": 2.0,
+          "z_window": 60,
+          "exit": 0.5,
+          "sharpe": -0.125,
+          "cagr": -0.0077,
+          "maxdd": -0.3274,
+          "turnover": 10.2
+        },
+        {
+          "entry": 1.5,
+          "z_window": 60,
+          "exit": 0.5,
+          "sharpe": -0.126,
+          "cagr": -0.0092,
+          "maxdd": -0.3448,
+          "turnover": 13.3
+        },
+        {
+          "entry": 1.5,
+          "z_window": 120,
+          "exit": 0.5,
+          "sharpe": -0.149,
+          "cagr": -0.0102,
+          "maxdd": -0.3413,
+          "turnover": 9.1
+        },
+        {
+          "entry": 2.5,
+          "z_window": 120,
+          "exit": 0.5,
+          "sharpe": -0.17,
+          "cagr": -0.0081,
+          "maxdd": -0.2093,
+          "turnover": 3.4
+        },
+        {
+          "entry": 2.0,
+          "z_window": 120,
+          "exit": 0.5,
+          "sharpe": -0.176,
+          "cagr": -0.0098,
+          "maxdd": -0.2782,
+          "turnover": 5.6
+        },
+        {
+          "entry": 2.5,
+          "z_window": 120,
+          "exit": 1.0,
+          "sharpe": -0.213,
+          "cagr": -0.0084,
+          "maxdd": -0.2077,
+          "turnover": 3.8
+        }
+      ]
+    }
+  },
+  "hedge": {
+    "V/MA": {
+      "pair_monthly": {
+        "CAGR": -0.0006,
+        "Vol": 0.038,
+        "Sharpe": 0.003,
+        "Sortino": 0.004,
+        "MaxDD": -0.1832,
+        "WorstMonth": -0.0347,
+        "WorstYear": -0.0546,
+        "BestYear": 0.0819,
+        "Total": -0.01
+      },
+      "corr_to_overlay": -0.17,
+      "pair_diagnostics": {
+        "pair": "V/MA",
+        "start": "2009-06-16",
+        "end": "2026-10-14",
+        "n_days": 4360,
+        "annual_turnover": 10.1,
+        "avg_abs_position": 0.398,
+        "avg_beta": 0.863,
+        "corr_spy": 0.006,
+        "cost_bps_per_leg": 5.0,
+        "borrow_bps": 50.0
+      },
+      "blends": {
+        "0.1": {
+          "CAGR": 0.075,
+          "Vol": 0.0624,
+          "Sharpe": 1.192,
+          "Sortino": 1.945,
+          "MaxDD": -0.1281,
+          "WorstMonth": -0.0502,
+          "WorstYear": -0.0988,
+          "BestYear": 0.1614,
+          "Total": 2.42,
+          "CAGR_excess_series": 0.0579,
+          "Sharpe_excess": 0.935
+        },
+        "0.2": {
+          "CAGR": 0.0666,
+          "Vol": 0.0552,
+          "Sharpe": 1.199,
+          "Sortino": 1.965,
+          "MaxDD": -0.1114,
+          "WorstMonth": -0.0446,
+          "WorstYear": -0.0846,
+          "BestYear": 0.1415,
+          "Total": 1.99,
+          "CAGR_excess_series": 0.0497,
+          "Sharpe_excess": 0.907
+        }
+      }
+    },
+    "KO/PEP": {
+      "pair_monthly": {
+        "CAGR": -0.0137,
+        "Vol": 0.0529,
+        "Sharpe": -0.235,
+        "Sortino": -0.317,
+        "MaxDD": -0.3274,
+        "WorstMonth": -0.0451,
+        "WorstYear": -0.1164,
+        "BestYear": 0.1137,
+        "Total": -0.21
+      },
+      "corr_to_overlay": -0.01,
+      "pair_diagnostics": {
+        "pair": "KO/PEP",
+        "start": "2006-03-31",
+        "end": "2026-10-14",
+        "n_days": 5167,
+        "annual_turnover": 10.2,
+        "avg_abs_position": 0.426,
+        "avg_beta": 0.755,
+        "corr_spy": -0.057,
+        "cost_bps_per_leg": 5.0,
+        "borrow_bps": 50.0
+      },
+      "blends": {
+        "0.1": {
+          "CAGR": 0.0736,
+          "Vol": 0.0631,
+          "Sharpe": 1.159,
+          "Sortino": 1.891,
+          "MaxDD": -0.1344,
+          "WorstMonth": -0.0499,
+          "WorstYear": -0.1075,
+          "BestYear": 0.1543,
+          "Total": 2.34,
+          "CAGR_excess_series": 0.0566,
+          "Sharpe_excess": 0.905
+        },
+        "0.2": {
+          "CAGR": 0.0638,
+          "Vol": 0.0569,
+          "Sharpe": 1.12,
+          "Sortino": 1.839,
+          "MaxDD": -0.1242,
+          "WorstMonth": -0.044,
+          "WorstYear": -0.1023,
+          "BestYear": 0.1275,
+          "Total": 1.86,
+          "CAGR_excess_series": 0.047,
+          "Sharpe_excess": 0.838
+        }
+      }
+    },
+    "phase3_overlay": {
+      "CAGR": 0.0833,
+      "Vol": 0.07,
+      "Sharpe": 1.183,
+      "Sortino": 1.924,
+      "MaxDD": -0.1446,
+      "WorstMonth": -0.0558,
+      "WorstYear": -0.1129,
+      "BestYear": 0.1816,
+      "Total": 2.9,
+      "CAGR_excess_series": 0.0662,
+      "Sharpe_excess": 0.953
+    }
+  },
+  "paper_trade": {
+    "as_of": "2026-10-14",
+    "mode": "paper only; no orders",
+    "phase3_overlay": {
+      "allocation": {
+        "60/40": 0.7,
+        "phase3_book": 0.3
+      },
+      "book_weights": {
+        "trend": 0.25,
+        "carry": 0.25,
+        "bab": 0.25,
+        "vrp_gated": 0.25
+      },
+      "note": "sleeve-level target; rebalance monthly; BAB is a drag"
+    },
+    "pair_signals": {
+      "V/MA": {
+        "as_of": "2026-10-14",
+        "pair": "V/MA",
+        "beta": 0.9284,
+        "spread": 0.03803,
+        "z": -0.797,
+        "position": 1,
+        "action": "long spread (long A / short beta*B)"
+      },
+      "KO/PEP": {
+        "as_of": "2026-10-14",
+        "pair": "KO/PEP",
+        "beta": -0.4361,
+        "spread": 0.12862,
+        "z": -1.425,
+        "position": 1,
+        "action": "long spread (long A / short beta*B)"
+      }
+    },
+    "note": "KO/PEP is the example pair and is not recommended; V/MA is the only pair in the fixed screen with a cointegrated residual."
+  },
+  "note": "Pairs are a research sleeve. KO/PEP fails; V/MA is cointegrated but weak. The hedge blend is a preference trade, not alpha."
+}
