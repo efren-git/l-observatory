@@ -1,0 +1,13 @@
+{
+  "as_of": "2026-10-20",
+  "deals": [],
+  "rules": {
+    "min_annualised": 0.08,
+    "max_break_downside": -0.2,
+    "max_risk_points": 12,
+    "max_position_pct": 10.0,
+    "risk_budget_pct": 1.0,
+    "max_gross_exposure_pct": 40.0
+  },
+  "note": "Live/paper tool. A historical backtest needs delisted target prices and deal terms; free Yahoo data drops them."
+}
