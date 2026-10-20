@@ -26,9 +26,10 @@ for t in ["FXE","FXY","FXB","FXC","UUP"]:
 
 
 def trend_weights(px: pd.DataFrame, use_xs: bool = True,
-                  class_bal: bool = False) -> pd.DataFrame:
+                  class_bal: bool = False,
+                  lookbacks=(1, 3, 6, 12)) -> pd.DataFrame:
     ret = px.pct_change()
-    ts = ts_momentum(px)
+    ts = ts_momentum(px, lookbacks=lookbacks)
     xs = xs_momentum(px)
     signal = 0.5 * np.sign(ts) + 0.5 * xs if use_xs else np.sign(ts)
     vol = ret.rolling(20).std() * np.sqrt(252.0)
@@ -47,10 +48,13 @@ def trend_weights(px: pd.DataFrame, use_xs: bool = True,
 
 
 def trend_returns(px: pd.DataFrame, use_xs: bool = True, class_bal: bool = False,
-                  rebalance: str = "ME", cost_bps: float = 5.0) -> tuple[pd.Series, dict]:
+                  rebalance: str = "ME", cost_bps: float = 5.0,
+                  lookbacks=(1, 3, 6, 12),
+                  target_vol: float = 0.10) -> tuple[pd.Series, dict]:
     ret = px.pct_change()
-    w = trend_weights(px, use_xs=use_xs, class_bal=class_bal)
-    return panel_backtest(w, ret, rebalance=rebalance, cost_bps=cost_bps)
+    w = trend_weights(px, use_xs=use_xs, class_bal=class_bal, lookbacks=lookbacks)
+    return panel_backtest(w, ret, rebalance=rebalance, cost_bps=cost_bps,
+                          target_vol=target_vol)
 
 
 def reversal_returns(px: pd.DataFrame, cost_bps: float = 5.0) -> tuple[pd.Series, dict]:
@@ -81,10 +85,13 @@ def carry_weights(carry: pd.DataFrame, total: pd.DataFrame) -> pd.DataFrame:
     return raw
 
 
-def carry_returns(lag_months: int = 2, cost_bps: float = 5.0) -> tuple[pd.Series, dict, dict]:
+def carry_returns(lag_months: int = 2, cost_bps: float = 5.0,
+                  rebalance: str = "ME",
+                  target_vol: float = 0.10) -> tuple[pd.Series, dict, dict]:
     fxret, carry, total = carry_inputs(lag_months=lag_months)
     w = carry_weights(carry, total)
-    r, diag = panel_backtest(w, total, cost_bps=cost_bps)
+    r, diag = panel_backtest(w, total, cost_bps=cost_bps,
+                             rebalance=rebalance, target_vol=target_vol)
     return r, diag, {"lag_months": lag_months, "carry_mean": round(float(carry.mean().mean()), 3)}
 
 

@@ -23,6 +23,11 @@ This folder holds every project Laika builds. Each project lives in its own subf
 > Window B (2009-11+) a 30% allocation lifts the 60/40 from 1.10 to 1.18–1.23
 > Sharpe and cuts the drawdown to about −15%. Window A (legacy SVXY) only cuts
 > the drawdown. Standalone, the book does not beat the 60/40.
+>
+> **Phases 4–6 are complete.** Robustness, pairs/hedge/paper-trading, and the
+> pre-registered parameter study are in `inercia/PHASE4.md`, `PHASE5.md` and
+> `PHASE6.md`. The core parameter study found no robust improvement after
+> deflation (holdout DSR 0.048); the base configuration stands.
 
 ## How work is done here
 

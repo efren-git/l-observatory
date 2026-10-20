@@ -1,0 +1,740 @@
+{
+  "selection_rule": "highest Sharpe on 2005-01-01..2018-12-31",
+  "selection_period": [
+    "2005-01-01",
+    "2018-12-31"
+  ],
+  "holdout_start": "2019-01-01",
+  "trials": {
+    "prior": 103,
+    "phase6": 12,
+    "all": 115
+  },
+  "variants": {
+    "base": {
+      "params": {
+        "lookbacks": [
+          1,
+          3,
+          6,
+          12
+        ],
+        "target_vol": 0.1,
+        "carry_lag_months": 2,
+        "rebalance": "ME",
+        "use_xs": true,
+        "book_weights": [
+          0.74,
+          0.26
+        ]
+      },
+      "full": {
+        "CAGR": 0.0454,
+        "Vol": 0.0822,
+        "Sharpe": 0.581,
+        "Sortino": 0.795,
+        "MaxDD": -0.2388,
+        "Total": 1.74,
+        "WorstYr": -0.0838,
+        "BestYr": 0.2139
+      },
+      "selection": {
+        "CAGR": 0.0729,
+        "Vol": 0.0849,
+        "Sharpe": 0.871,
+        "Sortino": 1.212,
+        "MaxDD": -0.145,
+        "Total": 1.67,
+        "WorstYr": -0.0766,
+        "BestYr": 0.2139
+      },
+      "holdout": {
+        "CAGR": 0.0086,
+        "Vol": 0.0819,
+        "Sharpe": 0.146,
+        "Sortino": 0.193,
+        "MaxDD": -0.1983,
+        "Total": 0.07,
+        "WorstYr": -0.0838,
+        "BestYr": 0.0784
+      }
+    },
+    "vol_08": {
+      "params": {
+        "lookbacks": [
+          1,
+          3,
+          6,
+          12
+        ],
+        "target_vol": 0.08,
+        "carry_lag_months": 2,
+        "rebalance": "ME",
+        "use_xs": true,
+        "book_weights": [
+          0.74,
+          0.26
+        ]
+      },
+      "full": {
+        "CAGR": 0.0371,
+        "Vol": 0.0672,
+        "Sharpe": 0.575,
+        "Sortino": 0.788,
+        "MaxDD": -0.2139,
+        "Total": 1.29,
+        "WorstYr": -0.0717,
+        "BestYr": 0.1705
+      },
+      "selection": {
+        "CAGR": 0.0597,
+        "Vol": 0.0692,
+        "Sharpe": 0.872,
+        "Sortino": 1.217,
+        "MaxDD": -0.1272,
+        "Total": 1.24,
+        "WorstYr": -0.0717,
+        "BestYr": 0.1705
+      },
+      "holdout": {
+        "CAGR": 0.0065,
+        "Vol": 0.0674,
+        "Sharpe": 0.13,
+        "Sortino": 0.173,
+        "MaxDD": -0.1639,
+        "Total": 0.05,
+        "WorstYr": -0.0707,
+        "BestYr": 0.0634
+      }
+    },
+    "vol_12": {
+      "params": {
+        "lookbacks": [
+          1,
+          3,
+          6,
+          12
+        ],
+        "target_vol": 0.12,
+        "carry_lag_months": 2,
+        "rebalance": "ME",
+        "use_xs": true,
+        "book_weights": [
+          0.74,
+          0.26
+        ]
+      },
+      "full": {
+        "CAGR": 0.0522,
+        "Vol": 0.0955,
+        "Sharpe": 0.581,
+        "Sortino": 0.795,
+        "MaxDD": -0.266,
+        "Total": 2.18,
+        "WorstYr": -0.0994,
+        "BestYr": 0.2551
+      },
+      "selection": {
+        "CAGR": 0.0846,
+        "Vol": 0.099,
+        "Sharpe": 0.87,
+        "Sortino": 1.207,
+        "MaxDD": -0.1569,
+        "Total": 2.1,
+        "WorstYr": -0.0762,
+        "BestYr": 0.2551
+      },
+      "holdout": {
+        "CAGR": 0.0092,
+        "Vol": 0.0943,
+        "Sharpe": 0.144,
+        "Sortino": 0.192,
+        "MaxDD": -0.2249,
+        "Total": 0.07,
+        "WorstYr": -0.0994,
+        "BestYr": 0.1017
+      }
+    },
+    "lb_3_6_12": {
+      "params": {
+        "lookbacks": [
+          3,
+          6,
+          12
+        ],
+        "target_vol": 0.1,
+        "carry_lag_months": 2,
+        "rebalance": "ME",
+        "use_xs": true,
+        "book_weights": [
+          0.74,
+          0.26
+        ]
+      },
+      "full": {
+        "CAGR": 0.0482,
+        "Vol": 0.0822,
+        "Sharpe": 0.613,
+        "Sortino": 0.841,
+        "MaxDD": -0.2106,
+        "Total": 1.91,
+        "WorstYr": -0.0767,
+        "BestYr": 0.2099
+      },
+      "selection": {
+        "CAGR": 0.0738,
+        "Vol": 0.0849,
+        "Sharpe": 0.881,
+        "Sortino": 1.224,
+        "MaxDD": -0.1455,
+        "Total": 1.7,
+        "WorstYr": -0.0767,
+        "BestYr": 0.2099
+      },
+      "holdout": {
+        "CAGR": 0.0149,
+        "Vol": 0.0818,
+        "Sharpe": 0.222,
+        "Sortino": 0.297,
+        "MaxDD": -0.1627,
+        "Total": 0.12,
+        "WorstYr": -0.0464,
+        "BestYr": 0.0598
+      }
+    },
+    "lb_1_3_6": {
+      "params": {
+        "lookbacks": [
+          1,
+          3,
+          6
+        ],
+        "target_vol": 0.1,
+        "carry_lag_months": 2,
+        "rebalance": "ME",
+        "use_xs": true,
+        "book_weights": [
+          0.74,
+          0.26
+        ]
+      },
+      "full": {
+        "CAGR": 0.0494,
+        "Vol": 0.0831,
+        "Sharpe": 0.622,
+        "Sortino": 0.851,
+        "MaxDD": -0.2332,
+        "Total": 1.99,
+        "WorstYr": -0.0893,
+        "BestYr": 0.2238
+      },
+      "selection": {
+        "CAGR": 0.0697,
+        "Vol": 0.0848,
+        "Sharpe": 0.838,
+        "Sortino": 1.161,
+        "MaxDD": -0.1186,
+        "Total": 1.56,
+        "WorstYr": -0.0493,
+        "BestYr": 0.2238
+      },
+      "holdout": {
+        "CAGR": 0.0025,
+        "Vol": 0.0832,
+        "Sharpe": 0.072,
+        "Sortino": 0.095,
+        "MaxDD": -0.2136,
+        "Total": 0.02,
+        "WorstYr": -0.0893,
+        "BestYr": 0.0824
+      }
+    },
+    "lb_6_12": {
+      "params": {
+        "lookbacks": [
+          6,
+          12
+        ],
+        "target_vol": 0.1,
+        "carry_lag_months": 2,
+        "rebalance": "ME",
+        "use_xs": true,
+        "book_weights": [
+          0.74,
+          0.26
+        ]
+      },
+      "full": {
+        "CAGR": 0.0545,
+        "Vol": 0.0814,
+        "Sharpe": 0.693,
+        "Sortino": 0.96,
+        "MaxDD": -0.1956,
+        "Total": 2.34,
+        "WorstYr": -0.0615,
+        "BestYr": 0.2189
+      },
+      "selection": {
+        "CAGR": 0.0793,
+        "Vol": 0.0844,
+        "Sharpe": 0.947,
+        "Sortino": 1.33,
+        "MaxDD": -0.1381,
+        "Total": 1.9,
+        "WorstYr": -0.0615,
+        "BestYr": 0.2189
+      },
+      "holdout": {
+        "CAGR": 0.0237,
+        "Vol": 0.0806,
+        "Sharpe": 0.33,
+        "Sortino": 0.446,
+        "MaxDD": -0.1113,
+        "Total": 0.2,
+        "WorstYr": -0.0446,
+        "BestYr": 0.0743
+      }
+    },
+    "lag_1": {
+      "params": {
+        "lookbacks": [
+          1,
+          3,
+          6,
+          12
+        ],
+        "target_vol": 0.1,
+        "carry_lag_months": 1,
+        "rebalance": "ME",
+        "use_xs": true,
+        "book_weights": [
+          0.74,
+          0.26
+        ]
+      },
+      "full": {
+        "CAGR": 0.0456,
+        "Vol": 0.0823,
+        "Sharpe": 0.583,
+        "Sortino": 0.798,
+        "MaxDD": -0.241,
+        "Total": 1.75,
+        "WorstYr": -0.0839,
+        "BestYr": 0.2151
+      },
+      "selection": {
+        "CAGR": 0.0729,
+        "Vol": 0.0849,
+        "Sharpe": 0.871,
+        "Sortino": 1.211,
+        "MaxDD": -0.1452,
+        "Total": 1.67,
+        "WorstYr": -0.0767,
+        "BestYr": 0.2151
+      },
+      "holdout": {
+        "CAGR": 0.0092,
+        "Vol": 0.0819,
+        "Sharpe": 0.153,
+        "Sortino": 0.203,
+        "MaxDD": -0.1988,
+        "Total": 0.07,
+        "WorstYr": -0.0839,
+        "BestYr": 0.0774
+      }
+    },
+    "lag_3": {
+      "params": {
+        "lookbacks": [
+          1,
+          3,
+          6,
+          12
+        ],
+        "target_vol": 0.1,
+        "carry_lag_months": 3,
+        "rebalance": "ME",
+        "use_xs": true,
+        "book_weights": [
+          0.74,
+          0.26
+        ]
+      },
+      "full": {
+        "CAGR": 0.045,
+        "Vol": 0.0822,
+        "Sharpe": 0.576,
+        "Sortino": 0.788,
+        "MaxDD": -0.2413,
+        "Total": 1.71,
+        "WorstYr": -0.0851,
+        "BestYr": 0.2127
+      },
+      "selection": {
+        "CAGR": 0.0723,
+        "Vol": 0.0849,
+        "Sharpe": 0.865,
+        "Sortino": 1.202,
+        "MaxDD": -0.1447,
+        "Total": 1.65,
+        "WorstYr": -0.0764,
+        "BestYr": 0.2127
+      },
+      "holdout": {
+        "CAGR": 0.0084,
+        "Vol": 0.0819,
+        "Sharpe": 0.144,
+        "Sortino": 0.191,
+        "MaxDD": -0.1987,
+        "Total": 0.07,
+        "WorstYr": -0.0851,
+        "BestYr": 0.079
+      }
+    },
+    "quarterly": {
+      "params": {
+        "lookbacks": [
+          1,
+          3,
+          6,
+          12
+        ],
+        "target_vol": 0.1,
+        "carry_lag_months": 2,
+        "rebalance": "QE",
+        "use_xs": true,
+        "book_weights": [
+          0.74,
+          0.26
+        ]
+      },
+      "full": {
+        "CAGR": 0.0268,
+        "Vol": 0.0843,
+        "Sharpe": 0.356,
+        "Sortino": 0.48,
+        "MaxDD": -0.346,
+        "Total": 0.82,
+        "WorstYr": -0.1049,
+        "BestYr": 0.2253
+      },
+      "selection": {
+        "CAGR": 0.0512,
+        "Vol": 0.0857,
+        "Sharpe": 0.626,
+        "Sortino": 0.859,
+        "MaxDD": -0.1768,
+        "Total": 1.01,
+        "WorstYr": -0.1049,
+        "BestYr": 0.2253
+      },
+      "holdout": {
+        "CAGR": -0.0094,
+        "Vol": 0.0866,
+        "Sharpe": -0.066,
+        "Sortino": -0.086,
+        "MaxDD": -0.261,
+        "Total": -0.07,
+        "WorstYr": -0.0973,
+        "BestYr": 0.0458
+      }
+    },
+    "no_xs": {
+      "params": {
+        "lookbacks": [
+          1,
+          3,
+          6,
+          12
+        ],
+        "target_vol": 0.1,
+        "carry_lag_months": 2,
+        "rebalance": "ME",
+        "use_xs": false,
+        "book_weights": [
+          0.74,
+          0.26
+        ]
+      },
+      "full": {
+        "CAGR": 0.0356,
+        "Vol": 0.0821,
+        "Sharpe": 0.467,
+        "Sortino": 0.642,
+        "MaxDD": -0.2929,
+        "Total": 1.21,
+        "WorstYr": -0.1331,
+        "BestYr": 0.2338
+      },
+      "selection": {
+        "CAGR": 0.0623,
+        "Vol": 0.0847,
+        "Sharpe": 0.756,
+        "Sortino": 1.054,
+        "MaxDD": -0.1475,
+        "Total": 1.32,
+        "WorstYr": -0.0781,
+        "BestYr": 0.2338
+      },
+      "holdout": {
+        "CAGR": -0.0011,
+        "Vol": 0.082,
+        "Sharpe": 0.028,
+        "Sortino": 0.037,
+        "MaxDD": -0.213,
+        "Total": -0.01,
+        "WorstYr": -0.1331,
+        "BestYr": 0.1082
+      }
+    },
+    "book_80_20": {
+      "params": {
+        "lookbacks": [
+          1,
+          3,
+          6,
+          12
+        ],
+        "target_vol": 0.1,
+        "carry_lag_months": 2,
+        "rebalance": "ME",
+        "use_xs": true,
+        "book_weights": [
+          0.8,
+          0.2
+        ]
+      },
+      "full": {
+        "CAGR": 0.0476,
+        "Vol": 0.0866,
+        "Sharpe": 0.581,
+        "Sortino": 0.796,
+        "MaxDD": -0.244,
+        "Total": 1.88,
+        "WorstYr": -0.0926,
+        "BestYr": 0.2258
+      },
+      "selection": {
+        "CAGR": 0.0756,
+        "Vol": 0.0895,
+        "Sharpe": 0.86,
+        "Sortino": 1.198,
+        "MaxDD": -0.1553,
+        "Total": 1.76,
+        "WorstYr": -0.0819,
+        "BestYr": 0.2258
+      },
+      "holdout": {
+        "CAGR": 0.0092,
+        "Vol": 0.0866,
+        "Sharpe": 0.149,
+        "Sortino": 0.198,
+        "MaxDD": -0.2093,
+        "Total": 0.07,
+        "WorstYr": -0.0926,
+        "BestYr": 0.0864
+      }
+    },
+    "book_60_40": {
+      "params": {
+        "lookbacks": [
+          1,
+          3,
+          6,
+          12
+        ],
+        "target_vol": 0.1,
+        "carry_lag_months": 2,
+        "rebalance": "ME",
+        "use_xs": true,
+        "book_weights": [
+          0.6,
+          0.4
+        ]
+      },
+      "full": {
+        "CAGR": 0.0399,
+        "Vol": 0.0748,
+        "Sharpe": 0.56,
+        "Sortino": 0.766,
+        "MaxDD": -0.2282,
+        "Total": 1.43,
+        "WorstYr": -0.0644,
+        "BestYr": 0.1947
+      },
+      "selection": {
+        "CAGR": 0.0663,
+        "Vol": 0.0772,
+        "Sharpe": 0.87,
+        "Sortino": 1.207,
+        "MaxDD": -0.1218,
+        "Total": 1.45,
+        "WorstYr": -0.0644,
+        "BestYr": 0.1947
+      },
+      "holdout": {
+        "CAGR": 0.007,
+        "Vol": 0.0735,
+        "Sharpe": 0.132,
+        "Sortino": 0.176,
+        "MaxDD": -0.1769,
+        "Total": 0.06,
+        "WorstYr": -0.0634,
+        "BestYr": 0.0596
+      }
+    }
+  },
+  "best_selection": {
+    "name": "lb_6_12",
+    "params": {
+      "lookbacks": [
+        6,
+        12
+      ],
+      "target_vol": 0.1,
+      "carry_lag_months": 2,
+      "rebalance": "ME",
+      "use_xs": true,
+      "book_weights": [
+        0.74,
+        0.26
+      ]
+    },
+    "selection": {
+      "CAGR": 0.0793,
+      "Vol": 0.0844,
+      "Sharpe": 0.947,
+      "Sortino": 1.33,
+      "MaxDD": -0.1381,
+      "Total": 1.9,
+      "WorstYr": -0.0615,
+      "BestYr": 0.2189
+    },
+    "holdout": {
+      "CAGR": 0.0237,
+      "Vol": 0.0806,
+      "Sharpe": 0.33,
+      "Sortino": 0.446,
+      "MaxDD": -0.1113,
+      "Total": 0.2,
+      "WorstYr": -0.0446,
+      "BestYr": 0.0743
+    },
+    "full": {
+      "CAGR": 0.0545,
+      "Vol": 0.0814,
+      "Sharpe": 0.693,
+      "Sortino": 0.96,
+      "MaxDD": -0.1956,
+      "Total": 2.34,
+      "WorstYr": -0.0615,
+      "BestYr": 0.2189
+    },
+    "holdout_rank_among_variants": 1
+  },
+  "full_dsr": {
+    "sharpe_daily": 0.04364,
+    "sr0_expected_max": 0.03455,
+    "dsr": 0.7511,
+    "n_trials": 115,
+    "n_obs": 5721,
+    "skew": -0.535,
+    "kurtosis": 7.52
+  },
+  "holdout_dsr": {
+    "sharpe_daily": 0.02081,
+    "sr0_expected_max": 0.05872,
+    "dsr": 0.0479,
+    "n_trials": 115,
+    "n_obs": 1955,
+    "skew": -0.592,
+    "kurtosis": 5.25
+  },
+  "full_bootstrap": {
+    "sharpe": 0.693,
+    "ci_low": 0.281,
+    "ci_high": 1.102,
+    "p_sharpe_gt_0": 0.999,
+    "n_boot": 2000,
+    "block": 21,
+    "n_obs": 5721
+  },
+  "holdout_bootstrap": {
+    "sharpe": 0.33,
+    "ci_low": -0.208,
+    "ci_high": 0.992,
+    "p_sharpe_gt_0": 0.887,
+    "n_boot": 2000,
+    "block": 21,
+    "n_obs": 1955
+  },
+  "cost_stress_best": {
+    "5": {
+      "full": {
+        "CAGR": 0.0545,
+        "Vol": 0.0814,
+        "Sharpe": 0.693,
+        "Sortino": 0.96,
+        "MaxDD": -0.1956,
+        "Total": 2.34,
+        "WorstYr": -0.0615,
+        "BestYr": 0.2189
+      },
+      "holdout": {
+        "CAGR": 0.0237,
+        "Vol": 0.0806,
+        "Sharpe": 0.33,
+        "Sortino": 0.446,
+        "MaxDD": -0.1113,
+        "Total": 0.2,
+        "WorstYr": -0.0446,
+        "BestYr": 0.0743
+      }
+    },
+    "10": {
+      "full": {
+        "CAGR": 0.0472,
+        "Vol": 0.0814,
+        "Sharpe": 0.608,
+        "Sortino": 0.838,
+        "MaxDD": -0.2125,
+        "Total": 1.85,
+        "WorstYr": -0.0686,
+        "BestYr": 0.2124
+      },
+      "holdout": {
+        "CAGR": 0.0156,
+        "Vol": 0.0807,
+        "Sharpe": 0.232,
+        "Sortino": 0.312,
+        "MaxDD": -0.1187,
+        "Total": 0.13,
+        "WorstYr": -0.0527,
+        "BestYr": 0.0648
+      }
+    },
+    "25": {
+      "full": {
+        "CAGR": 0.0257,
+        "Vol": 0.0816,
+        "Sharpe": 0.351,
+        "Sortino": 0.479,
+        "MaxDD": -0.3202,
+        "Total": 0.78,
+        "WorstYr": -0.0898,
+        "BestYr": 0.1929
+      },
+      "holdout": {
+        "CAGR": -0.0082,
+        "Vol": 0.0812,
+        "Sharpe": -0.061,
+        "Sortino": -0.081,
+        "MaxDD": -0.1982,
+        "Total": -0.06,
+        "WorstYr": -0.0766,
+        "BestYr": 0.0367
+      }
+    }
+  },
+  "note": "retrospective, pre-registered split; not a blind forward test. The grid and selection rule were fixed before the holdout table."
+}

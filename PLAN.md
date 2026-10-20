@@ -155,6 +155,24 @@ book, and start a forward paper-trading ledger.
 Implementation: `inercia/src/inercia/pairs.py`, `src/inercia/phase5.py`,
 `src/run_phase5.py`, `src/paper_trade.py`, `inercia/PHASE5.md`.
 
+## Phase 6 — pre-registered core parameter study (added 2026-10-20)
+
+12 one-factor variants, fixed before the run; selection 2005-01→2018-12,
+holdout 2019-01→latest; select by selection Sharpe; DSR with 115 trials.
+
+- Best selection: `lb_6_12` (trend 6/12): selection 0.947, holdout **0.330**,
+  full 0.693, full MaxDD −19.6%.
+- Base: selection 0.871, holdout 0.146, full 0.581, MaxDD −23.9%.
+- Holdout DSR **0.048**; bootstrap −0.208 to 0.992. Not significant after
+  deflation.
+- Cost stress on `lb_6_12`: full/holdout 0.693/0.330 at 5 bps, 0.608/0.232 at
+  10 bps, 0.351/−0.061 at 25 bps.
+- Verdict: no parameter change is justified; keep the base, treat `lb_6_12` as
+  a forward-test candidate.
+
+Implementation: `inercia/src/inercia/phase6.py`, `src/run_phase6.py`,
+`inercia/PHASE6.md`, `output/phase6_metrics.json`.
+
 ## Non-goals
 
 - No live trading.

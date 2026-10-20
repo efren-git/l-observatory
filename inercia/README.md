@@ -380,6 +380,17 @@ lifts Sharpe from 1.183 to 1.199, at the cost of 1.7 points of CAGR. That is a
 preference trade, not alpha. The paper-trading ledger is
 `output/paper_trade_log.csv`; it is a snapshot, not an order router.
 
+## Chapter 14 — Phase 6: pre-registered core parameter study
+
+`PHASE6.md` fixes 12 one-factor variants before the run, selects on 2005–2018
+and reports 2019+ without changing the winner. The best selection variant is
+trend lookbacks 6/12 (`lb_6_12`): selection Sharpe 0.947, holdout **0.330**,
+full 0.693. But the holdout **DSR is 0.048** after 115 trials, and the bootstrap
+lower bound is negative (−0.21). The parameter study does **not** produce a
+robust improvement; the base 74/26, 10%-vol, monthly, 1/3/6/12 configuration
+remains the published choice. `lb_6_12` is a candidate for a forward test, not
+an adopted change.
+
 ## Appendix — References & reproducibility
 
 Selected references: Jegadeesh & Titman 1993; Carhart 1997; Moskowitz, Ooi &
