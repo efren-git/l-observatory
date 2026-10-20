@@ -359,6 +359,15 @@ Sharpe / −14.5% MaxDD**, inverse-vol **1.23 / −15.1%**, versus the 60/40's
 it only cuts the drawdown. The standalone book does not beat the 60/40, and BAB
 is a drag. See `PHASE3.md` for the full tables and caveats.
 
+## Chapter 12 — Phase 4: robustness
+
+`PHASE4.md` holds the robustness checks for the Phase 3 book; `src/run_phase4.py`
+regenerates them. The overlay is positive in every pre-specified fold (worst
+2019–2023 at 0.86–0.89), survives VRP costs up to 25 bps/month at the portfolio
+level, and is positive in all 15 block sample-splits (min 0.49–0.54). The
+post-hoc 24-month holdout is 1.46–1.51, but it is not blind. The 30% size is not
+special: 40% looks better in-sample, which is a warning against re-optimising it.
+
 ## Appendix — References & reproducibility
 
 Selected references: Jegadeesh & Titman 1993; Carhart 1997; Moskowitz, Ooi &

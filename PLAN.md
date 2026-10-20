@@ -119,6 +119,25 @@ run with `inercia/src/run_phase3.py`, written up in `inercia/PHASE3.md`.
   post-audit sensitivity, not the pre-specified claim.
 - DSR 0.972–0.984 with 61 trials; bootstrap CI 0.72–1.83.
 
+## Phase 4 — robustness (added and completed 2026-10-20)
+
+Phase 3 fixed the book; Phase 4 tests whether it survives. No parameters are
+changed.
+
+- Contiguous pre-specified folds: worst 2019–2023 at 0.86–0.89; 2024–2026 at
+  1.65–1.71.
+- VRP cost stress 5/10/25 bps/month: sleeve Sharpe 1.18 / 1.14 / 1.00; the 30%
+  overlay 1.18 / 1.18 / 1.16.
+- Combined-book cost stress 5/10/25 bps: overlay 1.18 / 1.18 / 1.18.
+- 6-block, 2-held-out combinatorial sample-split (15 splits): mean 1.18–1.26,
+  min 0.49–0.54, 100% positive.
+- Post-hoc 24-month holdout: 1.46–1.51; not blind.
+- Overlay-size sensitivity 20/30/40%: monotone; 40% looks better in-sample, so
+  do not re-optimise the 30% choice after seeing it.
+
+Implementation: `inercia/src/inercia/phase4.py`, `src/run_phase4.py`,
+`inercia/PHASE4.md`, `output/phase4_metrics.json`.
+
 ## Non-goals
 
 - No live trading.
