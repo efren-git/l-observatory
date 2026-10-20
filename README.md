@@ -1,8 +1,8 @@
 # l'Observatori
 
-> Catalan: "the observatory." A private laboratory of finance and quantitative research.
+> Catalan: "the observatory." A laboratory of finance and quantitative research.
 
-This folder holds every project Laika builds for Efren. Each project lives in its own subfolder, named in the same poetic spirit — a night before dawn, watched until it breaks into light.
+This folder holds every project Laika builds. Each project lives in its own subfolder, named in the same poetic spirit — a night before dawn, watched until it breaks into light.
 
 ## Projects
 
