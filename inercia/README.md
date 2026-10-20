@@ -349,6 +349,16 @@ The headline numbers that changed:
 | Equity sleeve Sharpe | −0.312 | **−0.566** after costs |
 | Turnover (XS sleeve) | 0.0 (bug) | **11.4×/yr** |
 
+## Chapter 11 — Phase 3: the combined book
+
+The cross-project book is `PHASE3.md`; `src/run_phase3.py` regenerates it. It
+uses inercia's trend and carry once, plus cartograf's BAB and gated VRP, at
+monthly frequency. Window B (2009-11+, gated VRP): 60/40 + 30% equal **1.18
+Sharpe / −14.5% MaxDD**, inverse-vol **1.23 / −15.1%**, versus the 60/40's
+**1.10 / −20.5%**. Window A (2008-01+, legacy SVXY) does **not** improve Sharpe;
+it only cuts the drawdown. The standalone book does not beat the 60/40, and BAB
+is a drag. See `PHASE3.md` for the full tables and caveats.
+
 ## Appendix — References & reproducibility
 
 Selected references: Jegadeesh & Titman 1993; Carhart 1997; Moskowitz, Ooi &

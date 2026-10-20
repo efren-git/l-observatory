@@ -65,7 +65,7 @@ Phase 2 result: the mask repriced BAB 0.17 -> 0.10, the equal-weight book
 (0.77 -> 0.88), but the standalone core no longer clears SPY on Sharpe. Details in
 `cartograf/AUDIT-2026-10-19.md` §5.
 
-## Phase 3 — combined book (pre-specified 2026-10-19)
+## Phase 3 — combined book (pre-specified 2026-10-19; complete 2026-10-20)
 
 Goal: one book that combines the surviving sleeves without double-counting.
 
@@ -105,6 +105,19 @@ Goal: one book that combines the surviving sleeves without double-counting.
 
 **Acceptance.** One script regenerates the combined book and its metrics; a
 synthetic smoke test; README chapter 11 with the honest result.
+
+**Result (2026-10-20).** Implemented in `inercia/src/inercia/phase3.py`,
+run with `inercia/src/run_phase3.py`, written up in `inercia/PHASE3.md`.
+
+- Window B (2009-11+, gated VRP): 60/40 + 30% equal **1.18 Sharpe / −14.5%
+  MaxDD**; inverse-vol **1.23 / −15.1%**; 60/40 **1.10 / −20.5%**. The
+  pre-specified overlay improves both Sharpe and drawdown.
+- Window A (2008-01+, legacy SVXY): overlay **0.86** vs 60/40 **0.86**; only the
+  drawdown improves (−19.7% vs −27.6%). The legacy proxy is not enough.
+- The standalone book does not beat the 60/40 (equal 0.88, inverse-vol 1.09).
+- BAB is a drag; the no-BAB inverse-vol overlay is 1.27 / −14.8%, but that is a
+  post-audit sensitivity, not the pre-specified claim.
+- DSR 0.972–0.984 with 61 trials; bootstrap CI 0.72–1.83.
 
 ## Non-goals
 

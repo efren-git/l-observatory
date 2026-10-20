@@ -11,7 +11,10 @@ def _round(x, n=4):
 
 
 def annual_returns(r: pd.Series) -> pd.Series:
-    r = r.dropna()
+    r = pd.Series(r).dropna()
+    if isinstance(r.index, pd.PeriodIndex):
+        # PeriodIndex does not accept the "YE" resample alias.
+        return (1 + r).groupby(r.index.year).prod() - 1
     return (1 + r).resample("YE").prod() - 1
 
 
@@ -24,7 +27,8 @@ def _completed_annual(r: pd.Series, min_obs: int = 200) -> pd.Series:
     r = pd.Series(r).dropna()
     ann = annual_returns(r)
     counts = r.groupby(r.index.year).size()
-    keep = [y for y in ann.index if int(counts.get(y.year, 0)) >= min_obs]
+    keep = [y for y in ann.index
+            if int(counts.get(int(getattr(y, "year", y)), 0)) >= min_obs]
     return ann.loc[keep]
 
 
@@ -83,7 +87,8 @@ def perf_m(m: pd.Series, rf_monthly: pd.Series | None = None,
     sortino = float(m.mean() * 12.0 / dn) if dn and dn > 0 else None
     ann = annual_returns(m)
     counts = m.groupby(m.index.year).size()
-    years = ann[[y for y in ann.index if int(counts.get(y.year, 0)) >= 12]]
+    years = ann[[y for y in ann.index
+                 if int(counts.get(int(getattr(y, "year", y)), 0)) >= 12]]
     out = {
         "CAGR": _round(eq.iloc[-1] ** (12.0 / len(m)) - 1),
         "Vol": _round(vol),

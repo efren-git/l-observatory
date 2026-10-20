@@ -18,6 +18,11 @@ This folder holds every project Laika builds for Efren. Each project lives in it
 > before/after tables are in `HANDOVER-2026-10-20.md`,
 > `cartograf/AUDIT-2026-10-20.md` and `inercia/AUDIT-2026-10-20.md`. The body
 > chapters remain the historical record.
+>
+> **Phase 3 is complete.** The cross-project book is `inercia/PHASE3.md`; on
+> Window B (2009-11+) a 30% allocation lifts the 60/40 from 1.10 to 1.18–1.23
+> Sharpe and cuts the drawdown to about −15%. Window A (legacy SVXY) only cuts
+> the drawdown. Standalone, the book does not beat the 60/40.
 
 ## How work is done here
 
