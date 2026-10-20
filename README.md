@@ -10,8 +10,14 @@ This folder holds every project Laika builds for Efren. Each project lives in it
 |---|---|---|
 | How Long Until Dawn | nit_d'alba/ | Complete — macro fragility engine |
 | Can You Predict the Market? | augur/ | Complete — ML, honest verdict |
-| A Strategy That Actually Survives | inercia/ | Complete — refactored 2026-10-19; trend + carry book |
-| How Much of the Literature Actually Survives? | cartograf/ | Complete — 5 edges + network momentum + proper VRP |
+| A Strategy That Actually Survives | inercia/ | Complete — refactored 2026-10-19; corrected 2026-10-20 |
+| How Much of the Literature Actually Survives? | cartograf/ | Complete — 5 edges + network momentum + proper VRP; corrected 2026-10-20 |
+
+> **2026-10-20 correction.** Both books were re-run after fixing a turnover
+> denominator and a month-end alignment bug. The corrected headline and the
+> before/after tables are in `HANDOVER-2026-10-20.md`,
+> `cartograf/AUDIT-2026-10-20.md` and `inercia/AUDIT-2026-10-20.md`. The body
+> chapters remain the historical record.
 
 ## How work is done here
 

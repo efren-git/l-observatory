@@ -1,42 +1,72 @@
 {
   "base_book": {
-    "CAGR": 0.0618,
-    "Vol": 0.1085,
-    "Sharpe": 0.607,
-    "Sortino": 0.752,
+    "CAGR": 0.0551,
+    "Vol": 0.1092,
+    "Sharpe": 0.546,
+    "Sortino": 0.747,
     "MaxDD": -0.3629,
-    "Total": 2.9,
+    "Total": 2.38,
     "WorstYr": -0.1298,
-    "BestYr": 0.3468
+    "BestYr": 0.3735
+  },
+  "tilt_k0.3_gross": {
+    "CAGR": 0.0443,
+    "Vol": 0.1082,
+    "Sharpe": 0.454,
+    "Sortino": 0.619,
+    "MaxDD": -0.3748,
+    "Total": 1.67,
+    "WorstYr": -0.1587,
+    "BestYr": 0.315
   },
   "tilt_k0.3": {
-    "CAGR": 0.0599,
-    "Vol": 0.108,
-    "Sharpe": 0.593,
-    "Sortino": 0.738,
-    "MaxDD": -0.3748,
-    "Total": 2.75,
-    "WorstYr": -0.1131,
-    "BestYr": 0.3949
+    "CAGR": 0.0429,
+    "Vol": 0.1082,
+    "Sharpe": 0.442,
+    "Sortino": 0.602,
+    "MaxDD": -0.3814,
+    "Total": 1.59,
+    "WorstYr": -0.1587,
+    "BestYr": 0.3131
+  },
+  "tilt_k0.6_gross": {
+    "CAGR": 0.0397,
+    "Vol": 0.1093,
+    "Sharpe": 0.411,
+    "Sortino": 0.559,
+    "MaxDD": -0.3805,
+    "Total": 1.42,
+    "WorstYr": -0.1587,
+    "BestYr": 0.2934
   },
   "tilt_k0.6": {
-    "CAGR": 0.0566,
-    "Vol": 0.1097,
-    "Sharpe": 0.557,
-    "Sortino": 0.682,
-    "MaxDD": -0.3805,
-    "Total": 2.49,
-    "WorstYr": -0.1228,
-    "BestYr": 0.3947
+    "CAGR": 0.0371,
+    "Vol": 0.1093,
+    "Sharpe": 0.388,
+    "Sortino": 0.527,
+    "MaxDD": -0.3928,
+    "Total": 1.29,
+    "WorstYr": -0.1587,
+    "BestYr": 0.2902
+  },
+  "tilt_k1.0_gross": {
+    "CAGR": 0.0312,
+    "Vol": 0.1101,
+    "Sharpe": 0.334,
+    "Sortino": 0.452,
+    "MaxDD": -0.4023,
+    "Total": 1.01,
+    "WorstYr": -0.1587,
+    "BestYr": 0.2518
   },
   "tilt_k1.0": {
-    "CAGR": 0.0487,
-    "Vol": 0.111,
-    "Sharpe": 0.484,
-    "Sortino": 0.579,
-    "MaxDD": -0.4023,
-    "Total": 1.94,
-    "WorstYr": -0.1318,
-    "BestYr": 0.3761
+    "CAGR": 0.0275,
+    "Vol": 0.1101,
+    "Sharpe": 0.302,
+    "Sortino": 0.408,
+    "MaxDD": -0.4187,
+    "Total": 0.85,
+    "WorstYr": -0.1587,
+    "BestYr": 0.2481
   }
 }

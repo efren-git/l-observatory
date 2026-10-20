@@ -68,7 +68,9 @@ def carry_inputs(lag_months: int = 2) -> tuple[pd.DataFrame, pd.DataFrame, pd.Da
     rd = rates.reindex(fxret.index, method="ffill")
     ud = usd.reindex(fxret.index, method="ffill")
     carry = rd.sub(ud, axis=0)
-    total = fxret.add(carry / 100.0 / 252.0, fill_value=0.0)
+    # Do not use add(..., fill_value=0): a missing FX return would become pure
+    # carry, a phantom positive return for an instrument that is not live.
+    total = fxret.add(carry / 100.0 / 252.0)
     return fxret, carry, total
 
 

@@ -20,6 +20,23 @@ def annual_returns(daily: pd.Series) -> pd.Series:
     return (1 + d).groupby(d.index.year).prod() - 1
 
 
+def _completed_annual(daily: pd.Series, min_obs: int = 200) -> pd.Series:
+    """Annual returns for complete years only (exclude the current stub)."""
+    d = pd.Series(daily).dropna()
+    ann = annual_returns(d)
+    counts = d.groupby(d.index.year).size()
+    keep = [y for y in ann.index if int(counts.get(y, 0)) >= min_obs]
+    return ann.loc[keep]
+
+
+def downside_deviation(daily: pd.Series, periods: int = TD) -> float:
+    """Downside deviation relative to zero, the Sortino denominator."""
+    d = pd.Series(daily).dropna().astype(float)
+    if not len(d):
+        return np.nan
+    return float(np.sqrt(np.mean(np.minimum(d, 0.0) ** 2)) * np.sqrt(periods))
+
+
 def perf(daily: pd.Series, rf_daily: pd.Series | None = None,
          min_obs: int = 40) -> dict:
     """Daily performance. rf_daily adds excess-return columns.
@@ -36,10 +53,10 @@ def perf(daily: pd.Series, rf_daily: pd.Series | None = None,
     cagr = eq.iloc[-1] ** (1 / years) - 1
     vol = d.std() * np.sqrt(TD)
     sharpe = d.mean() / d.std() * np.sqrt(TD) if d.std() > 0 else 0.0
-    dn = d[d < 0].std() * np.sqrt(TD)
+    dn = downside_deviation(d, TD)
     sortino = d.mean() * TD / dn if dn and dn > 0 else 0.0
     dd = eq / eq.cummax() - 1
-    ann = annual_returns(d)
+    ann = _completed_annual(d, 200)
     out = dict(CAGR=_r(cagr), Vol=_r(vol), Sharpe=_r(sharpe, 3),
                Sortino=_r(sortino, 3), MaxDD=_r(dd.min()),
                Total=_r(eq.iloc[-1] - 1), WorstYear=_r(ann.min()),
@@ -63,7 +80,8 @@ def perf_m(monthly: pd.Series, rf_monthly: pd.Series | None = None,
     eq = (1 + m).cumprod()
     years = len(m) / 12
     vol = m.std() * np.sqrt(12)
-    dn = m[m < 0].std() * np.sqrt(12)
+    dn = downside_deviation(m, 12)
+    ann = _completed_annual(m, 12)
     out = dict(
         CAGR=_r(eq.iloc[-1] ** (1 / years) - 1),
         Vol=_r(vol),
@@ -71,7 +89,8 @@ def perf_m(monthly: pd.Series, rf_monthly: pd.Series | None = None,
         Sortino=_r(m.mean() * 12 / dn, 3) if dn and dn > 0 else None,
         MaxDD=_r((eq / eq.cummax() - 1).min()),
         WorstMonth=_r(m.min()),
-        WorstYear=_r(annual_returns(m).min()),
+        WorstYear=_r(ann.min()) if len(ann) else None,
+        BestYear=_r(ann.max()) if len(ann) else None,
         Total=_r(eq.iloc[-1] - 1),
     )
     if rf_monthly is not None:
@@ -115,6 +134,37 @@ def drawdown(daily: pd.Series) -> tuple[pd.Series, pd.Series]:
 def sharpe_daily(daily: pd.Series) -> float:
     d = pd.Series(daily).dropna()
     return float(d.mean() / d.std()) if d.std() > 0 else 0.0
+
+
+def bootstrap_sharpe(daily: pd.Series, n_boot: int = 2000, block: int = 21,
+                     periods: int = TD, seed: int = 7) -> dict:
+    """Moving-block bootstrap confidence interval for the annualised Sharpe."""
+    r = pd.Series(daily).dropna().astype(float).to_numpy()
+    n = len(r)
+    if n < 2 * block:
+        return {}
+    rng = np.random.default_rng(seed)
+    n_blocks = int(np.ceil(n / block))
+    srs = []
+    for _ in range(n_boot):
+        starts = rng.integers(0, n - block + 1, size=n_blocks)
+        sample = np.concatenate([r[s:s + block] for s in starts])[:n]
+        sd = float(sample.std())
+        if sd > 0:
+            srs.append(float(sample.mean() / sd * np.sqrt(periods)))
+    srs = np.asarray(srs)
+    if not len(srs):
+        return {}
+    lo, hi = np.percentile(srs, [2.5, 97.5])
+    return {
+        "sharpe": _r(float(pd.Series(r).mean() / pd.Series(r).std() * np.sqrt(periods)), 3),
+        "ci_low": _r(float(lo), 3),
+        "ci_high": _r(float(hi), 3),
+        "p_sharpe_gt_0": _r(float((srs > 0).mean()), 3),
+        "n_boot": int(n_boot),
+        "block": int(block),
+        "n_obs": int(n),
+    }
 
 
 def deflated_sharpe(sr: float, n_trials: int, n_obs: int,

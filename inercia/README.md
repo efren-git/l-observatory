@@ -2,11 +2,18 @@
 
 *A readable walkthrough of everything in this project: what it is, why it exists, how the data works, and what the results mean.*
 
-Project #3 of l'Observatori. Status: **complete, refactored 2026-10-19**. The refactor
+Project #3 of l'Observatori. Status: **complete, refactored 2026-10-19; corrected 2026-10-20**. The refactor
 consolidated a dozen duplicated scripts into one shared library, fixed a turnover
 bug, removed a look-ahead in the volatility scaling, and made the FX-carry timing
 publication-safe. Every number below comes from one run and agrees with
 `output/*.json`.
+
+> **2026-10-20 correction.** Sortino now uses downside deviation; annual Worst/Best exclude
+> partial years; the drawdown/regime/tilt overlays pay 5 bps per unit of exposure change; a
+> monthly-rebalanced 60/40 and an overlay DSR/bootstrap were added. Corrected headline: book
+> **0.581**; 10%-target book **0.546**; 60/40+30% overlay **0.895** daily / **1.036** monthly;
+> overlay DSR **0.987**. Full before/after tables and the cost-stress table:
+> `AUDIT-2026-10-20.md`. The body is the historical record.
 
 ## How to read this book
 

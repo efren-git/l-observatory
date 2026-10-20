@@ -15,6 +15,27 @@ def annual_returns(r: pd.Series) -> pd.Series:
     return (1 + r).resample("YE").prod() - 1
 
 
+def _completed_annual(r: pd.Series, min_obs: int = 200) -> pd.Series:
+    """Annual returns for complete years only.
+
+    The final year of a backtest is usually partial. Including it in WorstYr /
+    BestYr can make a nine-month stub look like a calendar-year result.
+    """
+    r = pd.Series(r).dropna()
+    ann = annual_returns(r)
+    counts = r.groupby(r.index.year).size()
+    keep = [y for y in ann.index if int(counts.get(y.year, 0)) >= min_obs]
+    return ann.loc[keep]
+
+
+def downside_deviation(r: pd.Series, periods: int = 252) -> float:
+    """Downside deviation relative to zero, the Sortino denominator."""
+    r = pd.Series(r).dropna().astype(float)
+    if not len(r):
+        return np.nan
+    return float(np.sqrt(np.mean(np.minimum(r, 0.0) ** 2)) * np.sqrt(periods))
+
+
 def perf(r: pd.Series, rf: pd.Series | None = None, periods: int = 252) -> dict:
     """Return the standard metric block. rf adds excess-return columns."""
     r = pd.Series(r).dropna().astype(float)
@@ -24,10 +45,10 @@ def perf(r: pd.Series, rf: pd.Series | None = None, periods: int = 252) -> dict:
     vol = float(r.std() * np.sqrt(periods))
     cagr = float(eq.iloc[-1] ** (periods / len(r)) - 1)
     sharpe = float(r.mean() / r.std() * np.sqrt(periods)) if r.std() > 0 else 0.0
-    downside = float(r[r < 0].std() * np.sqrt(periods)) if (r < 0).any() else np.nan
+    downside = downside_deviation(r, periods)
     sortino = float(r.mean() * periods / downside) if downside and downside > 0 else None
     maxdd = float((eq / eq.cummax() - 1).min())
-    years = annual_returns(r)
+    years = _completed_annual(r, 200)
     out = {
         "CAGR": _round(cagr),
         "Vol": _round(vol),
@@ -49,6 +70,75 @@ def perf(r: pd.Series, rf: pd.Series | None = None, periods: int = 252) -> dict:
     return out
 
 
+def perf_m(m: pd.Series, rf_monthly: pd.Series | None = None,
+           min_obs: int = 24) -> dict:
+    """Monthly performance, annualised with 12 periods."""
+    m = pd.Series(m).dropna().astype(float)
+    if len(m) < min_obs:
+        return {}
+    eq = (1 + m).cumprod()
+    vol = float(m.std() * np.sqrt(12.0))
+    sharpe = float(m.mean() / m.std() * np.sqrt(12.0)) if m.std() > 0 else 0.0
+    dn = downside_deviation(m, 12)
+    sortino = float(m.mean() * 12.0 / dn) if dn and dn > 0 else None
+    ann = annual_returns(m)
+    counts = m.groupby(m.index.year).size()
+    years = ann[[y for y in ann.index if int(counts.get(y.year, 0)) >= 12]]
+    out = {
+        "CAGR": _round(eq.iloc[-1] ** (12.0 / len(m)) - 1),
+        "Vol": _round(vol),
+        "Sharpe": _round(sharpe, 3),
+        "Sortino": _round(sortino, 3),
+        "MaxDD": _round(float((eq / eq.cummax() - 1).min())),
+        "WorstMonth": _round(float(m.min())),
+        "WorstYear": _round(years.min()) if len(years) else None,
+        "BestYear": _round(years.max()) if len(years) else None,
+        "Total": _round(eq.iloc[-1] - 1, 2),
+    }
+    if rf_monthly is not None:
+        rf = pd.Series(rf_monthly).reindex(m.index).ffill().fillna(0.0)
+        ex = m - rf
+        out["CAGR_excess_series"] = _round((1 + ex).cumprod().iloc[-1] ** (12.0 / len(m)) - 1)
+        out["Sharpe_excess"] = _round(ex.mean() / ex.std() * np.sqrt(12.0), 3) if ex.std() > 0 else None
+    return out
+
+
+def bootstrap_sharpe(r: pd.Series, n_boot: int = 2000, block: int = 21,
+                     periods: int = 252, seed: int = 7) -> dict:
+    """Moving-block bootstrap confidence interval for the annualised Sharpe.
+
+    A single backtest path is one draw. Blocks preserve some autocorrelation and
+    volatility clustering; the interval is the honest way to show how much of the
+    Sharpe is sampling noise.
+    """
+    r = pd.Series(r).dropna().astype(float).to_numpy()
+    n = len(r)
+    if n < 2 * block:
+        return {}
+    rng = np.random.default_rng(seed)
+    n_blocks = int(np.ceil(n / block))
+    srs = []
+    for _ in range(n_boot):
+        starts = rng.integers(0, n - block + 1, size=n_blocks)
+        sample = np.concatenate([r[s:s + block] for s in starts])[:n]
+        sd = float(sample.std())
+        if sd > 0:
+            srs.append(float(sample.mean() / sd * np.sqrt(periods)))
+    srs = np.asarray(srs)
+    if not len(srs):
+        return {}
+    lo, hi = np.percentile(srs, [2.5, 97.5])
+    return {
+        "sharpe": _round(float(pd.Series(r).mean() / pd.Series(r).std() * np.sqrt(periods)), 3),
+        "ci_low": _round(float(lo), 3),
+        "ci_high": _round(float(hi), 3),
+        "p_sharpe_gt_0": _round(float((srs > 0).mean()), 3),
+        "n_boot": int(n_boot),
+        "block": int(block),
+        "n_obs": int(n),
+    }
+
+
 def vol_target(r: pd.Series, target: float = 0.10, window: int = 60,
                max_leverage: float = 3.0) -> tuple[pd.Series, pd.Series]:
     """Scale a daily return series to a target annualised volatility.
@@ -61,16 +151,24 @@ def vol_target(r: pd.Series, target: float = 0.10, window: int = 60,
     return r * scale, scale
 
 
-def drawdown_control(r: pd.Series, maxdd: float = 0.20, floor: float = 0.0) -> pd.Series:
-    """CPPI-style exposure cut as the drawdown deepens (no look-ahead)."""
+def drawdown_control(r: pd.Series, maxdd: float = 0.20, floor: float = 0.0,
+                     cost_bps: float = 5.0) -> pd.Series:
+    """CPPI-style exposure cut as the drawdown deepens (no look-ahead).
+
+    Changing the exposure multiplier is a trade: the overlay pays cost_bps per
+    unit of exposure change. Pass cost_bps=0.0 for the gross comparison.
+    """
     r = pd.Series(r).fillna(0.0)
     eq = 1.0
     peak = 1.0
+    prev = 1.0
     out = []
     for x in r:
         dd = eq / peak - 1.0
         mult = float(np.clip(1.0 + dd / maxdd, floor, 1.0))
-        rr = float(x) * mult
+        trade = abs(mult - prev)
+        rr = float(x) * mult - trade * cost_bps / 1e4
+        prev = mult
         eq *= 1.0 + rr
         peak = max(peak, eq)
         out.append(rr)

@@ -3,10 +3,17 @@
 *A readable walkthrough of everything in this project: what it asks, why, how the data
 works, and what the results mean.*
 
-Project #4 of l'Observatori. Status: **refactored and re-audited 2026-10-19** — five published return
+Project #4 of l'Observatori. Status: **refactored and re-audited 2026-10-19; corrected 2026-10-20** — five published return
 patterns tested on free data, walk-forward, net of costs, plus an equity-factor cross-check, plus
 three follow-ups: **network momentum** (§8), a **proper volatility-risk-premium** test (§9) and
 **cross-asset carry** (§10).
+
+> **2026-10-20 correction.** The numbers in Chapters 5–10 are the pre-fix run. A month-end
+> alignment bug in the VRP/core series and a turnover-denominator bug were fixed. Corrected
+> headline: gated VRP Sharpe **0.90 → 1.18**; core (trend+BAB+VRP) **0.66 → 0.85**; 60/40+30%
+> core overlay **1.24** monthly / **1.26** daily, DSR **0.985**; BAB **0.10 → −0.08** after requiring a full beta
+> window. Full before/after tables and caveats: `AUDIT-2026-10-20.md`. Treat the body tables as
+> the historical record, not the current numbers.
 
 ## How to read this book
 

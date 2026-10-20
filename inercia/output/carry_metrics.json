@@ -1,40 +1,40 @@
 {
   "carry": {
-    "CAGR": 0.0135,
-    "Vol": 0.0917,
-    "Sharpe": 0.192,
-    "Sortino": 0.232,
-    "MaxDD": -0.2991,
-    "Total": 0.36,
-    "WorstYr": -0.2203,
-    "BestYr": 0.1892
+    "CAGR": 0.0119,
+    "Vol": 0.0981,
+    "Sharpe": 0.17,
+    "Sortino": 0.234,
+    "MaxDD": -0.288,
+    "Total": 0.31,
+    "WorstYr": -0.2075,
+    "BestYr": 0.1904
   },
   "trend": {
     "CAGR": 0.0546,
     "Vol": 0.1051,
     "Sharpe": 0.559,
-    "Sortino": 0.708,
+    "Sortino": 0.772,
     "MaxDD": -0.264,
     "Total": 2.34,
     "WorstYr": -0.1216,
     "BestYr": 0.2658
   },
   "combo_50_50": {
-    "CAGR": 0.045,
-    "Vol": 0.0776,
-    "Sharpe": 0.607,
-    "Sortino": 0.76,
+    "CAGR": 0.036,
+    "Vol": 0.0781,
+    "Sharpe": 0.493,
+    "Sortino": 0.68,
     "MaxDD": -0.3204,
-    "Total": 1.72,
-    "WorstYr": -0.089,
-    "BestYr": 0.2915
+    "Total": 1.23,
+    "WorstYr": -0.087,
+    "BestYr": 0.2649
   },
-  "corr_trend_carry": 0.033,
+  "corr_trend_carry": 0.017,
   "carry_meta": {
     "lag_months": 2,
     "carry_mean": -0.073
   },
-  "carry_turnover": 6.5,
+  "carry_turnover": 7.8,
   "excess_convention": {
     "net_long_benchmarks": [
       "SPY",

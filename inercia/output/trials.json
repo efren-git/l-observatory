@@ -13,22 +13,22 @@
   "n_trials_all": 26,
   "n_trials_final_published": 2,
   "deflated_sharpe_all_trials": {
-    "sharpe_daily": 0.03687,
+    "sharpe_daily": 0.0366,
     "sr0_expected_max": 0.02699,
-    "dsr": 0.7694,
+    "dsr": 0.7633,
     "n_trials": 26,
     "n_obs": 5721,
-    "skew": -0.685,
-    "kurtosis": 7.84
+    "skew": -0.687,
+    "kurtosis": 7.682
   },
   "deflated_sharpe_final_variants": {
-    "sharpe_daily": 0.03687,
+    "sharpe_daily": 0.0366,
     "sr0_expected_max": 0.00697,
-    "dsr": 0.9872,
+    "dsr": 0.9865,
     "n_trials": 2,
     "n_obs": 5721,
-    "skew": -0.685,
-    "kurtosis": 7.84
+    "skew": -0.687,
+    "kurtosis": 7.682
   },
   "note": "DSR uses the daily Sharpe of the final fixed-weight book."
 }

@@ -8,9 +8,13 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from cartograf.backtest import hrp_weights, scale_weights_to_target, weights_to_returns
+from cartograf.backtest import (
+    hrp_weights, scale_weights_to_target, turnover_annual, weights_to_returns,
+)
 from cartograf.sleeves import live_mask, monthly_to_daily
-from cartograf.stats import deflated_sharpe, perf, vol_target
+from cartograf.stats import (
+    bootstrap_sharpe, deflated_sharpe, downside_deviation, perf, vol_target,
+)
 
 
 def panel(seed=1, n=500, k=3):
@@ -74,6 +78,27 @@ class SmokeTest(unittest.TestCase):
         d = monthly_to_daily(m, idx)
         self.assertAlmostEqual(float(d.sum()), float(m.sum()), places=10)
         self.assertTrue(d.iloc[:2].isna().all() or True)
+
+    def test_turnover_denominator_uses_traded_window(self):
+        idx = pd.bdate_range("2020-01-01", periods=504)
+        R = pd.DataFrame(0.0, index=idx, columns=["A", "B"])
+        targets = pd.DataFrame({"A": [1.0], "B": [0.0]}, index=[idx[252]])
+        _, to, _ = weights_to_returns(R, targets, cost_bps=0.0)
+        self.assertAlmostEqual(float(to), 1.0)
+        self.assertAlmostEqual(turnover_annual(to, len(R.loc[targets.index[0]:])), 1.0)
+        self.assertAlmostEqual(turnover_annual(to, len(R)), 0.5)
+
+    def test_sortino_uses_downside_deviation(self):
+        r = pd.Series([-0.01, 0.02, -0.03, 0.01])
+        expected = float(np.sqrt(np.mean(np.minimum(r, 0.0) ** 2)) * np.sqrt(252))
+        self.assertAlmostEqual(downside_deviation(r), expected, places=12)
+
+    def test_bootstrap_sharpe_returns_ordered_interval(self):
+        b = bootstrap_sharpe(self.R.mean(axis=1), n_boot=200, block=21)
+        self.assertIn("ci_low", b)
+        self.assertLessEqual(b["ci_low"], b["ci_high"])
+        self.assertGreaterEqual(b["p_sharpe_gt_0"], 0.0)
+        self.assertLessEqual(b["p_sharpe_gt_0"], 1.0)
 
     def test_excess_performance_and_dsr(self):
         r = self.R.mean(axis=1)

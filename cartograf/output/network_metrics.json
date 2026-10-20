@@ -8,34 +8,34 @@
     "top_k": 5,
     "blend": 0.5
   },
-  "avg_lead_corr_kept": 0.1146,
+  "avg_lead_corr_kept": 0.1147,
   "trend_only": {
     "CAGR": 0.0669,
     "Vol": 0.1208,
     "Sharpe": 0.597,
-    "Sortino": 0.793,
+    "Sortino": 0.832,
     "MaxDD": -0.2626,
     "Total": 2.3525,
     "WorstYear": -0.1558,
     "BestYear": 0.2398
   },
   "network_only": {
-    "CAGR": 0.0288,
-    "Vol": 0.1223,
-    "Sharpe": 0.293,
-    "Sortino": 0.366,
+    "CAGR": 0.029,
+    "Vol": 0.1222,
+    "Sharpe": 0.295,
+    "Sortino": 0.403,
     "MaxDD": -0.3725,
-    "Total": 0.6985,
+    "Total": 0.706,
     "WorstYear": -0.2083,
     "BestYear": 0.2512
   },
   "trend_plus_network": {
-    "CAGR": 0.0771,
+    "CAGR": 0.0772,
     "Vol": 0.1184,
-    "Sharpe": 0.686,
-    "Sortino": 0.923,
+    "Sharpe": 0.688,
+    "Sortino": 0.968,
     "MaxDD": -0.2742,
-    "Total": 3.0057,
+    "Total": 3.0163,
     "WorstYear": -0.1552,
     "BestYear": 0.2541
   },
@@ -43,7 +43,7 @@
     "CAGR": 0.118,
     "Vol": 0.1969,
     "Sharpe": 0.665,
-    "Sortino": 0.812,
+    "Sortino": 0.942,
     "MaxDD": -0.5148,
     "Total": 7.0427,
     "WorstYear": -0.315,
@@ -55,9 +55,9 @@
   "corr_own_vs_net": 0.417,
   "corr_comb_vs_spy": 0.072,
   "turnover": {
-    "own": 17.74,
-    "net": 18.4,
-    "comb": 16.7
+    "own": 22.55,
+    "net": 23.37,
+    "comb": 21.23
   },
   "excess_convention": {
     "net_long_benchmarks": [
@@ -71,7 +71,7 @@
     "CAGR": 0.0836,
     "Vol": 0.0895,
     "Sharpe": 0.942,
-    "Sortino": 1.242,
+    "Sortino": 1.34,
     "MaxDD": -0.1777,
     "Total": 3.4846,
     "WorstYear": -0.0738,
@@ -84,13 +84,13 @@
     "CAGR": 0.0866,
     "Vol": 0.09,
     "Sharpe": 0.968,
-    "Sortino": 1.265,
+    "Sortino": 1.382,
     "MaxDD": -0.1666,
-    "Total": 3.7195,
+    "Total": 3.7232,
     "WorstYear": -0.0584,
     "BestYear": 0.1904,
     "CAGR_excess": 0.0709,
     "Vol_excess": 0.09,
-    "Sharpe_excess": 0.806
+    "Sharpe_excess": 0.807
   }
 }

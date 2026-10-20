@@ -35,17 +35,23 @@ def group_map(cols):
     return {k: v for k, v in g.items() if len(v) >= 2}
 
 
-def live_mask(px: pd.DataFrame, dates, cols) -> pd.DataFrame:
-    """Boolean [dates x cols]: the fund has a valid price on or before each date.
+def live_mask(px: pd.DataFrame, dates, cols, min_obs: int = 20,
+              recent: int = 5) -> pd.DataFrame:
+    """Boolean [dates x cols]: the fund has enough recent valid prices.
 
     The first valid observation is the listing date. A name is never scored or
-    weighted before it existed. Signal lookbacks (252 days for momentum, 1260
-    for value) remain NaN until computable; this mask only removes the phantom
-    cross-section that a zero-filled return panel would otherwise create.
+    weighted before it existed, but one old price is not enough: require
+    min_obs observations and at least one print in the last recent days.
+    Signal lookbacks (252 days for momentum, 1260 for value) remain NaN until
+    computable; this mask removes the phantom cross-section that a zero-filled
+    return panel would otherwise create.
     """
     cols = list(cols)
-    seen = px.reindex(columns=cols).notna().cumsum()
-    return seen.reindex(pd.DatetimeIndex(dates), method="ffill").fillna(0.0).gt(0)
+    valid = px.reindex(columns=cols).notna()
+    seen = valid.cumsum()
+    recent_valid = valid.rolling(recent, min_periods=1).sum().gt(0)
+    live = ((seen >= min_obs) & recent_valid).astype(float)
+    return live.reindex(pd.DatetimeIndex(dates), method="ffill").fillna(0.0).gt(0.5)
 
 
 def group_z(df, groups):
@@ -82,7 +88,10 @@ def _build(rows, me, cols, R, cost=COST):
     w = w.where(live_mask(prices(), me, cols), 0.0)
     w = scale_weights_to_target(w, R, TARGET)
     net, to, _ = weights_to_returns(R, w, cost)
-    return net, turnover_annual(to, len(R)), w
+    # Turnover is generated only from the first target onward. Dividing by the
+    # full price-panel length (which may start years earlier) understates it.
+    traded_days = len(R.loc[me[0]:]) if len(me) else len(R)
+    return net, turnover_annual(to, traded_days), w
 
 
 def trend(px, R, tradable, me, groups):
@@ -110,13 +119,19 @@ def value(px, R, tradable, me, groups):
 
 def bab(R, tradable, me, groups):
     eq = [t for t in tradable if UNIVERSE.get(t, "").startswith("equity")]
-    spy = R["SPY"]
-    beta = pd.DataFrame({t: R[t].rolling(252).cov(spy) / spy.rolling(252).var()
-                         for t in eq})
-    score = -(beta.sub(1.0))
-    score = score.div((R[eq].rolling(63).std() * np.sqrt(252)).clip(lower=0.05))
-    # R is zero-filled before an ETF lists, so beta=0 and vol=0 produce a huge
-    # phantom score. Mask the name until it has a real 252-day history too.
+    # R is zero-filled before an ETF lists. A rolling beta computed on those
+    # zeros is biased toward zero for the first year after listing, so estimate
+    # beta and vol from the un-filled price panel and require full windows.
+    R_nan = prices().pct_change()
+    spy = R_nan["SPY"]
+    beta = pd.DataFrame({
+        t: R_nan[t].rolling(252, min_periods=252).cov(spy)
+        / spy.rolling(252, min_periods=252).var()
+        for t in eq
+    })
+    vol = R_nan[eq].rolling(63, min_periods=63).std() * np.sqrt(252)
+    score = -(beta.sub(1.0)).div(vol.clip(lower=0.05))
+    # Mask the name until it has a live price and enough history.
     score = score.where(live_mask(prices(), score.index, eq), np.nan)
     rows = score.div(score.abs().sum(axis=1).replace(0, np.nan), axis=0)
     net, to, _ = _build(rows.reindex(me).fillna(0.0), me, tradable, R, COST)
@@ -146,14 +161,20 @@ def vrp_monthly():
     per = logret.index.to_period("M")
     rv = logret.groupby(per).apply(lambda s: float(np.sqrt((s ** 2).mean() * 252)) * 100)
     rv.index = rv.index.to_timestamp(how="end").normalize()
+    # me is the last *trading* day, rv is the calendar month-end. Align by
+    # month period, not by exact timestamp, or every month whose last calendar
+    # day is a weekend silently drops out of the VRP series.
+    rv_by_month = rv.copy()
+    rv_by_month.index = rv_by_month.index.to_period("M")
+    rv_aligned = rv_by_month.reindex(me.to_period("M")).to_numpy()
 
     vix = term["vix"].reindex(spy.index).ffill()
     vix3m = term["vix3m"].reindex(spy.index).ffill()
     df = pd.DataFrame({
         "K": vix.reindex(me).shift(1),
         "K3": vix3m.reindex(me).shift(1),
-        "RV": rv.reindex(me),
-    }).dropna(subset=["K", "RV"])
+        "RV": rv_aligned,
+    }, index=me).dropna(subset=["K", "RV"])
     df["pnl"] = (df["K"] ** 2 - df["RV"] ** 2) / (2 * df["K"])
     df["contango"] = df["K3"].notna() & (df["K"] < df["K3"])
 
@@ -172,7 +193,11 @@ def vrp_monthly():
 
     if "SVXY" in px.columns:
         sv = px["SVXY"].resample("ME").last().pct_change()
-        sv = sv.reindex(df.index)
+        # df.index is the last trading day; align the calendar month-end SVXY
+        # series by period, not exact timestamp.
+        sv.index = sv.index.to_period("M")
+        sv = sv.reindex(df.index.to_period("M"))
+        sv.index = df.index
         # Do not invest until the trailing vol estimate exists. Filling 1.0 here
         # would hold raw SVXY (realised vol ~50%) for the first 24 months, which
         # contaminates the whole C series and makes the proxy look far better than
@@ -284,7 +309,8 @@ def _carry_leg(rows, cols, rets, me, cost=COST):
     w = pd.DataFrame(rows, index=me).reindex(columns=cols).fillna(0.0)
     w = scale_weights_to_target(w, rets, TARGET)
     net, to, _ = weights_to_returns(rets, w, cost)
-    return net, turnover_annual(to, len(rets))
+    traded_days = len(rets.loc[me[0]:]) if len(me) else len(rets)
+    return net, turnover_annual(to, traded_days)
 
 
 def carry_legs():
@@ -352,7 +378,8 @@ def network_sleeves():
         w = w * (TARGET / volm.reindex(columns=cols).clip(lower=0.05)).fillna(0.0)
         w = scale_weights_to_target(w, R, TARGET)
         net, to, _ = weights_to_returns(R, w, COST)
-        return net, turnover_annual(to, len(R))
+        traded_days = len(R.loc[me[0]:]) if len(me) else len(R)
+        return net, turnover_annual(to, traded_days)
 
     own_ret, own_to = build(own_rows)
     net_ret, net_to = build(net_rows)

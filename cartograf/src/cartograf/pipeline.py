@@ -18,8 +18,8 @@ from .sleeves import (
     value, vrp_monthly, vrp_svxy, xsmom,
 )
 from .stats import (
-    annual_returns, deflated_sharpe, drawdown, perf, perf_m, sharpe_daily,
-    vol_target, vol_target_m,
+    annual_returns, bootstrap_sharpe, deflated_sharpe, drawdown, perf, perf_m,
+    sharpe_daily, vol_target, vol_target_m,
 )
 
 EXCESS_CONVENTION = {
@@ -119,7 +119,14 @@ def run_main() -> dict:
     # artificial autocorrelation and flatters daily-vol-based combinations.
     vrp_df = vrp_monthly()
     monthly_base = (1 + sleeves[["trend", "bab"]]).resample("ME").prod() - 1
-    df_core_m = pd.concat([monthly_base, vrp_df["B"].rename("vrp")], axis=1).dropna()
+    # Align by month period: monthly_base is calendar month-end, vrp_df is the
+    # last trading day. Exact-timestamp concat silently drops months whose last
+    # calendar day is a weekend.
+    monthly_base.index = monthly_base.index.to_period("M")
+    vrp_monthly_b = vrp_df["B"].rename("vrp").copy()
+    vrp_monthly_b.index = vrp_monthly_b.index.to_period("M")
+    df_core_m = pd.concat([monthly_base, vrp_monthly_b], axis=1).dropna()
+    df_core_m.index = df_core_m.index.to_timestamp(how="end").normalize()
     core_proper, core_scale = vol_target_m(df_core_m.mean(axis=1), TARGET)
 
     equal = equal_book(sleeves)
@@ -173,13 +180,49 @@ def run_main() -> dict:
 
     bench_m = (1 + bench[["SPY", "60/40"]]).resample("ME").prod() - 1
     core_mix = 0.7 * bench_m["60/40"] + 0.3 * core_proper
+
+    # Benchmark convention: the daily-rebalanced 60/40 above is the continuity
+    # series. A monthly-rebalanced 60/40 (the way most funds actually run) has a
+    # different Sharpe; report it separately rather than letting one convention
+    # decide the conclusion.
+    px_m = prices()[["SPY", "IEF"]].resample("ME").last().pct_change()
+    sixty40_m_rebal = 0.6 * px_m["SPY"] + 0.4 * px_m["IEF"]
+    core_mix_mr = (0.7 * sixty40_m_rebal.reindex(core_proper.index) + 0.3 * core_proper).dropna()
+
+    def _claim(s: pd.Series, label: str) -> dict:
+        s = s.dropna()
+        sr = float(s.mean() / s.std()) if s.std() > 0 else 0.0
+        return {
+            "label": label,
+            "stats": perf_m(s, rf_monthly=risk_free_monthly(s.index)),
+            "dsr_all_trials": deflated_sharpe(
+                sr, N_TRIALS_ALL, len(s), float(s.skew()), float(s.kurtosis() + 3)
+            ),
+            "bootstrap": bootstrap_sharpe(s, n_boot=2000, block=6, periods=12),
+        }
+
+    report["benchmarks_monthly"] = {
+        "SPY": perf_m(px_m["SPY"], rf_monthly=risk_free_monthly(px_m.index)),
+        "60_40_monthly_rebal": perf_m(
+            sixty40_m_rebal, rf_monthly=risk_free_monthly(sixty40_m_rebal.index)
+        ),
+        "note": "monthly-rebalanced 60/40 (SPY/IEF), no rebalancing costs; "
+                "the daily-rebalanced series is in benchmarks",
+    }
     report["books"]["core_proper_vrp"] = {
         "stats": perf_m(core_proper),
         "corr_to_spy": round(float(core_proper.corr(bench_m["SPY"])), 3),
         "60_40_plus_30": perf_m(core_mix, rf_monthly=risk_free_monthly(core_mix.index)),
+        "60_40_plus_30_monthly_rebal": perf_m(
+            core_mix_mr, rf_monthly=risk_free_monthly(core_mix_mr.index)
+        ),
         "leverage_mean": round(float(core_scale.mean()), 3),
         "leverage_max": round(float(core_scale.max()), 3),
         "frequency": "monthly",
+    }
+    report["claims"] = {
+        "core_60_40_plus_30_daily_bench": _claim(core_mix, "60/40 daily-rebalanced + 30% core"),
+        "core_60_40_plus_30_monthly_bench": _claim(core_mix_mr, "60/40 monthly-rebalanced + 30% core"),
     }
 
     # Like-for-like: the legacy SVXY core on the same 2009-11+ sample. Without
@@ -313,7 +356,12 @@ def run_vrp() -> dict:
     b = df["B"].reindex(common)
     c = df["C"].reindex(common)
     px = prices()
-    m_px = px[["SPY", "IEF"]].resample("ME").last().pct_change().reindex(common).dropna()
+    # common is a last-trading-day index; align the calendar month-end price
+    # series to it by period rather than by exact timestamp.
+    m_px = px[["SPY", "IEF"]].resample("ME").last().pct_change()
+    m_px.index = m_px.index.to_period("M")
+    m_px = m_px.reindex(pd.PeriodIndex(common, freq="M"))
+    m_px.index = common
     bench = 0.6 * m_px["SPY"] + 0.4 * m_px["IEF"]
     rf = risk_free_monthly(common)
 
@@ -340,8 +388,15 @@ def run_vrp() -> dict:
         "excess_convention": EXCESS_CONVENTION,
     }
     for name, s in (("A_always_on", a), ("B_contango_gated", b)):
-        mix = 0.7 * bench + 0.3 * s.reindex(bench.index).fillna(0.0)
+        mix = (0.7 * bench + 0.3 * s.reindex(bench.index).fillna(0.0)).dropna()
         rep[f"60/40+30 {name}"] = perf_m(mix, rf_monthly=rf.reindex(mix.index))
+        sr = float(mix.mean() / mix.std()) if mix.std() > 0 else 0.0
+        rep[f"60/40+30 {name}_dsr_all_trials"] = deflated_sharpe(
+            sr, N_TRIALS_ALL, len(mix), float(mix.skew()), float(mix.kurtosis() + 3)
+        )
+        rep[f"60/40+30 {name}_bootstrap"] = bootstrap_sharpe(
+            mix, n_boot=2000, block=6, periods=12
+        )
     crisis = {}
     for d in ["2008-10-31", "2018-02-28", "2020-03-31"]:
         ts = pd.Timestamp(d)

@@ -24,9 +24,11 @@ from .engines import (
 )
 from .stats import (
     annual_returns,
+    bootstrap_sharpe,
     deflated_sharpe,
     drawdown_control,
     perf,
+    perf_m,
     sharpe_daily,
     vol_target,
 )
@@ -84,6 +86,15 @@ def _benchmarks():
     sixty40 = 0.6 * ret["SPY"].fillna(0.0) + 0.4 * ret["IEF"].fillna(0.0)
     rf = risk_free_daily(ret.index)
     return spy, sixty40, rf
+
+
+@lru_cache(maxsize=1)
+def _monthly_6040():
+    """Monthly-rebalanced 60/40 (SPY/IEF), the way most funds run it."""
+    ret = prices().pct_change()
+    spy_m = (1 + ret["SPY"].fillna(0.0)).resample("ME").prod() - 1
+    ief_m = (1 + ret["IEF"].fillna(0.0)).resample("ME").prod() - 1
+    return 0.6 * spy_m + 0.4 * ief_m, spy_m
 
 
 @lru_cache(maxsize=1)
@@ -345,21 +356,29 @@ def run_book() -> dict:
 
 def run_harden() -> dict:
     df, book_unlev, book, _, _, _, _ = _book()
-    book_dd = drawdown_control(book, 0.20)
+    book_dd_gross = drawdown_control(book, 0.20, cost_bps=0.0)
+    book_dd = drawdown_control(book, 0.20, cost_bps=5.0)
     sv = book.rolling(20).std() * np.sqrt(252.0)
     lv = book.rolling(252).std() * np.sqrt(252.0)
     regime = np.clip((lv / sv).shift(1), 0.4, 1.2)
-    book_reg = (book * regime).fillna(0.0)
-    book_hard = drawdown_control(book * regime, 0.20)
+    book_reg_gross = (book * regime).fillna(0.0)
+    regime_trade = regime.diff().abs().fillna(0.0) * 5.0 / 1e4
+    book_reg = (book_reg_gross - regime_trade).fillna(0.0)
+    book_hard_gross = drawdown_control(book_reg_gross, 0.20, cost_bps=0.0)
+    book_hard = drawdown_control(book_reg, 0.20, cost_bps=5.0)
     res = {
         "trend": perf(df["trend"]),
         "carry": perf(df["carry"]),
         "book_unlevered": perf(book_unlev),
         "book": perf(book),
+        "book_dd_control_gross": perf(book_dd_gross),
         "book_dd_control": perf(book_dd),
+        "book_regime_gross": perf(book_reg_gross),
         "book_regime": perf(book_reg),
+        "book_hardened_gross": perf(book_hard_gross),
         "book_hardened": perf(book_hard),
-        "note": "overlays are preference trades, not free Sharpe",
+        "note": "overlays are preference trades; net figures charge 5 bps per unit "
+                "of exposure change",
     }
     _save_json("hardened_metrics.json", res)
     _curve_plot({"Book": book, "Book + DD control": book_dd,
@@ -378,7 +397,10 @@ def run_tilt() -> dict:
     out = {"base_book": perf(base)}
     for k in [0.3, 0.6, 1.0]:
         wt = (0.5 + k * (regime - 1)).clip(0, 1).fillna(0.5)
-        g = df["trend"] * wt + df["carry"] * (1 - wt)
+        g_gross = df["trend"] * wt + df["carry"] * (1 - wt)
+        trade = wt.diff().abs().fillna(0.0) * 5.0 / 1e4
+        g = g_gross - trade
+        out[f"tilt_k{k}_gross"] = perf(vol_target(g_gross)[0])
         out[f"tilt_k{k}"] = perf(vol_target(g)[0])
     _save_json("tilt_metrics.json", out)
     return out
@@ -443,13 +465,23 @@ def run_finalbook() -> dict:
     book_wf = (wf * df).sum(axis=1)
     book_wf_target, _ = vol_target(book_wf)
     spy, sixty40, rf = _benchmarks()
-    combo = 0.7 * sixty40 + 0.3 * book
+    combo = (0.7 * sixty40 + 0.3 * book).dropna()
     sr = sharpe_daily(book)
     n_obs = int(book.dropna().shape[0])
     dsr_all = deflated_sharpe(sr, sum(TRIAL_REGISTRY.values()), n_obs,
                               skew=float(book.skew()), kurt=float(book.kurtosis() + 3))
     dsr_final = deflated_sharpe(sr, 2, n_obs,
                                 skew=float(book.skew()), kurt=float(book.kurtosis() + 3))
+    overlay_sr = sharpe_daily(combo)
+    overlay_dsr = deflated_sharpe(
+        overlay_sr, sum(TRIAL_REGISTRY.values()), len(combo),
+        skew=float(combo.skew()), kurt=float(combo.kurtosis() + 3),
+    )
+    overlay_boot = bootstrap_sharpe(combo, n_boot=2000, block=21)
+    sixty40_m, spy_m = _monthly_6040()
+    book_m = (1 + book).resample("ME").prod() - 1
+    combo_m = (0.7 * sixty40_m + 0.3 * book_m).dropna()
+    rf_m = (1 + rf).resample("ME").prod() - 1
     res = {
         "trend": perf(df["trend"]),
         "carry": perf(df["carry"]),
@@ -473,6 +505,16 @@ def run_finalbook() -> dict:
         "xsmom_turnover": xdiag["annual_turnover"],
         "deflated_sharpe_all_trials": dsr_all,
         "deflated_sharpe_final_variants": dsr_final,
+        "overlay_dsr_all_trials": overlay_dsr,
+        "overlay_bootstrap": overlay_boot,
+        "benchmarks_monthly": {
+            "spy": perf_m(spy_m, rf_monthly=rf_m),
+            "sixty40_monthly_rebal": perf_m(sixty40_m, rf_monthly=rf_m),
+            "note": "monthly-rebalanced 60/40 (SPY/IEF), no rebalancing costs",
+        },
+        "combo_60_40_plus_30_monthly_rebal": perf_m(combo_m, rf_monthly=rf_m),
+        "deflated_sharpe_note": "deflated_sharpe_* is the sleeve book; "
+                                "overlay_dsr_all_trials is the 60/40+30% claim",
         "trial_registry": TRIAL_REGISTRY,
         "excess_convention": EXCESS_CONVENTION,
     }
@@ -486,6 +528,27 @@ def run_finalbook() -> dict:
         "note": "DSR uses the daily Sharpe of the final fixed-weight book.",
     })
     return res
+
+
+def run_cost_stress() -> dict:
+    """Net performance at 5/10/25/50 bps per unit of turnover."""
+    px = prices()
+    spy, sixty40, rf = _benchmarks()
+    out = {}
+    for bps in (5.0, 10.0, 25.0, 50.0):
+        trend, _ = trend_returns(px, cost_bps=bps)
+        carry, _, _ = carry_returns(cost_bps=bps)
+        df = pd.DataFrame({"trend": trend, "carry": carry}).dropna()
+        book = fixed_book(df, {"trend": 0.74, "carry": 0.26})
+        combo = (0.7 * sixty40 + 0.3 * book).dropna()
+        out[str(int(bps))] = {
+            "trend": perf(trend),
+            "carry": perf(carry),
+            "book": perf(book),
+            "overlay_60_40_plus_30": perf(combo, rf=rf),
+        }
+    _save_json("cost_stress.json", out)
+    return out
 
 
 def run_all() -> dict:
@@ -502,6 +565,7 @@ def run_all() -> dict:
         ("tilt", run_tilt),
         ("sleeve", run_sleeve),
         ("finalbook", run_finalbook),
+        ("cost_stress", run_cost_stress),
     ]:
         print(f"[inercia] {name} ...", flush=True)
         out[name] = fn()
@@ -521,5 +585,6 @@ STAGES = {
     "tilt": run_tilt,
     "sleeve": run_sleeve,
     "finalbook": run_finalbook,
+    "cost_stress": run_cost_stress,
     "all": run_all,
 }
