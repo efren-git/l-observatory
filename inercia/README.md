@@ -406,6 +406,21 @@ changes of a mean-reverting, non-investable index; a real futures position pays
 the roll. The base book is unchanged. The methodological lesson: test the
 hedge's difference series, not just the hedged portfolio's Sharpe.
 
+## Chapter 16 — Relative-value lab: the literal pair trade fails
+
+`RELATIVE-VALUE.md` tests the most literal version of "buy one asset, short a
+related one": 27 economically linked ETF pairs, a 252-day rolling hedge ratio,
+a 60-day z-score, quarterly cointegration screening, 5 bps per leg and 50 bps
+borrow. Walk-forward, 2005–2026: **CAGR −2.1%, vol 5.1%, Sharpe −0.39, max
+drawdown −43.8%, DSR 0.0001**. The best standalone pair (EWA/EWC) has a Sharpe
+of 0.27; most pairs lose after costs. The lesson is not "try more pairs." It is
+that a statistical spread with no contractual link is a directional bet on the
+difference, cointegration is unstable out of sample, and the accessible ETF
+version of stat arb is crowded. Contractual/event-driven relative value —
+merger arbitrage, convertible arbitrage, capital-structure trades — is a
+different animal and needs deal/bond data, not just prices. Reproduce with
+`src/run_relval.py`.
+
 ## Appendix — References & reproducibility
 
 Selected references: Jegadeesh & Titman 1993; Carhart 1997; Moskowitz, Ooi &
